@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description']/.." position="before">
+                <group>
+                    <field
+                        name="product_label_template_ids"
+                        context="{'default_product_id': active_id}"
+                    >
+                        <tree string="Product Labels">
+                            <field name="product_id" invisible="1" />
+                            <field name="product_label_type_id" />
+                            <field name="label_image" widget="image" />
+                            <field name="font_family" />
+                            <field name="font_size" />
+                            <field name="line_height" />
+                            <field name="width_padding" />
+                            <field name="height_padding" />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

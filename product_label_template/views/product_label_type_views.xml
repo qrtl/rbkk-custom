@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_label_type_tree_view" model="ir.ui.view">
+        <field name="name">product.label.type.tree</field>
+        <field name="model">product.label.type</field>
+        <field name="arch" type="xml">
+            <tree string="Label Types" editable="top">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="product_label_type_action" model="ir.actions.act_window">
+        <field name="name">Product Label Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.label.type</field>
+        <field name="view_mode">tree</field>
+        <field name="view_type">form</field>
+    </record>
+    <menuitem
+        id="menu_product_label_type_action"
+        action="product_label_type_action"
+        parent="sale.prod_config_main"
+        sequence="10"
+    />
+</odoo>

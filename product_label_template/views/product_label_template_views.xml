@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_label_template_tree_view" model="ir.ui.view">
+        <field name="name">product.label.template.tree</field>
+        <field name="model">product.label.template</field>
+        <field name="arch" type="xml">
+            <tree string="Product Labels" editable="top">
+                <field name="product_id" />
+                <field name="product_label_type_id" />
+                <field name="label_image" widget="image" />
+                <field name="label_width" />
+                <field name="label_height" />
+                <field name="font_family" />
+                <field name="font_size" />
+                <field name="line_height" />
+                <field name="width_padding" />
+                <field name="height_padding" />
+                <field name="with_qr_code" />
+                <field name="qr_code_size" />
+                <field name="qr_code_width_padding" />
+                <field name="qr_code_height_padding" />
+            </tree>
+        </field>
+    </record>
+    <record id="product_label_template_action" model="ir.actions.act_window">
+        <field name="name">Product Label Templates</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.label.template</field>
+        <field name="view_mode">tree</field>
+        <field name="view_type">form</field>
+    </record>
+    <menuitem
+        id="menu_product_label_template_action"
+        action="product_label_template_action"
+        parent="sale.prod_config_main"
+        sequence="11"
+    />
+</odoo>

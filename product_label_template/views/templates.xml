@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="product_label_reports">
+        <t t-call="web.basic_layout">
+            <t t-if="'move_line_ids' in docs and docs.move_line_ids">
+                <t t-set="lines" t-value="docs.move_line_ids" />
+            </t>
+            <t t-if="'finished_move_line_ids' in docs and docs.finished_move_line_ids">
+                <t t-set="lines" t-value="docs.finished_move_line_ids" />
+            </t>
+            <div class="page">
+                <t t-foreach="lines" t-as="line">
+                    <t t-call="product_label_template.basic_label_template">
+                        <t
+                            t-set="product_label"
+                            t-value="line.product_id.product_label_template_ids and line.product_id.product_label_template_ids[0]"
+                        />
+                        <t t-set="lot" t-value="line.lot_id" />
+                        <!-- FIXME: Serial number should be printed instead -->
+                        <t t-set="qr_code" t-value="line.product_id.barcode" />
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+    <template id="basic_label_template">
+        <div t-if="product_label">
+            <t t-if="lot">
+                <div t-att-style="product_label.get_label_css()">
+                    <div t-att-style="product_label.get_label_text_css()">
+                        <span t-field="lot.name" />
+                        <br />
+                        <span t-field="lot.create_date" />
+                        <br />
+                        <span t-field="lot.removal_date" />
+                    </div>
+                    <t t-if="product_label.with_qr_code">
+                        <t
+                            t-set="qr_size"
+                            t-value="product_label.qr_code_size or 100"
+                        />
+                        <img
+                            t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', quote_plus(qr_code or ''), qr_size, qr_size)"
+                            t-att-style="product_label.get_qr_code_css()"
+                        />
+                    </t>
+                </div>
+            </t>
+        </div>
+    </template>
+</odoo>
