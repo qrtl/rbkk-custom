@@ -1,7 +1,7 @@
 # Copyright 2021 Quartile Limited
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-import codecs
+import base64
 import io
 
 from PIL import Image
@@ -71,7 +71,7 @@ class ProductLabelTemplate(models.Model):
             if template.label_image:
                 # Borrowing logic from odoo image tool
                 # https://github.com/odoo/odoo/blob/4e2d0b97f3ec0491294301a5a6b05086e158dea8/odoo/tools/image.py#L68-L69 # noqa
-                image_stream = io.BytesIO(codecs.decode(template.label_image, "base64"))
+                image_stream = io.BytesIO(base64.b64decode(template.label_image))
                 image = Image.open(image_stream)
                 template.label_width = image.size[0]
                 template.label_height = image.size[1]
