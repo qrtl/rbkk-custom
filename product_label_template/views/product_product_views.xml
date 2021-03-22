@@ -13,7 +13,6 @@
                     >
                         <tree string="Product Labels">
                             <field name="product_id" invisible="1" />
-                            <field name="product_label_type_id" />
                             <field name="label_image" widget="image" />
                             <field name="font_family" />
                             <field name="font_size" />

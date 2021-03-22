@@ -13,8 +13,8 @@ from odoo.tools.image import image_data_uri
 class ProductLabelTemplate(models.Model):
     _name = "product.label.template"
 
-    product_label_type_id = fields.Many2one("product.label.type", required=True)
     product_id = fields.Many2one("product.product", required=True)
+    paperformat_id = fields.Many2one("report.paperformat", "Paper Format")
     label_image = fields.Binary(string="Product Label", attachment=True,)
     label_width = fields.Float(
         "Label Width", compute="_compute_label_size", store=True, readonly=False
@@ -22,6 +22,7 @@ class ProductLabelTemplate(models.Model):
     label_height = fields.Float(
         "Label Height", compute="_compute_label_size", store=True, readonly=False
     )
+    label_ratio = fields.Float("Label Ratio", compute="_compute_label_size", store=True)
     font_family = fields.Char("Font Family")
     font_size = fields.Float("Font Size")
     line_height = fields.Float("Line Spacing")
@@ -31,6 +32,18 @@ class ProductLabelTemplate(models.Model):
     qr_code_size = fields.Integer("QR Code Size")
     qr_code_width_padding = fields.Float("Width Padding (QR Code)")
     qr_code_height_padding = fields.Float("Height Padding (QR Code)")
+    label_width_margin = fields.Float("Label Width Margin")
+    label_height_margin = fields.Float("Label Height Margin")
+
+    def get_label_layout_css(self):
+        css_list = [
+            "display: inline-table",
+        ]
+        if self.label_width_margin:
+            css_list.append("margin-left: %spx" % self.label_width_margin)
+        if self.label_height_margin:
+            css_list.append("margin-top: %spx" % self.label_height_margin)
+        return ";".join(css_list)
 
     def get_label_css(self):
         css_list = [
@@ -64,6 +77,16 @@ class ProductLabelTemplate(models.Model):
             css_list.append("top: %spx" % self.height_padding)
         return ";".join(css_list)
 
+    @api.onchange("label_width")
+    def _onchange_label_width(self):
+        if self.label_width and self.label_ratio:
+            self.label_height = self.label_width / self.label_ratio
+
+    @api.onchange("label_height")
+    def _onchange_label_height(self):
+        if self.label_height and self.label_ratio:
+            self.label_width = self.label_height * self.label_ratio
+
     @api.multi
     @api.depends("label_image")
     def _compute_label_size(self):
@@ -75,3 +98,4 @@ class ProductLabelTemplate(models.Model):
                 image = Image.open(image_stream)
                 template.label_width = image.size[0]
                 template.label_height = image.size[1]
+                template.label_ratio = image.size[0] / image.size[1]
