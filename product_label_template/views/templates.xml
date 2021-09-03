@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="product_label_reports">
-        <t t-call="web.basic_layout">
-            <div class="page">
-                <t t-foreach="lots" t-as="lot">
-                    <t t-call="product_label_template.basic_label_template">
-                        <t
-                            t-set="product_label"
-                            t-value="lot.product_id.product_label_template_ids and lot.product_id.product_label_template_ids[0]"
-                        />
-                        <!-- FIXME: Serial number should be printed instead -->
-                        <t t-set="qr_code" t-value="lot.product_id.barcode" />
-                    </t>
-                </t>
-            </div>
-        </t>
-    </template>
     <template id="basic_label_template">
         <div t-if="product_label" t-att-style="product_label.get_label_layout_css()">
             <div t-att-style="product_label.get_label_css()">
                 <div t-att-style="product_label.get_label_text_css()">
+                    <t t-set="lot" t-value="serial.lot_id" />
                     <span t-field="lot.ref" />
                     <br />
                     <span

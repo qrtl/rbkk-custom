@@ -1,9 +1,7 @@
-This module provides the function to maintain the label template for each product.
-The module does not provide the printing function by itself. The module is expected
-to be used as a dependency of the modules for label printing (e.g.
-mrp_production_product_label_print module).
+Go to *Manufacturing > Configuratioon > Product Label Templates*, and create/maintain
+product templates there.
 
-Product Label Template Settings Description
+Product Label Template settings:
 
 1. Paper Format: Paper format that uses to print out the PDF (report.paperformat)
 2. Product Label: Product label image
