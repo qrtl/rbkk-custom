@@ -10,42 +10,35 @@ Product Label Template
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
-    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
-    :alt: License: LGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-qrtl%2Frpl--private-lightgray.png?logo=github
+.. |badge2| image:: https://img.shields.io/badge/github-qrtl%2Frpl--private-lightgray.png?logo=github
     :target: https://github.com/qrtl/rpl-private/tree/12.0/product_label_template
     :alt: qrtl/rpl-private
 
-|badge1| |badge2| |badge3| 
+|badge1| |badge2| 
 
 This module provides the function to maintain the label template for each product.
-The module does not provide the printing function by itself. The module is expected
-to be used as a dependency of the modules for label printing (e.g.
+The module does not provide the print action per se. The module is expected to be used
+as a dependency of the modules for label printing (e.g.
 mrp_production_product_label_print module).
-
-Product Label Template Settings Description
-
-1. Paper Format: Paper format that uses to print out the PDF (report.paperformat)
-2. Product Label: Product label image
-3. Label Width: Width of the printed label image (in px)
-4. Label Height: Height of the printed label image (in px)
-5. Font Family: Font of the lot information
-6. Font Size: Font size of the lot information (in px)
-7. Line Spacing: Spacing between the lot information (in px)
-8. Width Padding (Text): Horizontal position of the lot information (corresponding to the label)
-9. Height Padding (Text): Vertical position of the lot information (corresponding to the label)
-10. With QR Code: Print QR code on the label
-11. QR Code Size: Size of the QR code.
-12. Width Padding (QR Code): Horizontal position of QR code (corresponding to the label)
-13. Height Padding (QR Code): Vertical position of QR code (corresponding to the label)
-14. Label Width Margin: Horizontal margin between labels
-15. Label Height Margin: Vertical margin between labels
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Installation
+============
+
+This module uses the 'treepoem' Python library for printing two-dimentional Data Matrix
+code, which depends on 'ghostscript'::
+
+    sudo pip install treepoem
+    apt-get install ghostscript
+
+To add fonts to the server::
+
+    sudo apt install ttf-mscorefonts-installer
+    sudo fc-cache -f
 
 Configuration
 =============
@@ -55,21 +48,25 @@ product templates there.
 
 Product Label Template settings:
 
-1. Paper Format: Paper format that uses to print out the PDF (report.paperformat)
-2. Product Label: Product label image
-3. Label Width: Width of the printed label image (in px)
-4. Label Height: Height of the printed label image (in px)
-5. Font Family: Font of the lot information
-6. Font Size: Font size of the lot information (in px)
-7. Line Spacing: Spacing between the lot information (in px)
-8. Width Padding (Text): Horizontal position of the lot information (corresponding to the label)
-9. Height Padding (Text): Vertical position of the lot information (corresponding to the label)
-10. With QR Code: Print QR code on the label
-11. QR Code Size: Size of the QR code.
-12. Width Padding (QR Code): Horizontal position of QR code (corresponding to the label)
-13. Height Padding (QR Code): Vertical position of QR code (corresponding to the label)
-14. Label Width Margin: Horizontal margin between labels
-15. Label Height Margin: Vertical margin between labels
+#. Paper Format: Paper format used to print the PDF with (report.paperformat)
+#. Product Label: Product label image
+#. Label Width: Width of the printed label image (in cm)
+#. Label Height: Height of the printed label image (in cm)
+#. Label Width Margin: Margin on the right side of the label (in cm)
+#. Label Height Margin: Margin at the bottom of the label (in cm)
+#. Font Family: Font applied to the printed texts
+#. Font Size: Size of the font (in cm)
+#. Line Spacing: Line spacing between the printed texts (in proportion to the font size)
+#. Width Padding (Dates): Horizontal position of the texts from the left of the label (in cm)
+#. Height Padding (Dates): Vertical position of the texts from the top of the label (in cm)
+#. With QR Code: Indicates whether QR code should be printed on the label
+#. QR Code Size: Size of the QR code (in cm)
+#. Width Padding (QR Code): Horizontal position of the QR code from the left of the label (in cm)
+#. Height Padding (QR Code): Vertical position of the QR code from the top of the label (in cm)
+#. With GS1 Code: Indicates whether GS1 Data Matrix code should be printed on the label
+#. GS1 Code Size: Size of the GS1 Data Matrix code (in cm)
+#. Width Padding (GS1 Code): Horizontal position of the GS1 Data Matrix code from the left of the label (in cm)
+#. Height Padding (GS1 Code): Vertical position of the GS1 Data Matrix code from the top of the label (in cm)
 
 Bug Tracker
 ===========

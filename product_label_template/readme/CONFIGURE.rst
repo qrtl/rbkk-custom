@@ -3,18 +3,22 @@ product templates there.
 
 Product Label Template settings:
 
-1. Paper Format: Paper format that uses to print out the PDF (report.paperformat)
-2. Product Label: Product label image
-3. Label Width: Width of the printed label image (in px)
-4. Label Height: Height of the printed label image (in px)
-5. Font Family: Font of the lot information
-6. Font Size: Font size of the lot information (in px)
-7. Line Spacing: Spacing between the lot information (in px)
-8. Width Padding (Text): Horizontal position of the lot information (corresponding to the label)
-9. Height Padding (Text): Vertical position of the lot information (corresponding to the label)
-10. With QR Code: Print QR code on the label
-11. QR Code Size: Size of the QR code.
-12. Width Padding (QR Code): Horizontal position of QR code (corresponding to the label)
-13. Height Padding (QR Code): Vertical position of QR code (corresponding to the label)
-14. Label Width Margin: Horizontal margin between labels
-15. Label Height Margin: Vertical margin between labels
+#. Paper Format: Paper format used to print the PDF with (report.paperformat)
+#. Product Label: Product label image
+#. Label Width: Width of the printed label image (in cm)
+#. Label Height: Height of the printed label image (in cm)
+#. Label Width Margin: Margin on the right side of the label (in cm)
+#. Label Height Margin: Margin at the bottom of the label (in cm)
+#. Font Family: Font applied to the printed texts
+#. Font Size: Size of the font (in cm)
+#. Line Spacing: Line spacing between the printed texts (in proportion to the font size)
+#. Width Padding (Dates): Horizontal position of the texts from the left of the label (in cm)
+#. Height Padding (Dates): Vertical position of the texts from the top of the label (in cm)
+#. With QR Code: Indicates whether QR code should be printed on the label
+#. QR Code Size: Size of the QR code (in cm)
+#. Width Padding (QR Code): Horizontal position of the QR code from the left of the label (in cm)
+#. Height Padding (QR Code): Vertical position of the QR code from the top of the label (in cm)
+#. With GS1 Code: Indicates whether GS1 Data Matrix code should be printed on the label
+#. GS1 Code Size: Size of the GS1 Data Matrix code (in cm)
+#. Width Padding (GS1 Code): Horizontal position of the GS1 Data Matrix code from the left of the label (in cm)
+#. Height Padding (GS1 Code): Vertical position of the GS1 Data Matrix code from the top of the label (in cm)
