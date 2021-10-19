@@ -3,15 +3,20 @@
     <template id="basic_label_template">
         <div t-if="product_label" t-att-style="product_label.get_label_layout_css()">
             <div t-att-style="product_label.get_label_css()">
-                <div t-att-style="product_label.get_label_text_css()">
+                <div t-att-style="product_label.get_label_text_css('lot')">
                     <t t-set="lot" t-value="serial.lot_id" />
                     <span t-field="lot.ref" />
-                    <br />
+                </div>
+                <div
+                    t-if="product_label.with_prod_date"
+                    t-att-style="product_label.get_label_text_css('production_date')"
+                >
                     <span
                         t-field="lot.date_produced"
                         t-options="{'format':'yyyy-MM-dd'}"
                     />
-                    <br />
+                </div>
+                <div t-att-style="product_label.get_label_text_css('expiry_date')">
                     <span
                         t-field="lot.expiry_date"
                         t-options="{'format':'yyyy-MM-dd'}"

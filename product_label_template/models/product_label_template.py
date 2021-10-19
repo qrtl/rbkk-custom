@@ -40,17 +40,33 @@ class ProductLabelTemplate(models.Model):
         help="Font applied to the printed texts",
     )
     font_size = fields.Float(help="Size of the font (in cm)")
-    line_height = fields.Float(
-        "Line Spacing",
-        help="Line spacing between the printed texts (in proportion to the font size)",
+    width_padding_lot = fields.Float(
+        "Width Padding (Lot)",
+        oldname="width_padding",
+        help="Horizontal position of the lot from the left of the label (in cm)",
     )
-    width_padding = fields.Float(
-        "Width Padding (Dates)",
-        help="Horizontal position of the texts from the left of the label (in cm)",
+    height_padding_lot = fields.Float(
+        "Height Padding (Lot)",
+        oldname="height_padding",
+        help="Vertical position of the lot from the top of the label (in cm)",
     )
-    height_padding = fields.Float(
-        "Height Padding (Dates)",
-        help="Vertical position of the texts from the top of the label (in cm)",
+    # some products do not need to show production date on label.
+    with_prod_date = fields.Boolean("With production date")
+    width_padding_production_date = fields.Float(
+        "Width Padding (Prod. Date)",
+        help="Horizontal position of the prod. date from the left of the label (in cm)",
+    )
+    height_padding_production_date = fields.Float(
+        "Height Padding (Prod. Date)",
+        help="Vertical position of the prod. date from the top of the label (in cm)",
+    )
+    width_padding_expiry_date = fields.Float(
+        "Width Padding (Exp. Date)",
+        help="Horizontal position of the exp. date from the left of the label (in cm)",
+    )
+    height_padding_expiry_date = fields.Float(
+        "Height Padding (Exp. Date)",
+        help="Vertical position of the exp. date from the top of the label (in cm)",
     )
     with_qr_code = fields.Boolean("With QR Code")
     qr_code_size = fields.Float("QR Code Size", help="Size of the QR code (in cm)")
@@ -78,15 +94,22 @@ class ProductLabelTemplate(models.Model):
     )
     coefficient = fields.Float(
         "Conversion Coefficient",
-        compute="_compute_coefficient",
+        # compute="_compute_coefficient",
+        default=13.37,
         help="The coefficient to convert the parameter values from 'cm' to 'mm' "
         "taking the dpi setting into account.",
     )
+    # 13.37 under 300 dpi was reported by one whose env. is MS windows and chrome.
+    # 38.55 under 300 dpi and 12.7 under 100 dpi was by Macintosh user.
 
+    """
+    memo: In dev. env., dpi * 0.1285 is good value, but it is not so in other servers.
     def _compute_coefficient(self):
         for template in self:
-            # TODO How was '0.1285' calculated?
+            # '0.1285' was decided by updating label width moderately to paper size
+            # (wide=210mm) under left and right margins are 0 mm on dev. env. of qrtl.
             template.coefficient = template.paperformat_id.dpi * 0.1285
+    """
 
     def get_label_layout_css(self):
         self.ensure_one()
@@ -109,15 +132,16 @@ class ProductLabelTemplate(models.Model):
         ]
         return ";".join(css_list)
 
-    def get_label_text_css(self):
+    def get_label_text_css(self, field_name):
         self.ensure_one()
+        width_padding_field = getattr(self, "width_padding_%s" % field_name)
+        height_padding_field = getattr(self, "height_padding_%s" % field_name)
         css_list = [
             "position: absolute",
             "font-family: %s" % self.font_family,
             "font-size: %smm" % str(self.font_size * self.coefficient),
-            "line-height: %s" % self.line_height,
-            "left: %smm" % str(self.width_padding * self.coefficient),
-            "top: %smm" % str(self.height_padding * self.coefficient),
+            "left: %smm" % str(width_padding_field * self.coefficient),
+            "top: %smm" % str(height_padding_field * self.coefficient),
         ]
         return ";".join(css_list)
 

@@ -10,6 +10,7 @@
                         <group>
                             <field name="product_id" />
                             <field name="paperformat_id" />
+                            <field name="coefficient" />
                             <field name="label_image" widget="image" />
                         </group>
                         <group>
@@ -23,12 +24,22 @@
                         </group>
                     </group>
                     <group>
-                        <group string="Dates">
+                        <group string="Lot Information">
                             <field name="font_family" />
                             <field name="font_size" />
-                            <field name="line_height" />
-                            <field name="width_padding" />
-                            <field name="height_padding" />
+                            <field name="width_padding_lot" />
+                            <field name="height_padding_lot" />
+                            <field name="with_prod_date" />
+                            <field
+                                name="width_padding_production_date"
+                                attrs="{'invisible': [('with_prod_date','=',False)]}"
+                            />
+                            <field
+                                name="height_padding_production_date"
+                                attrs="{'invisible': [('with_prod_date','=',False)]}"
+                            />
+                            <field name="width_padding_expiry_date" />
+                            <field name="height_padding_expiry_date" />
                         </group>
                         <group
                             string="QR Code"
@@ -64,6 +75,7 @@
             <tree string="Label Templates" editable="top">
                 <field name="product_id" />
                 <field name="paperformat_id" />
+                <field name="coefficient" />
                 <field
                     name="label_image"
                     widget="image"
@@ -76,9 +88,19 @@
                 <field name="label_height_margin" />
                 <field name="font_family" />
                 <field name="font_size" />
-                <field name="line_height" />
-                <field name="width_padding" />
-                <field name="height_padding" />
+                <field name="width_padding_lot" />
+                <field name="height_padding_lot" />
+                <field name="with_prod_date" />
+                <field
+                    name="width_padding_production_date"
+                    attrs="{'invisible': [('with_prod_date','=',False)]}"
+                />
+                <field
+                    name="height_padding_production_date"
+                    attrs="{'invisible': [('with_prod_date','=',False)]}"
+                />
+                <field name="width_padding_expiry_date" />
+                <field name="height_padding_expiry_date" />
                 <field name="with_qr_code" />
                 <field
                     name="qr_code_size"
