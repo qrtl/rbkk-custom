@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-02 15:32+0000\n"
-"PO-Revision-Date: 2021-10-02 15:32+0000\n"
+"POT-Creation-Date: 2021-11-07 15:00+0000\n"
+"PO-Revision-Date: 2021-11-07 15:00+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,14 +16,9 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_label_template
-#: selection:product.label.template,font_family:0
-msgid "Arial"
-msgstr ""
-
-#. module: product_label_template
-#: selection:product.label.template,font_family:0
-msgid "Calibri"
-msgstr ""
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__attribute_value_ids
+msgid "Attribute Values"
+msgstr "属性値"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__coefficient
@@ -41,29 +36,14 @@ msgid "Created on"
 msgstr "作成日"
 
 #. module: product_label_template
-#: model_terms:ir.ui.view,arch_db:product_label_template.view_product_label_template_form
-msgid "Dates"
-msgstr "日付"
-
-#. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__display_name
 msgid "Display Name"
 msgstr "表示名"
 
 #. module: product_label_template
-#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__font_family
-msgid "Font Family"
-msgstr "フォント"
-
-#. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__font_size
 msgid "Font Size"
 msgstr "フォントサイズ"
-
-#. module: product_label_template
-#: model:ir.model.fields,help:product_label_template.field_product_label_template__font_family
-msgid "Font applied to the printed texts"
-msgstr "表示テキストに適用されるフォント"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__gs1_code_size
@@ -91,24 +71,39 @@ msgid "Group By"
 msgstr "グループ化"
 
 #. module: product_label_template
-#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__height_padding
-msgid "Height Padding (Dates)"
-msgstr "高さパディング(日付)"
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__height_padding_expiry_date
+msgid "Height Padding (Exp. Date)"
+msgstr "期限日の位置(縦)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__gs1_code_height_padding
 msgid "Height Padding (GS1)"
-msgstr "高さパディング(GS1)"
+msgstr "GS1画像位置(縦)"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__height_padding_lot
+msgid "Height Padding (Lot)"
+msgstr "ロット位置(縦)"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__height_padding_production_date
+msgid "Height Padding (Prod. Date)"
+msgstr "製造日の位置(縦)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__qr_code_height_padding
 msgid "Height Padding (QR)"
-msgstr "高さパディング(QR)"
+msgstr "QR位置(縦)"
 
 #. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__label_height
 msgid "Height of the printed label image (in cm)"
 msgstr "印刷されるラベル画像の高さ(cm)"
+
+#. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__qr_code_width_margin
+msgid "Horizontal margin between the QR codes (in cm)"
+msgstr "別刷りQRコードの横方向の表示間隔(cm)"
 
 #. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__gs1_code_width_padding
@@ -121,14 +116,29 @@ msgid "Horizontal position of the QR code from the left of the label (in cm)"
 msgstr "ラベル左端からのQRコード表示位置(cm)"
 
 #. module: product_label_template
-#: model:ir.model.fields,help:product_label_template.field_product_label_template__width_padding
-msgid "Horizontal position of the texts from the left of the label (in cm)"
-msgstr "ラベル左端からのテキスト表示位置(cm)"
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__width_padding_expiry_date
+msgid "Horizontal position of the exp. date from the left of the label (in cm)"
+msgstr "ラベル左端からの使用期限日の表示位置(cm)"
+
+#. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__width_padding_lot
+msgid "Horizontal position of the lot from the left of the label (in cm)"
+msgstr "ラベル左端からのロットの表示位置(cm)"
+
+#. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__width_padding_production_date
+msgid "Horizontal position of the prod. date from the left of the label (in cm)"
+msgstr "ラベル左端からの製造日の表示位置(cm)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__id
 msgid "ID"
 msgstr ""
+
+#. module: product_label_template
+#: model_terms:ir.ui.view,arch_db:product_label_template.view_product_label_template_form
+msgid "Individual QR Code Printing"
+msgstr "QRコード単独印刷時の設定"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__label_height
@@ -138,7 +148,7 @@ msgstr "ラベル高さ"
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__label_height_margin
 msgid "Label Height Margin"
-msgstr "ラベル高さマージン"
+msgstr "ラベル同士の間隔(縦)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__label_image
@@ -164,7 +174,7 @@ msgstr "ラベル幅"
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__label_width_margin
 msgid "Label Width Margin"
-msgstr "ラベル幅マージン"
+msgstr "ラベル同士の間隔(横)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template____last_update
@@ -182,19 +192,19 @@ msgid "Last Updated on"
 msgstr "最終更新日"
 
 #. module: product_label_template
-#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__line_height
-msgid "Line Spacing"
-msgstr "行間隔"
-
-#. module: product_label_template
-#: model:ir.model.fields,help:product_label_template.field_product_label_template__line_height
-msgid "Line spacing between the printed texts (in proportion to the font size)"
-msgstr "表示テキストの行間隔(フォントサイズ比)"
+#: model_terms:ir.ui.view,arch_db:product_label_template.view_product_label_template_form
+msgid "Lot Information"
+msgstr "ロット情報"
 
 #. module: product_label_template
 #: model:ir.model,name:product_label_template.model_stock_production_lot
 msgid "Lot/Serial"
 msgstr "ロット/シリアル"
+
+#. module: product_label_template
+#: selection:ir.actions.report,plt_paperformat_type:0
+msgid "Main"
+msgstr "メイン"
 
 #. module: product_label_template
 #: model_terms:ir.ui.view,arch_db:product_label_template.view_product_label_template_form
@@ -204,17 +214,27 @@ msgstr "基本属性"
 #. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__label_height_margin
 msgid "Margin at the bottom of the label (in cm)"
-msgstr "ラベル下部のマージン(cm)"
+msgstr "ラベル下部の余白(cm)"
 
 #. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__label_width_margin
 msgid "Margin on the right side of the label (in cm)"
-msgstr "ラベル右側のマージン(cm)"
+msgstr "ラベル右側の余白(cm)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__paperformat_id
 msgid "Paper Format"
 msgstr "用紙"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__qr_paperformat_id
+msgid "Paper Format (QR)"
+msgstr "用紙(QR)"
+
+#. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__qr_paperformat_id
+msgid "Paper format used to print only QR codes."
+msgstr "QRコード単独印刷で使用される用紙"
 
 #. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__paperformat_id
@@ -232,6 +252,11 @@ msgstr "プロダクト"
 #: model:ir.model.fields,field_description:product_label_template.field_product_product__product_label_template_ids
 msgid "Product Label Template"
 msgstr "プロダクトラベルテンプレート"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_ir_actions_report__plt_paperformat_type
+msgid "Product Label Template Paperformat Type"
+msgstr "プロダクトラベルテンプレート用紙タイプ"
 
 #. module: product_label_template
 #: model:ir.actions.act_window,name:product_label_template.product_label_template_action
@@ -253,6 +278,11 @@ msgid "Product Template"
 msgstr "プロダクトテンプレート"
 
 #. module: product_label_template
+#: model_terms:ir.ui.view,arch_db:product_label_template.product_label_template_search_view
+msgid "Product variant attribute"
+msgstr "製品属性"
+
+#. module: product_label_template
 #: model_terms:ir.ui.view,arch_db:product_label_template.view_product_label_template_form
 msgid "QR Code"
 msgstr "QRコード"
@@ -261,6 +291,26 @@ msgstr "QRコード"
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__qr_code_size
 msgid "QR Code Size"
 msgstr "QRコードサイズ"
+
+#. module: product_label_template
+#: selection:ir.actions.report,plt_paperformat_type:0
+msgid "QR Only"
+msgstr "QRコードのみ"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__qr_code_height_margin
+msgid "Qr Code Height Margin"
+msgstr "QR同士の間隔(縦)"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__qr_code_width_margin
+msgid "Qr Code Width Margin"
+msgstr "QR同士の間隔(横)"
+
+#. module: product_label_template
+#: model:ir.model,name:product_label_template.model_ir_actions_report
+msgid "Report Action"
+msgstr "レポートアクション"
 
 #. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__gs1_code_size
@@ -283,6 +333,16 @@ msgid "The coefficient to convert the parameter values from 'cm' to 'mm' taking 
 msgstr "パラメタ値の「cm」から「mm」への換算係数(DPIを加味)"
 
 #. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_ir_actions_report__use_plt_paperformat
+msgid "Use Product Label Template Paperformat"
+msgstr "プロダクトラベルテンプレートの用紙設定を使用"
+
+#. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__qr_code_height_margin
+msgid "Vertical margin between the QR codes (in cm)"
+msgstr "別刷り時の縦方向のQRコード表示間隔(cm)"
+
+#. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__gs1_code_height_padding
 msgid "Vertical position of the GS1 Data Matrix code from the top of the label (in cm)"
 msgstr "ラベル上端からのGS1データマトリックスコード表示位置(cm)"
@@ -293,24 +353,44 @@ msgid "Vertical position of the QR code from the top of the label (in cm)"
 msgstr "ラベル上端からのQRコード表示位置(cm)"
 
 #. module: product_label_template
-#: model:ir.model.fields,help:product_label_template.field_product_label_template__height_padding
-msgid "Vertical position of the texts from the top of the label (in cm)"
-msgstr "ラベル上端からのテキスト表示位置(cm)"
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__height_padding_expiry_date
+msgid "Vertical position of the exp. date from the top of the label (in cm)"
+msgstr "ラベル上端からの使用期限日表示位置(cm)"
 
 #. module: product_label_template
-#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__width_padding
-msgid "Width Padding (Dates)"
-msgstr "幅パディング(日付)"
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__height_padding_lot
+msgid "Vertical position of the lot from the top of the label (in cm)"
+msgstr "ラベル上端からのロット表示位置(cm)"
+
+#. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__height_padding_production_date
+msgid "Vertical position of the prod. date from the top of the label (in cm)"
+msgstr "ラベル上端からの製造日表示位置(cm)"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__width_padding_expiry_date
+msgid "Width Padding (Exp. Date)"
+msgstr "期限日の位置(横)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__gs1_code_width_padding
 msgid "Width Padding (GS1)"
-msgstr "幅パディング(GS1)"
+msgstr "GS1画像位置(横)"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__width_padding_lot
+msgid "Width Padding (Lot)"
+msgstr "ロット位置(横)"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__width_padding_production_date
+msgid "Width Padding (Prod. Date)"
+msgstr "製造日の位置(横)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__qr_code_width_padding
 msgid "Width Padding (QR)"
-msgstr "幅パディング(QR)"
+msgstr "QR位置(横)"
 
 #. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__label_width
@@ -323,9 +403,19 @@ msgid "With GS1 Code"
 msgstr "GS1コード表示"
 
 #. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__with_individual_qr_code
+msgid "With Individual QR Code"
+msgstr "QRコードを単独で印刷"
+
+#. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__with_qr_code
 msgid "With QR Code"
 msgstr "QRコード表示"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__with_prod_date
+msgid "With production date"
+msgstr "製造日表示"
 
 #. module: product_label_template
 #: model:ir.model,name:product_label_template.model_report_product_label_template_product_label_reports

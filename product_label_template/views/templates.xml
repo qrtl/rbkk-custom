@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="basic_label_template">
-        <div t-if="product_label" t-att-style="product_label.get_label_layout_css()">
+        <div
+            t-if="product_label"
+            t-att-style="product_label.get_label_layout_css('label')"
+        >
             <div t-att-style="product_label.get_label_css()">
                 <div t-att-style="product_label.get_label_text_css('lot')">
                     <t t-set="lot" t-value="serial.lot_id" />
@@ -35,6 +38,17 @@
                     />
                 </t>
             </div>
+        </div>
+    </template>
+    <template id="qr_codes_template">
+        <div
+            t-if="product_label"
+            t-att-style="product_label.get_label_layout_css('qr_code')"
+        >
+            <img
+                t-att-src="'/report/barcode/?type=%s&amp;value=%s' % ('QR', quote_plus(serial.name or ''))"
+                t-att-style="product_label.get_qr_code_css(qr_only=True)"
+            />
         </div>
     </template>
 </odoo>

@@ -16,12 +16,18 @@ class ProductLabelTemplate(models.Model):
     _description = "Product Label Template"
 
     product_id = fields.Many2one("product.product", required=True)
+    attribute_value_ids = fields.Many2many(related="product_id.attribute_value_ids")
     product_tmpl_id = fields.Many2one(related="product_id.product_tmpl_id", store=True)
     paperformat_id = fields.Many2one(
         "report.paperformat",
         "Paper Format",
         required=True,
         help="Paper format used to print the PDF with",
+    )
+    qr_paperformat_id = fields.Many2one(
+        "report.paperformat",
+        "Paper Format (QR)",
+        help="Paper format used to print only QR codes.",
     )
     label_image = fields.Binary(attachment=True)
     label_width = fields.Float(help="Width of the printed label image (in cm)")
@@ -31,6 +37,11 @@ class ProductLabelTemplate(models.Model):
         help="Margin on the right side of the label (in cm)"
     )
     label_height_margin = fields.Float(help="Margin at the bottom of the label (in cm)")
+
+    """
+    NOTE: parameter of font_family has used to select font,
+    but latest requirement is limited to Arial font.
+    Codes below would be a good example to use this function again.
     # When adding a new font, you add ("string for CSS", "display name")
     # The string for CSS can be checked with `fc-list | awk -F ":" '{print $2}'`
     font_family = fields.Selection(
@@ -39,6 +50,7 @@ class ProductLabelTemplate(models.Model):
         required=True,
         help="Font applied to the printed texts",
     )
+    """
     font_size = fields.Float(help="Size of the font (in cm)")
     width_padding_lot = fields.Float(
         "Width Padding (Lot)",
@@ -68,6 +80,7 @@ class ProductLabelTemplate(models.Model):
         "Height Padding (Exp. Date)",
         help="Vertical position of the exp. date from the top of the label (in cm)",
     )
+
     with_qr_code = fields.Boolean("With QR Code")
     qr_code_size = fields.Float("QR Code Size", help="Size of the QR code (in cm)")
     qr_code_width_padding = fields.Float(
@@ -78,6 +91,15 @@ class ProductLabelTemplate(models.Model):
         "Height Padding (QR)",
         help="Vertical position of the QR code from the top of the label (in cm)",
     )
+
+    with_individual_qr_code = fields.Boolean("With Individual QR Code")
+    qr_code_width_margin = fields.Float(
+        help="Horizontal margin between the QR codes (in cm)"
+    )
+    qr_code_height_margin = fields.Float(
+        help="Vertical margin between the QR codes (in cm)"
+    )
+
     with_gs1_code = fields.Boolean("With GS1 Code")
     gs1_code_size = fields.Float(
         "GS1 Code Size", help="Size of the GS1 Data Matrix code (in cm)"
@@ -95,15 +117,15 @@ class ProductLabelTemplate(models.Model):
     coefficient = fields.Float(
         "Conversion Coefficient",
         # compute="_compute_coefficient",
-        default=13.37,
+        default=38.55,
         help="The coefficient to convert the parameter values from 'cm' to 'mm' "
         "taking the dpi setting into account.",
     )
-    # 13.37 under 300 dpi was reported by one whose env. is MS windows and chrome.
-    # 38.55 under 300 dpi and 12.7 under 100 dpi was by Macintosh user.
 
     """
-    memo: In dev. env., dpi * 0.1285 is good value, but it is not so in other servers.
+    NOTE: dpi * 0.1285 is good value in dev. env., but it is not so in other servers.
+    # 13.37 under 300 dpi was reported by one whose env. is MS windows and chrome.
+    # 38.55 under 300 dpi and 12.7 under 100 dpi was by Macintosh user.
     def _compute_coefficient(self):
         for template in self:
             # '0.1285' was decided by updating label width moderately to paper size
@@ -111,13 +133,15 @@ class ProductLabelTemplate(models.Model):
             template.coefficient = template.paperformat_id.dpi * 0.1285
     """
 
-    def get_label_layout_css(self):
+    def get_label_layout_css(self, field_name):
         self.ensure_one()
+        width_margin_field = getattr(self, "%s_width_margin" % field_name)
+        height_margin_field = getattr(self, "%s_height_margin" % field_name)
         # margin-top and margin-left will be given by report.paperformat
         css_list = [
             "display: inline-table",
-            "margin-bottom: %smm" % str(self.label_height_margin * self.coefficient),
-            "margin-right: %smm" % str(self.label_width_margin * self.coefficient),
+            "margin-bottom: %smm" % str(height_margin_field * self.coefficient),
+            "margin-right: %smm" % str(width_margin_field * self.coefficient),
         ]
         return ";".join(css_list)
 
@@ -138,17 +162,20 @@ class ProductLabelTemplate(models.Model):
         height_padding_field = getattr(self, "height_padding_%s" % field_name)
         css_list = [
             "position: absolute",
-            "font-family: %s" % self.font_family,
+            "font-family: Arial",
             "font-size: %smm" % str(self.font_size * self.coefficient),
             "left: %smm" % str(width_padding_field * self.coefficient),
             "top: %smm" % str(height_padding_field * self.coefficient),
         ]
         return ";".join(css_list)
 
-    def get_qr_code_css(self):
+    def get_qr_code_css(self, qr_only=False):
         self.ensure_one()
         css_list = [
-            "position: absolute",
+            # When qr_only is true, there is no parent element and in that case
+            # 'relative' should be applied for the position attribute to avoid the
+            # overlap of the images.
+            "position: %s" % ("relative" if qr_only else "absolute"),
             "left: %smm" % str(self.qr_code_width_padding * self.coefficient),
             "top: %smm" % str(self.qr_code_height_padding * self.coefficient),
             "width: %smm" % str(self.qr_code_size * self.coefficient),

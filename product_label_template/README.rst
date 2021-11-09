@@ -16,10 +16,11 @@ Product Label Template
 
 |badge1| |badge2| 
 
-This module provides the function to maintain the label template for each product.
-The module does not provide the print action per se. The module is expected to be used
-as a dependency of the modules for label printing (e.g.
-mrp_production_product_label_print module).
+This module provides the function to maintain the label template
+and parameters of individual QR printing for each product.
+The module does not provide the print action per se.
+The module is expected to be used as a dependency of the modules for printing.
+(e.g.mrp_production_product_label_print module).
 
 **Table of contents**
 
@@ -53,9 +54,8 @@ Product Label Template settings:
 #. Product Label: Product label image
 #. Label Width: Width of the printed label image (in cm)
 #. Label Height: Height of the printed label image (in cm)
-#. Label Width Margin: Margin on the right side of the label (in cm)
-#. Label Height Margin: Margin at the bottom of the label (in cm)
-#. Font Family: Font applied to the printed texts
+#. xxxx Width Margin: Margin on the right side of xxxx (in cm)
+#. xxxx Height Margin: Margin at the bottom of xxxx (in cm)
 #. xxxx Size: Size of xxxx (in cm)
 #. With xxxx: Indicates whether xxxx should be printed on the label.
 #. Width Padding xxxx: Horizontal position of xxxx from the left of the label (in cm)

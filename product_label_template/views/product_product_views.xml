@@ -18,6 +18,10 @@
                             <tree string="Product Labels">
                                 <field name="paperformat_id" />
                                 <field
+                                    widget="many2many_tags"
+                                    name="attribute_value_ids"
+                                />
+                                <field
                                     name="label_image"
                                     widget="image"
                                     options="{'size': [200, 200]}"
@@ -26,9 +30,9 @@
                                 <field name="label_height" />
                                 <field name="label_width_margin" />
                                 <field name="label_height_margin" />
-                                <field name="font_family" />
                                 <field name="with_qr_code" />
                                 <field name="with_gs1_code" />
+                                <field name="with_individual_qr_code" />
                             </tree>
                         </field>
                     </group>
