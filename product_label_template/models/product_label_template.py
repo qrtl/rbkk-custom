@@ -149,7 +149,7 @@ class ProductLabelTemplate(models.Model):
         self.ensure_one()
         css_list = [
             "position: relative",
-            "background-image: url('%s')" % image_data_uri(self.label_image),
+            "background-image: url('%s')" % image_data_uri(self.label_image or b""),
             "height: %smm" % str(self.label_height * self.coefficient),
             "width: %smm" % str(self.label_width * self.coefficient),
             "background-size: cover",

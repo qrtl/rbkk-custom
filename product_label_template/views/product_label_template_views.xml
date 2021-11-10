@@ -52,7 +52,10 @@
                             string="Individual QR Code Printing"
                             attrs="{'invisible': [('with_individual_qr_code','=',False)]}"
                         >
-                            <field name="qr_paperformat_id" />
+                            <field
+                                name="qr_paperformat_id"
+                                attrs="{'required': [('with_individual_qr_code','=',True)]}"
+                            />
                             <field
                                 name="qr_code_size"
                                 attrs="{'required': [('with_individual_qr_code','=',True)]}"
