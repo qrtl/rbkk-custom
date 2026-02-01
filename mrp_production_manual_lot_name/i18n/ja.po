@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-31 10:38+0000\n"
-"PO-Revision-Date: 2026-01-31 10:38+0000\n"
+"POT-Creation-Date: 2026-02-01 09:52+0000\n"
+"PO-Revision-Date: 2026-02-01 09:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid ""
 "A lot/serial number with name '%(lot_name)s' already exists for product "
 "'%(product_name)s'."
-msgstr "ロット/シリアル番号 '%(lot_name)s' は製品 '%(product_name)s' に既に存在します。"
+msgstr "ロット/シリアル番号 '%(lot_name)s' はプロダクト '%(product_name)s' に既に存在します。"
 
 #. module: mrp_production_manual_lot_name
 #: model:ir.model.fields,help:mrp_production_manual_lot_name.field_mrp_production__lot_producing_name
@@ -47,12 +47,18 @@ msgstr "ロット/シリアル番号名"
 #: model:ir.model.fields,field_description:mrp_production_manual_lot_name.field_product_product__mrp_manual_lot_name
 #: model:ir.model.fields,field_description:mrp_production_manual_lot_name.field_product_template__mrp_manual_lot_name
 msgid "Manual Lot Name in Manufacturing"
-msgstr "製造時のロット名手動入力"
+msgstr "製造オーダでロット/シリアル名を手動入力"
 
 #. module: mrp_production_manual_lot_name
 #: model:ir.model,name:mrp_production_manual_lot_name.model_mrp_production
 msgid "Manufacturing Order"
 msgstr "製造オーダ"
+
+#. module: mrp_production_manual_lot_name
+#. odoo-python
+#: code:addons/mrp_production_manual_lot_name/models/mrp_production.py:0
+msgid "Please enter a lot/serial name for the product '%s'."
+msgstr "プロダクト '%s' のロット/シリアル名を入力してください。"
 
 #. module: mrp_production_manual_lot_name
 #: model:ir.model,name:mrp_production_manual_lot_name.model_product_template

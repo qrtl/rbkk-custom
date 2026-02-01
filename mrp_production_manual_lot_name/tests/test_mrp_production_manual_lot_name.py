@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 from odoo import Command
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 from odoo.addons.mrp.tests.common import TestMrpCommon
 
@@ -115,3 +115,10 @@ class TestMrpManualLotName(TestMrpCommon):
         mo.action_generate_serial()
         self.assertTrue(mo.lot_producing_id)
         self.assertTrue(mo.lot_producing_id.name)
+
+    def test_button_mark_done_without_lot_name(self):
+        """Test that marking done without lot name raises UserError."""
+        mo = self._create_mo(self.product_lot, self.bom_lot)
+        mo.qty_producing = 1
+        with self.assertRaises(UserError):
+            mo.button_mark_done()

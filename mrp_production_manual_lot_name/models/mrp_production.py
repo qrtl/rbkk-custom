@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class MrpProduction(models.Model):
@@ -51,3 +51,16 @@ class MrpProduction(models.Model):
             if production.lot_producing_name and production.lot_producing_id:
                 production.lot_producing_name = False
         return res
+
+    def button_mark_done(self):
+        for production in self:
+            if (
+                production.mrp_manual_lot_name
+                and not production.lot_producing_name
+                and not production.lot_producing_id
+            ):
+                raise UserError(
+                    _("Please enter a lot/serial name for the product '%s'.")
+                    % (production.product_id.display_name,)
+                )
+        return super().button_mark_done()
