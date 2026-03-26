@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_timesheet_sheet_form_task_required" model="ir.ui.view">
+        <field name="name">hr.timesheet.sheet.form.task.required</field>
+        <field name="model">hr_timesheet.sheet</field>
+        <field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='timesheet_ids']//list//field[@name='task_id']"
+                position="attributes"
+            >
+                <attribute name="required">1</attribute>
+                <attribute name="optional" />
+            </xpath>
+            <xpath
+                expr="//field[@name='timesheet_ids']//form//field[@name='task_id']"
+                position="attributes"
+            >
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
