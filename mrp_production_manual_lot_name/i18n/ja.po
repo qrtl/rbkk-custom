@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_production_manual_lot_name
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-01 09:52+0000\n"
+"PO-Revision-Date: 2026-02-01 09:52+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_production_manual_lot_name
+#. odoo-python
+#: code:addons/mrp_production_manual_lot_name/models/mrp_production.py:0
+msgid ""
+"A lot/serial number with name '%(lot_name)s' already exists for product "
+"'%(product_name)s'."
+msgstr "ロット/シリアル番号 '%(lot_name)s' はプロダクト '%(product_name)s' に既に存在します。"
+
+#. module: mrp_production_manual_lot_name
+#: model:ir.model.fields,help:mrp_production_manual_lot_name.field_mrp_production__lot_producing_name
+msgid "Enter the lot/serial number name manually."
+msgstr "ロット/シリアル番号名を手動で入力します。"
+
+#. module: mrp_production_manual_lot_name
+#: model:ir.model.fields,help:mrp_production_manual_lot_name.field_mrp_production__mrp_manual_lot_name
+#: model:ir.model.fields,help:mrp_production_manual_lot_name.field_product_product__mrp_manual_lot_name
+#: model:ir.model.fields,help:mrp_production_manual_lot_name.field_product_template__mrp_manual_lot_name
+msgid ""
+"If enabled, allows manual entry of lot/serial number name when creating "
+"manufacturing orders."
+msgstr "有効にすると、製造オーダ作成時にロット/シリアル番号名を手動で入力できます。"
+
+#. module: mrp_production_manual_lot_name
+#: model:ir.model.fields,field_description:mrp_production_manual_lot_name.field_mrp_production__lot_producing_name
+msgid "Lot/Serial Number Name"
+msgstr "ロット/シリアル番号名"
+
+#. module: mrp_production_manual_lot_name
+#: model:ir.model.fields,field_description:mrp_production_manual_lot_name.field_mrp_production__mrp_manual_lot_name
+#: model:ir.model.fields,field_description:mrp_production_manual_lot_name.field_product_product__mrp_manual_lot_name
+#: model:ir.model.fields,field_description:mrp_production_manual_lot_name.field_product_template__mrp_manual_lot_name
+msgid "Manual Lot Name in Manufacturing"
+msgstr "製造オーダでロット/シリアル名を手動入力"
+
+#. module: mrp_production_manual_lot_name
+#: model:ir.model,name:mrp_production_manual_lot_name.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "製造オーダ"
+
+#. module: mrp_production_manual_lot_name
+#. odoo-python
+#: code:addons/mrp_production_manual_lot_name/models/mrp_production.py:0
+msgid "Please enter a lot/serial name for the product '%s'."
+msgstr "プロダクト '%s' のロット/シリアル名を入力してください。"
+
+#. module: mrp_production_manual_lot_name
+#: model:ir.model,name:mrp_production_manual_lot_name.model_product_template
+msgid "Product"
+msgstr "プロダクト"
+
+#. module: mrp_production_manual_lot_name
+#: model:ir.model.fields,field_description:mrp_production_manual_lot_name.field_mrp_production__smart_search
+#: model:ir.model.fields,field_description:mrp_production_manual_lot_name.field_product_template__smart_search
+msgid "Smart Search"
+msgstr ""
