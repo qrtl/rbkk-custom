@@ -8,40 +8,42 @@ from odoo.exceptions import UserError, ValidationError
 class MrpProduction(models.Model):
     _inherit = "mrp.production"
 
-    mrp_manual_lot_name = fields.Boolean(
-        related="product_id.mrp_manual_lot_name",
-    )
+    mrp_manual_lot_name = fields.Boolean(related="product_id.mrp_manual_lot_name")
     lot_producing_name = fields.Char(
         string="Lot/Serial Number Name",
         help="Enter the lot/serial number name manually.",
     )
 
+    def _check_lot_name_duplicate(self):
+        self.ensure_one()
+        existing_lot = self.env["stock.lot"].search(
+            [
+                ("name", "=", self.lot_producing_name),
+                ("product_id", "=", self.product_id.id),
+                ("company_id", "in", (self.company_id.id, False)),
+            ],
+            limit=1,
+        )
+        if existing_lot:
+            raise ValidationError(
+                _(
+                    "A lot/serial number with name '%(lot_name)s' already exists "
+                    "for product '%(product_name)s'.",
+                    lot_name=self.lot_producing_name,
+                    product_name=self.product_id.display_name,
+                )
+            )
+
     @api.constrains("lot_producing_name", "product_id")
     def _check_lot_producing_name_unique(self):
         for production in self:
-            if not production.lot_producing_name:
-                continue
-            existing_lot = self.env["stock.lot"].search(
-                [
-                    ("name", "=", production.lot_producing_name),
-                    ("product_id", "=", production.product_id.id),
-                    ("company_id", "=", production.company_id.id),
-                ],
-                limit=1,
-            )
-            if existing_lot:
-                raise ValidationError(
-                    _(
-                        "A lot/serial number with name '%(lot_name)s' already exists "
-                        "for product '%(product_name)s'.",
-                        lot_name=production.lot_producing_name,
-                        product_name=production.product_id.display_name,
-                    )
-                )
+            if production.lot_producing_name:
+                production._check_lot_name_duplicate()
 
     def _prepare_stock_lot_values(self):
         res = super()._prepare_stock_lot_values()
         if self.mrp_manual_lot_name and self.lot_producing_name:
+            self._check_lot_name_duplicate()
             res["name"] = self.lot_producing_name
         return res
 
@@ -56,6 +58,7 @@ class MrpProduction(models.Model):
         for production in self:
             if (
                 production.mrp_manual_lot_name
+                and production.product_id.tracking != "none"
                 and not production.lot_producing_name
                 and not production.lot_producing_id
             ):

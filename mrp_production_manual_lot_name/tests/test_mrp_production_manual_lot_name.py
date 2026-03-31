@@ -122,3 +122,19 @@ class TestMrpManualLotName(TestMrpCommon):
         mo.qty_producing = 1
         with self.assertRaises(UserError):
             mo.button_mark_done()
+
+    def test_duplicate_lot_name_at_generation(self):
+        """Test that duplicate is caught when lot is created between constraint
+        check and generation (e.g. concurrent MOs)."""
+        mo1 = self._create_mo(self.product_lot, self.bom_lot)
+        mo1.lot_producing_name = "SAME-LOT"
+        mo1.qty_producing = 1
+        mo2 = self._create_mo(self.product_lot, self.bom_lot)
+        mo2.lot_producing_name = "SAME-LOT"
+        mo2.qty_producing = 1
+        # First MO generates the lot successfully
+        mo1.action_generate_serial()
+        self.assertEqual(mo1.lot_producing_id.name, "SAME-LOT")
+        # Second MO fails at generation time (lot now exists in stock.lot)
+        with self.assertRaises(ValidationError):
+            mo2.action_generate_serial()
