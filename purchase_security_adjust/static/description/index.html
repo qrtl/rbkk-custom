@@ -368,14 +368,15 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:38ef92cccea42fef31e969ddf085d1a5e82d8578cea9dd4aba1ec7d1281c4b3e
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/qrtl/rbkk-custom/tree/18.0/purchase_security_adjust"><img alt="qrtl/rbkk-custom" src="https://img.shields.io/badge/github-qrtl%2Frbkk--custom-lightgray.png?logo=github" /></a></p>
-<p>This module makes the “Purchase Default Secondary UoM” field
-(<tt class="docutils literal">purchase_secondary_uom_id</tt>) on the product form visible to purchase
-users who are not purchase managers.</p>
-<p>By default, the field is placed inside the “Vendor Bills” group which is
-restricted to purchase managers by the <tt class="docutils literal">purchase</tt> module. This module
-adds a separate display of the same field for purchase users outside
-that restriction.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/qrtl/rbkk-custom/tree/18.0/purchase_security_adjust"><img alt="qrtl/rbkk-custom" src="https://img.shields.io/badge/github-qrtl%2Frbkk--custom-lightgray.png?logo=github" /></a></p>
+<p>This module adjusts purchase-related security settings to better fit the
+client’s operational needs.</p>
+<p>Changes:</p>
+<ul class="simple">
+<li>Product form: Make the “Purchase” tab and the “Vendor Bills” group
+visible to product managers, so they can manage purchase-related
+fields without requiring a purchase role.</li>
+</ul>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">

@@ -13,23 +13,23 @@ Purchase Security Adjust
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
-    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
-    :alt: License: AGPL-3
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
+    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
+    :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-qrtl%2Frbkk--custom-lightgray.png?logo=github
     :target: https://github.com/qrtl/rbkk-custom/tree/18.0/purchase_security_adjust
     :alt: qrtl/rbkk-custom
 
 |badge1| |badge2| |badge3|
 
-This module makes the "Purchase Default Secondary UoM" field
-(``purchase_secondary_uom_id``) on the product form visible to purchase
-users who are not purchase managers.
+This module adjusts purchase-related security settings to better fit the
+client's operational needs.
 
-By default, the field is placed inside the "Vendor Bills" group which is
-restricted to purchase managers by the ``purchase`` module. This module
-adds a separate display of the same field for purchase users outside
-that restriction.
+Changes:
+
+-  Product form: Make the "Purchase" tab and the "Vendor Bills" group
+   visible to product managers, so they can manage purchase-related
+   fields without requiring a purchase role.
 
 **Table of contents**
 
@@ -57,9 +57,9 @@ Authors
 Contributors
 ------------
 
-- `Quartile <https://www.quartile.co>`__:
+-  `Quartile <https://www.quartile.co>`__:
 
-  - Shinnnosuke Morita
+   -  Shinnnosuke Morita
 
 Maintainers
 -----------
