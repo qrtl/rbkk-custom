@@ -27,9 +27,9 @@ client's operational needs.
 
 Changes:
 
--  Product form: Make the "Purchase" tab and the "Vendor Bills" group
-   visible to product managers, so they can manage purchase-related
-   fields without requiring a purchase role.
+- Product form: Make the "Purchase" tab and the "Vendor Bills" group
+  visible to product managers, so they can manage purchase-related
+  fields without requiring a purchase role.
 
 **Table of contents**
 
@@ -57,9 +57,9 @@ Authors
 Contributors
 ------------
 
--  `Quartile <https://www.quartile.co>`__:
+- `Quartile <https://www.quartile.co>`__:
 
-   -  Shinnnosuke Morita
+  - Shinnnosuke Morita
 
 Maintainers
 -----------
