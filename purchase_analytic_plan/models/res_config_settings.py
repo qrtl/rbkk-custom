@@ -7,7 +7,8 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
-    analytic_plan_purchase_order_line_id = fields.Many2one(
+    pol_analytic_plan_id = fields.Many2one(
         "account.analytic.plan",
-        config_parameter="analytic_plan_field.purchase_order_line.plan_id",
+        related="company_id.pol_analytic_plan_id",
+        readonly=False,
     )

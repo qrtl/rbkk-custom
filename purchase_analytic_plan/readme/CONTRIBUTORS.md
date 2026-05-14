@@ -1,2 +1,2 @@
 - [Quartile](https://www.quartile.co):
-  - Nobu Nishida
+  - Toshikimi Shigenobu
