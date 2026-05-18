@@ -15,15 +15,14 @@ class PurchaseOrderLine(models.Model):
         readonly=True,
     )
 
-    @api.depends(
-        "analytic_distribution",
-        "company_id.pol_analytic_plan_id",
-    )
+    @api.depends("analytic_distribution")
     def _compute_analytic_plan_account_id(self):
         analytic_account_obj = self.env["account.analytic.account"]
+        plan = self.env["account.analytic.plan"].search(
+            [("is_pol_analytic_plan", "=", True)], limit=1
+        )
         for line in self:
             line.analytic_plan_account_id = False
-            plan = line.company_id.pol_analytic_plan_id
             if not line.analytic_distribution or not plan:
                 continue
             account_ids = {

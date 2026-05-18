@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "depends": ["purchase", "analytic"],
     "data": [
-        "views/res_config_settings_views.xml",
+        "views/analytic_plan_views.xml",
         "views/purchase_order_line_views.xml",
     ],
     "installable": True,
