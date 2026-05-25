@@ -40,15 +40,15 @@ class TestPurchaseOrderLine(TransactionCase):
         line = self._create_line(
             {str(self.account_a.id): 60.0, str(self.account_b.id): 40.0}
         )
-        self.assertEqual(line.analytic_plan_account_id, self.account_a)
+        self.assertEqual(line.pol_analytic_account_id, self.account_a)
 
     def test_plan_flag_change_recomputes_lines(self):
         line = self._create_line({str(self.account_a.id): 100.0})
-        self.assertEqual(line.analytic_plan_account_id, self.account_a)
+        self.assertEqual(line.pol_analytic_account_id, self.account_a)
         self.plan_a.is_pol_analytic_plan = False
-        self.assertFalse(line.analytic_plan_account_id)
+        self.assertFalse(line.pol_analytic_account_id)
         self.plan_a.is_pol_analytic_plan = True
-        self.assertEqual(line.analytic_plan_account_id, self.account_a)
+        self.assertEqual(line.pol_analytic_account_id, self.account_a)
 
     def test_duplicate_pol_plan_raises(self):
         with self.assertRaises(ValidationError):

@@ -19,7 +19,7 @@ class AccountAnalyticPlan(models.Model):
                 [("analytic_distribution", "!=", False)]
             )
             if lines:
-                lines._compute_analytic_plan_account_id()
+                lines._compute_pol_analytic_account_id()
         return res
 
     @api.constrains("is_pol_analytic_plan")

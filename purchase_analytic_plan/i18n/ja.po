@@ -6,20 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 05:19+0000\n"
-"PO-Revision-Date: 2026-05-18 05:19+0000\n"
+"POT-Creation-Date: 2026-05-25 06:09+0000\n"
+"PO-Revision-Date: 2026-05-25 06:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: purchase_analytic_plan
-#: model:ir.model.fields,field_description:purchase_analytic_plan.field_purchase_order_line__analytic_plan_account_id
-#: model_terms:ir.ui.view,arch_db:purchase_analytic_plan.purchase_order_line_search_analytic_plan_account
-msgid "Analytic Plan Account"
-msgstr "分析プランアカウント"
 
 #. module: purchase_analytic_plan
 #: model:ir.model,name:purchase_analytic_plan.model_account_analytic_plan
@@ -30,10 +24,15 @@ msgstr "分析プラン"
 #. odoo-python
 #: code:addons/purchase_analytic_plan/models/analytic_plan.py:0
 msgid ""
-"Only one analytic plan can be set for purchase order lines. Please disable "
+"Only one analytic plan can be set for purchase orderlines. Please disable "
 "the existing plan '%(plan)s' first."
-msgstr ""
-"購買オーダ明細に使用できる分析プランは1つのみです。既存の分析プラン '%(plan)s' を先に無効にしてください。"
+msgstr "購買オーダ明細に使用できる分析プランは1つのみです。既存の分析プラン '%(plan)s' を先に無効にしてください。"
+
+#. module: purchase_analytic_plan
+#: model:ir.model.fields,field_description:purchase_analytic_plan.field_purchase_order_line__pol_analytic_account_id
+#: model_terms:ir.ui.view,arch_db:purchase_analytic_plan.purchase_order_line_search_analytic_plan_account
+msgid "Pol Analytic Account"
+msgstr "予算番号"
 
 #. module: purchase_analytic_plan
 #: model:ir.model,name:purchase_analytic_plan.model_purchase_order_line

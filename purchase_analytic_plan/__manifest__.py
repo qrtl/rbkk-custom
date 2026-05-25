@@ -8,7 +8,7 @@
     "author": "Quartile",
     "website": "https://www.quartile.co",
     "license": "LGPL-3",
-    "depends": ["purchase", "analytic"],
+    "depends": ["purchase"],
     "data": [
         "views/analytic_plan_views.xml",
         "views/purchase_order_line_views.xml",

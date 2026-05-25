@@ -1,2 +1,3 @@
-Go to **Purchase > Configuration > Settings** and select the analytic plan to use
-for purchase order lines under **Analytic Plan for Purchase Order Lines**. 
+Go to **Invoicing > Configuration > Analytic Accounting > Analytic Plans**, open
+the analytic plan to use for purchase order lines, and enable
+**Use for Purchase Order Lines**.
