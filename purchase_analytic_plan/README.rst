@@ -23,10 +23,10 @@ Purchase Analytic Plan
 |badge1| |badge2| |badge3|
 
 This module adds a stored computed ``Many2one`` field
-(``analytic_plan_account_id``) to purchase order lines. The field
-extracts the analytic account belonging to the analytic plan marked for
-purchase order lines, enabling grouping and filtering by that account
-directly on purchase order lines.
+(``pol_budget_id``) to purchase order lines. The field extracts the
+analytic account belonging to the analytic plan marked for purchase
+order lines, enabling grouping and filtering by that account directly on
+purchase order lines.
 
 **Table of contents**
 
@@ -38,7 +38,7 @@ Configuration
 
 Go to **Invoicing > Configuration > Analytic Accounting > Analytic
 Plans**, open the analytic plan to use for purchase order lines, and
-enable **Use for Purchase Order Lines**.
+enable **Use for Purchase Order Lines Budget**.
 
 Bug Tracker
 ===========
