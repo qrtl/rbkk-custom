@@ -10,6 +10,7 @@
     "license": "LGPL-3",
     "depends": ["purchase"],
     "data": [
+        "data/server_action.xml",
         "views/analytic_plan_views.xml",
         "views/purchase_order_line_views.xml",
     ],

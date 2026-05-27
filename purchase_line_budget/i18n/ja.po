@@ -29,9 +29,9 @@ msgid ""
 msgstr "購買オーダ明細に使用できる分析プランは1つのみです。既存の分析プラン '%(plan)s' を先に無効にしてください。"
 
 #. module: purchase_line_budget
-#: model:ir.model.fields,field_description:purchase_line_budget.field_purchase_order_line__pol_budget_id
+#: model:ir.model.fields,field_description:purchase_line_budget.field_purchase_order_line__analytic_budget_id
 #: model_terms:ir.ui.view,arch_db:purchase_line_budget.purchase_order_line_search_analytic_plan_account
-msgid "Pol Budget"
+msgid "Analytic Budget Id"
 msgstr "予算番号"
 
 #. module: purchase_line_budget
@@ -40,6 +40,6 @@ msgid "Purchase Order Line"
 msgstr "購買オーダ明細"
 
 #. module: purchase_line_budget
-#: model:ir.model.fields,field_description:purchase_line_budget.field_account_analytic_plan__is_pol_budget
+#: model:ir.model.fields,field_description:purchase_line_budget.field_account_analytic_plan__is_budget
 msgid "Use for Purchase Order Lines Budget"
 msgstr "購買オーダ明細の予算番号に使用"

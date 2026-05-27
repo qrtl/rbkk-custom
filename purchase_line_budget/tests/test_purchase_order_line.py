@@ -10,7 +10,7 @@ class TestPurchaseOrderLine(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.plan_a = cls.env["account.analytic.plan"].create(
-            {"name": "Plan A", "is_pol_budget": True}
+            {"name": "Plan A", "is_budget": True}
         )
         cls.plan_b = cls.env["account.analytic.plan"].create({"name": "Plan B"})
         cls.account_a = cls.env["account.analytic.account"].create(
@@ -40,16 +40,16 @@ class TestPurchaseOrderLine(TransactionCase):
         line = self._create_line(
             {str(self.account_a.id): 60.0, str(self.account_b.id): 40.0}
         )
-        self.assertEqual(line.pol_budget_id, self.account_a)
+        self.assertEqual(line.analytic_budget_id, self.account_a)
 
     def test_plan_flag_change_recomputes_lines(self):
         line = self._create_line({str(self.account_a.id): 100.0})
-        self.assertEqual(line.pol_budget_id, self.account_a)
-        self.plan_a.is_pol_budget = False
-        self.assertFalse(line.pol_budget_id)
-        self.plan_a.is_pol_budget = True
-        self.assertEqual(line.pol_budget_id, self.account_a)
+        self.assertEqual(line.analytic_budget_id, self.account_a)
+        self.plan_a.is_budget = False
+        self.assertFalse(line.analytic_budget_id)
+        self.plan_a.is_budget = True
+        self.assertEqual(line.analytic_budget_id, self.account_a)
 
     def test_duplicate_pol_plan_raises(self):
         with self.assertRaises(ValidationError):
-            self.plan_b.is_pol_budget = True
+            self.plan_b.is_budget = True

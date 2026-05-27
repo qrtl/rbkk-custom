@@ -23,7 +23,7 @@ Purchase Line Budget
 |badge1| |badge2| |badge3|
 
 This module adds a stored computed ``Many2one`` field
-(``pol_budget_id``) to purchase order lines. The field extracts the
+(``analytic_budget_id``) to purchase order lines. The field extracts the
 analytic account belonging to the analytic plan marked for purchase
 order lines, enabling grouping and filtering by that account directly on
 purchase order lines.
@@ -36,9 +36,20 @@ purchase order lines.
 Configuration
 =============
 
-Go to **Invoicing > Configuration > Analytic Accounting > Analytic
-Plans**, open the analytic plan to use for purchase order lines, and
-enable **Use for Purchase Order Lines Budget**.
+Go to *Invoicing > Configuration > Analytic Accounting > Analytic
+Plans*, open the analytic plan to use for purchase order lines, and
+enable *Use for Purchase Order Lines Budget*.
+
+Usage
+=====
+
+To recompute the budget account on existing purchase order lines:
+
+1. Go to *Settings > Technical > Actions > Server Actions*, find
+   *Recompute Purchase Line Budget*, and click *Add Context Action*.
+2. Go to *Purchase > Orders > Purchase Order Lines*, select the target
+   lines, and choose *Recompute Purchase Line Budget* from the *Action*
+   menu.
 
 Bug Tracker
 ===========
