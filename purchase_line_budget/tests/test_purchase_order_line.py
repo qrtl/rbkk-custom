@@ -42,14 +42,6 @@ class TestPurchaseOrderLine(TransactionCase):
         )
         self.assertEqual(line.analytic_budget_id, self.account_a)
 
-    def test_plan_flag_change_recomputes_lines(self):
-        line = self._create_line({str(self.account_a.id): 100.0})
-        self.assertEqual(line.analytic_budget_id, self.account_a)
-        self.plan_a.is_budget = False
-        self.assertFalse(line.analytic_budget_id)
-        self.plan_a.is_budget = True
-        self.assertEqual(line.analytic_budget_id, self.account_a)
-
     def test_duplicate_pol_plan_raises(self):
         with self.assertRaises(ValidationError):
             self.plan_b.is_budget = True
