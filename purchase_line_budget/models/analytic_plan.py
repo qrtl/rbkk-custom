@@ -23,7 +23,7 @@ class AccountAnalyticPlan(models.Model):
                 if existing:
                     raise ValidationError(
                         _(
-                            "Only one analytic plan can be set for purchase order"
+                            "Only one analytic plan can be set for purchase order "
                             "lines. Please disable the existing plan '%(plan)s' first.",
                             plan=existing.name,
                         )

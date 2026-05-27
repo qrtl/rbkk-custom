@@ -24,7 +24,7 @@ msgstr "分析プラン"
 #. odoo-python
 #: code:addons/purchase_line_budget/models/analytic_plan.py:0
 msgid ""
-"Only one analytic plan can be set for purchase orderlines. Please disable "
+"Only one analytic plan can be set for purchase order lines. Please disable "
 "the existing plan '%(plan)s' first."
 msgstr "購買オーダ明細に使用できる分析プランは1つのみです。既存の分析プラン '%(plan)s' を先に無効にしてください。"
 
