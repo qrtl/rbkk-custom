@@ -2,15 +2,22 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 {
     "name": "Product Chemical",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Inventory/Inventory",
-    "summary": "Add chemical flag to products",
+    "summary": "Manage chemical substance information on products",
     "author": "Quartile",
     "website": "https://www.quartile.co",
     "license": "LGPL-3",
-    "depends": ["product"],
+    "depends": ["product", "stock"],
     "data": [
+        "security/ir.model.access.csv",
+        "views/product_chemical_law_views.xml",
+        "views/product_chemical_category_views.xml",
+        "views/product_chemical_substance_views.xml",
+        "views/product_chemical_location_amount_views.xml",
         "views/product_template_views.xml",
+        "views/stock_location_views.xml",
+        "views/product_chemical_menu.xml",
     ],
     "installable": True,
 }

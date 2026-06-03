@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_chemical_law_view_list" model="ir.ui.view">
+        <field name="name">product.chemical.law.list</field>
+        <field name="model">product.chemical.law</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="code" />
+                <field name="name" />
+                <field name="product_count" string="Products" />
+            </list>
+        </field>
+    </record>
+    <record id="product_chemical_law_view_form" model="ir.ui.view">
+        <field name="name">product.chemical.law.form</field>
+        <field name="model">product.chemical.law</field>
+        <field name="arch" type="xml">
+            <form>
+                <header />
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_products"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-cubes"
+                        >
+                            <field
+                                name="product_count"
+                                widget="statinfo"
+                                string="Products"
+                            />
+                        </button>
+                    </div>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active"
+                    />
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="Law Name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" />
+                            <field name="sequence" />
+                        </group>
+                        <group>
+                            <field name="active" invisible="1" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Categories" name="categories">
+                            <field name="major_category_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="name" />
+                                    <field name="minor_category_ids" widget="many2many_tags" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="product_chemical_law_view_search" model="ir.ui.view">
+        <field name="name">product.chemical.law.search</field>
+        <field name="model">product.chemical.law</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="code" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="product_chemical_law_action" model="ir.actions.act_window">
+        <field name="name">Chemical Laws</field>
+        <field name="res_model">product.chemical.law</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

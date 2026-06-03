@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_chemical_law_user,product.chemical.law user,model_product_chemical_law,base.group_user,1,1,1,1
+access_product_chemical_major_category_user,product.chemical.major.category user,model_product_chemical_major_category,base.group_user,1,1,1,1
+access_product_chemical_minor_category_user,product.chemical.minor.category user,model_product_chemical_minor_category,base.group_user,1,1,1,1
+access_product_chemical_substance_user,product.chemical.substance user,model_product_chemical_substance,base.group_user,1,1,1,1
+access_product_chemical_law_line_user,product.chemical.law.line user,model_product_chemical_law_line,base.group_user,1,1,1,1
+access_product_chemical_substance_line_user,product.chemical.substance.line user,model_product_chemical_substance_line,base.group_user,1,1,1,1
+access_product_chemical_location_amount_user,product.chemical.location.amount user,model_product_chemical_location_amount,base.group_user,1,0,0,0

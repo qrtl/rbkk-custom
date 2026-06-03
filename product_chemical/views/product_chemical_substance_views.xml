@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_chemical_substance_view_list" model="ir.ui.view">
+        <field name="name">product.chemical.substance.list</field>
+        <field name="model">product.chemical.substance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="cas_no" />
+                <field name="name" />
+                <field name="content_rate" />
+            </list>
+        </field>
+    </record>
+    <record id="product_chemical_substance_view_form" model="ir.ui.view">
+        <field name="name">product.chemical.substance.form</field>
+        <field name="model">product.chemical.substance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active"
+                    />
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="Substance Name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="cas_no" />
+                            <field name="content_rate" />
+                        </group>
+                        <group>
+                            <field name="active" invisible="1" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="product_chemical_substance_view_search" model="ir.ui.view">
+        <field name="name">product.chemical.substance.search</field>
+        <field name="model">product.chemical.substance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="cas_no" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="product_chemical_substance_action" model="ir.actions.act_window">
+        <field name="name">Chemical Substances</field>
+        <field name="res_model">product.chemical.substance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

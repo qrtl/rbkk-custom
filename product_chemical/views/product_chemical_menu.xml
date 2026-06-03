@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_product_chemical_root"
+        name="Chemical"
+        parent="stock.menu_stock_config_settings"
+        sequence="50"
+    />
+    <menuitem
+        id="menu_product_chemical_law"
+        name="Laws"
+        parent="menu_product_chemical_root"
+        action="product_chemical_law_action"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_product_chemical_major_category"
+        name="Major Categories"
+        parent="menu_product_chemical_root"
+        action="product_chemical_major_category_action"
+        sequence="20"
+    />
+    <menuitem
+        id="menu_product_chemical_minor_category"
+        name="Minor Categories"
+        parent="menu_product_chemical_root"
+        action="product_chemical_minor_category_action"
+        sequence="30"
+    />
+    <menuitem
+        id="menu_product_chemical_substance"
+        name="Chemical Substances"
+        parent="menu_product_chemical_root"
+        action="product_chemical_substance_action"
+        sequence="40"
+    />
+    <menuitem
+        id="menu_product_chemical_location_amount"
+        name="Chemicals by Location"
+        parent="stock.menu_warehouse_report"
+        action="product_chemical_location_amount_action"
+        sequence="100"
+    />
+</odoo>

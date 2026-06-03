@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-18 03:15+0000\n"
-"PO-Revision-Date: 2026-02-18 03:15+0000\n"
+"POT-Creation-Date: 2026-05-26 00:00+0000\n"
+"PO-Revision-Date: 2026-05-26 00:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,16 +18,284 @@ msgstr ""
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_product__is_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_template__is_chemical
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_root
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_template_search_view
 msgid "Chemical"
 msgstr "化学物質"
 
 #. module: product_chemical
-#: model:ir.model,name:product_chemical.model_product_template
-msgid "Product"
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_law_action
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_law
+msgid "Chemical Laws"
+msgstr "化学物質法律"
+
+#. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_law
+msgid "Chemical Law"
+msgstr "化学物質法律"
+
+#. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_major_category
+msgid "Chemical Major Category"
+msgstr "化学物質大分類"
+
+#. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_minor_category
+msgid "Chemical Minor Category"
+msgstr "化学物質小分類"
+
+#. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_substance
+msgid "Chemical Substance"
+msgstr "化学物質"
+
+#. module: product_chemical
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_substance_action
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_substance_line_ids
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_substance
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+msgid "Chemical Substances"
+msgstr "化学物質マスタ"
+
+#. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_law_line
+msgid "Product Chemical Law"
+msgstr "プロダクト化学物質法律"
+
+#. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_substance_line
+msgid "Product Chemical Substance Line"
+msgstr "プロダクト化学物質明細"
+
+#. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_location_amount
+msgid "Product Chemical Amount by Location"
+msgstr "ロケーション別プロダクト化学物質成分量"
+
+#. module: product_chemical
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_major_category_action
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__major_category_ids
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_major_category
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
+msgid "Major Categories"
+msgstr "大分類"
+
+#. module: product_chemical
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_minor_category_action
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__minor_category_ids
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_minor_category
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_form
+msgid "Minor Categories"
+msgstr "小分類"
+
+#. module: product_chemical
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_location_amount_action
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_location_amount
+msgid "Chemicals by Location"
+msgstr "ロケーション別化学物質"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.stock_location_view_form
+msgid "Chemicals"
+msgstr "化学物質"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__cas_no
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__cas_no
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__cas_no
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_search_view
+msgid "CAS No."
+msgstr "CAS番号"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__content_rate
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__content_rate
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__content_rate
+msgid "Content Rate (%)"
+msgstr "含有率 (%)"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__code
+msgid "Code"
+msgstr "コード"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__name
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__name
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__name
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__name
+msgid "Name"
+msgstr "名称"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__active
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__active
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__active
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__active
+msgid "Active"
+msgstr "有効"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__sequence
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__sequence
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__sequence
+msgid "Sequence"
+msgstr "シーケンス"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__note
+msgid "Note"
+msgstr "メモ"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__substance_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__substance_id
+msgid "Substance"
+msgstr "化学物質"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_substance_ids
+msgid "Substances"
+msgstr "化学物質"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__major_category_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_search
+msgid "Major Category"
+msgstr "大分類"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__minor_category_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_form
+msgid "Minor Category"
+msgstr "小分類"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__law_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__law_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__law_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_search
+msgid "Law"
+msgstr "法律"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__product_count
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_list
+msgid "Products"
 msgstr "プロダクト"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_template__smart_search
-msgid "Smart Search"
-msgstr ""
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_law_line_ids
+msgid "Laws"
+msgstr "法律"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__risk_assessment_pdf
+msgid "Risk Assessment Sheet"
+msgstr "リスクアセスメント表"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__risk_assessment_pdf_filename
+msgid "Risk Assessment Sheet Filename"
+msgstr "リスクアセスメント表ファイル名"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_location_amount_ids
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+msgid "Component Amount by Location"
+msgstr "ロケーション別成分量"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__quantity
+msgid "On Hand Qty"
+msgstr "手持在庫数"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__location_id
+msgid "Location"
+msgstr "ロケーション"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__component_amount
+msgid "Component Amount"
+msgstr "成分量"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_stock_location__chemical_amount_ids
+msgid "Chemical Components"
+msgstr "化学物質成分"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+msgid "Applicable Laws"
+msgstr "適用法律"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_substance_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_substance_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_form
+msgid "Archived"
+msgstr "アーカイブ済"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
+msgid "Categories"
+msgstr "カテゴリ"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
+msgid "Notes"
+msgstr "メモ"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
+msgid "Law Name"
+msgstr "法律名"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_substance_view_form
+msgid "Substance Name"
+msgstr "化学物質名"
+
+#. module: product_chemical
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_law_name_uniq
+msgid "Law name must be unique."
+msgstr "法律名は一意である必要があります。"
+
+#. module: product_chemical
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_cas_no_uniq
+msgid "CAS No. must be unique."
+msgstr "CAS番号は一意である必要があります。"
+
+#. module: product_chemical
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_major_category_name_law_uniq
+msgid "Major category name must be unique per law."
+msgstr "大分類名は法律ごとに一意である必要があります。"
+
+#. module: product_chemical
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_minor_category_name_major_uniq
+msgid "Minor category name must be unique per major category."
+msgstr "小分類名は大分類ごとに一意である必要があります。"
+
+#. module: product_chemical
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_law_line_product_law_uniq
+msgid "Each law can be added only once per product."
+msgstr "1プロダクトに対し各法律は1度のみ追加できます。"
+
+#. module: product_chemical
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_line_product_substance_uniq
+msgid "Each substance can be added only once per product."
+msgstr "1プロダクトに対し各化学物質は1度のみ追加できます。"
+
+#. module: product_chemical
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_line_content_rate_range
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_content_rate_range
+msgid "Content rate must be between 0 and 100."
+msgstr "含有率は0以上100以下である必要があります。"
