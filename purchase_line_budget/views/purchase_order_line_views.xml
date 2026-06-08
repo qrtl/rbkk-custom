@@ -21,7 +21,7 @@
             <xpath expr="//filter[@name='order_reference']" position="after">
                 <filter
                     name="groupby_purchase_line_budget_account"
-                    string="Pol Budget"
+                    string="Analytic Budget"
                     domain="[]"
                     context="{'group_by': 'analytic_budget_id'}"
                 />
