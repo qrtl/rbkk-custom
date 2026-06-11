@@ -1,0 +1,18 @@
+# Copyright 2026 Quartile (https://www.quartile.co)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+{
+    "name": "Stock Location Report Layout",
+    "version": "18.0.1.0.0",
+    "category": "Inventory/Inventory",
+    "summary": "Add a readonly manager layout option to the locations report",
+    "author": "Quartile",
+    "website": "https://www.quartile.co",
+    "license": "AGPL-3",
+    "maintainer": "Toshikimi Shigenobu",
+    "depends": ["stock"],
+    "data": [
+        "security/stock_location_report_layout_security.xml",
+        "views/stock_quant_views.xml",
+    ],
+    "installable": True,
+}
