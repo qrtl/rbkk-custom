@@ -9,12 +9,12 @@ class StockQuant(models.Model):
         if self.env.user.has_group("stock.group_stock_manager"):
             return action
         if not self.env.user.has_group(
-            "stock_location_report_layout.group_stock_location_report_manager_layout_readonly"
+            "stock_location_report_manager_layout.group_readonly_manager_layout"
         ):
             return action
 
         readonly_view = self.env.ref(
-            "stock_location_report_layout.view_stock_quant_tree_readonly_manager_layout"
+            "stock_location_report_manager_layout.view_stock_quant_tree_readonly_manager_layout"
         )
         action["view_id"] = readonly_view.id
         action["views"] = [(readonly_view.id, "list")] + [
