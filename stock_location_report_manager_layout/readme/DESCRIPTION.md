@@ -10,3 +10,6 @@ Depending on the user's groups, the Locations report list view resolves to:
   set (and its extension columns, such as expiration date) without being able to
   create, edit or delete records.
 - All other users: the standard read-only layout (unchanged).
+
+A module such as `stock_reporting_access` should be installed to let non-manager
+users access the *Inventory > Reporting* menu item.

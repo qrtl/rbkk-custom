@@ -384,6 +384,8 @@ expiration date) without being able to create, edit or delete
 records.</li>
 <li>All other users: the standard read-only layout (unchanged).</li>
 </ul>
+<p>A module such as <tt class="docutils literal">stock_reporting_access</tt> should be installed to let
+non-manager users access the <em>Inventory &gt; Reporting</em> menu item.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -406,10 +408,7 @@ records.</li>
 <li>Open the <em>Locations Report: Manager Layout (Read-only)</em> group.</li>
 <li>Add the relevant users.</li>
 </ol>
-<p>The group implies <em>Inventory / User</em> and <em>Inventory Reporting Access</em>
-(<tt class="docutils literal">stock_reporting_access.group_stock_reporting_user</tt>), so assigned
-users can reach the <em>Inventory &gt; Reporting</em> menu and open the Locations
-report without any further configuration. Stock managers always keep the
+<p>The group implies <em>Inventory / User</em>. Stock managers always keep the
 editable manager layout regardless of this group.</p>
 </div>
 <div class="section" id="usage">

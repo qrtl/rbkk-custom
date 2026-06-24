@@ -5,12 +5,7 @@
         <field name="category_id" ref="base.module_category_hidden" />
         <field
             name="implied_ids"
-            eval="[
-                Command.link(ref('stock.group_stock_user')),
-                Command.link(
-                    ref('stock_reporting_access.group_stock_reporting_user')
-                ),
-            ]"
+            eval="[Command.link(ref('stock.group_stock_user'))]"
         />
     </record>
 </odoo>
