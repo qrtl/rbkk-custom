@@ -19,11 +19,6 @@ class TestStockLocationReportManagerLayout(BaseCommon):
         cls.user_plain = new_test_user(
             cls.env, "srml_plain_user", groups="stock.group_stock_user"
         )
-        cls.user_layout = new_test_user(
-            cls.env,
-            "srml_layout_user",
-            groups="stock_location_report_manager_layout.group_readonly_manager_layout",
-        )
         cls.user_manager = new_test_user(
             cls.env, "srml_manager", groups="stock.group_stock_manager"
         )
@@ -37,15 +32,8 @@ class TestStockLocationReportManagerLayout(BaseCommon):
         )
         return action["view_id"]
 
-    def test_plain_user_gets_standard_layout(self):
-        self.assertEqual(self._list_view_id(self.user_plain), self.standard_view.id)
-
-    def test_layout_group_implies_stock_user(self):
-        # The group is self-contained: it grants inventory user access on its own.
-        self.assertTrue(self.user_layout.has_group("stock.group_stock_user"))
-
-    def test_layout_group_gets_readonly_manager_layout(self):
-        self.assertEqual(self._list_view_id(self.user_layout), self.readonly_view.id)
+    def test_non_manager_gets_readonly_manager_layout(self):
+        self.assertEqual(self._list_view_id(self.user_plain), self.readonly_view.id)
 
     def test_manager_is_unaffected(self):
         # Manager keeps the standard report view, and gets the editable layout in

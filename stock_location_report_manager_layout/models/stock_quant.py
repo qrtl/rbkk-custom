@@ -8,11 +8,6 @@ class StockQuant(models.Model):
         action = super()._get_quants_action(domain=domain, extend=extend)
         if self.env.user.has_group("stock.group_stock_manager"):
             return action
-        if not self.env.user.has_group(
-            "stock_location_report_manager_layout.group_readonly_manager_layout"
-        ):
-            return action
-
         readonly_view = self.env.ref(
             "stock_location_report_manager_layout.view_stock_quant_tree_readonly_manager_layout"
         )

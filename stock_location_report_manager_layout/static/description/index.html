@@ -370,59 +370,44 @@ ul.auto-toc {
 !! source digest: sha256:3c519dae8c0bb3c90bc5f11d688db658db73f033007036878bd5ff768a4200a0
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/qrtl/rbkk-custom/tree/18.0/stock_location_report_manager_layout"><img alt="qrtl/rbkk-custom" src="https://img.shields.io/badge/github-qrtl%2Frbkk--custom-lightgray.png?logo=github" /></a></p>
-<p>This module adds a third layout option for the Locations report
-(<em>Inventory &gt; Reporting &gt; Locations</em>), giving selected non-managers a
-read-only view of the manager layout.</p>
+<p>This module changes the Locations report (<em>Inventory &gt; Reporting &gt;
+Locations</em>) so that non-managers see a read-only copy of the manager
+layout.</p>
 <p>Depending on the user’s groups, the Locations report list view resolves
 to:</p>
 <ul class="simple">
 <li>Stock managers: the existing editable manager layout (unchanged).</li>
-<li>Non-managers in the new group <em>Locations Report: Manager Layout
-(Read-only)</em>: a read-only copy of the manager layout, so they see the
-richer manager column set (and its extension columns, such as
+<li>All other users: a read-only copy of the manager layout, so they see
+the richer manager column set (and its extension columns, such as
 expiration date) without being able to create, edit or delete
 records.</li>
-<li>All other users: the standard read-only layout (unchanged).</li>
 </ul>
 <p>A module such as <tt class="docutils literal">stock_reporting_access</tt> should be installed to let
 non-manager users access the <em>Inventory &gt; Reporting</em> menu item.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
-<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-6">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-7">Maintainers</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-4">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-5">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-6">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="section" id="configuration">
-<h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
-<p>To grant a user the read-only manager layout:</p>
-<ol class="arabic simple">
-<li>Go to <em>Settings &gt; Users &amp; Companies &gt; Groups</em>.</li>
-<li>Open the <em>Locations Report: Manager Layout (Read-only)</em> group.</li>
-<li>Add the relevant users.</li>
-</ol>
-<p>The group implies <em>Inventory / User</em>. Stock managers always keep the
-editable manager layout regardless of this group.</p>
-</div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
 <ol class="arabic simple">
-<li>Log in as a user who belongs to the <em>Locations Report: Manager Layout
-(Read-only)</em> group but is not a stock manager.</li>
+<li>Log in as a stock user who is not a stock manager.</li>
 <li>Go to <em>Inventory &gt; Reporting &gt; Locations</em>.</li>
 <li>The list shows the manager layout columns, but records cannot be
 created, edited or deleted.</li>
 </ol>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/qrtl/rbkk-custom/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -430,24 +415,25 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-4">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-3">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-5">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-4">Authors</a></h2>
 <ul class="simple">
 <li>Quartile</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-6">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-5">Contributors</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://www.quartile.co">Quartile</a>:<ul>
 <li>Toshikimi Shigenobu</li>
+<li>Aung Ko Ko Lin</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
 <p>This module is part of the <a class="reference external" href="https://github.com/qrtl/rbkk-custom/tree/18.0/stock_location_report_manager_layout">qrtl/rbkk-custom</a> project on GitHub.</p>
 <p>You are welcome to contribute.</p>
 </div>

@@ -22,20 +22,18 @@ Stock Location Report Manager Layout
 
 |badge1| |badge2| |badge3|
 
-This module adds a third layout option for the Locations report
-(*Inventory > Reporting > Locations*), giving selected non-managers a
-read-only view of the manager layout.
+This module changes the Locations report (*Inventory > Reporting >
+Locations*) so that non-managers see a read-only copy of the manager
+layout.
 
 Depending on the user's groups, the Locations report list view resolves
 to:
 
 -  Stock managers: the existing editable manager layout (unchanged).
--  Non-managers in the new group *Locations Report: Manager Layout
-   (Read-only)*: a read-only copy of the manager layout, so they see the
-   richer manager column set (and its extension columns, such as
+-  All other users: a read-only copy of the manager layout, so they see
+   the richer manager column set (and its extension columns, such as
    expiration date) without being able to create, edit or delete
    records.
--  All other users: the standard read-only layout (unchanged).
 
 A module such as ``stock_reporting_access`` should be installed to let
 non-manager users access the *Inventory > Reporting* menu item.
@@ -45,23 +43,10 @@ non-manager users access the *Inventory > Reporting* menu item.
 .. contents::
    :local:
 
-Configuration
-=============
-
-To grant a user the read-only manager layout:
-
-1. Go to *Settings > Users & Companies > Groups*.
-2. Open the *Locations Report: Manager Layout (Read-only)* group.
-3. Add the relevant users.
-
-The group implies *Inventory / User*. Stock managers always keep the
-editable manager layout regardless of this group.
-
 Usage
 =====
 
-1. Log in as a user who belongs to the *Locations Report: Manager Layout
-   (Read-only)* group but is not a stock manager.
+1. Log in as a stock user who is not a stock manager.
 2. Go to *Inventory > Reporting > Locations*.
 3. The list shows the manager layout columns, but records cannot be
    created, edited or deleted.
@@ -90,6 +75,7 @@ Contributors
 -  `Quartile <https://www.quartile.co>`__:
 
    -  Toshikimi Shigenobu
+   -  Aung Ko Ko Lin
 
 Maintainers
 -----------
