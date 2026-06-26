@@ -80,6 +80,17 @@ Contributors
 Maintainers
 -----------
 
+.. |maintainer-nobuQuartile| image:: https://github.com/nobuQuartile.png?size=40px
+    :target: https://github.com/nobuQuartile
+    :alt: nobuQuartile
+.. |maintainer-AungKoKoLin1997| image:: https://github.com/AungKoKoLin1997.png?size=40px
+    :target: https://github.com/AungKoKoLin1997
+    :alt: AungKoKoLin1997
+
+Current maintainers:
+
+|maintainer-nobuQuartile| |maintainer-AungKoKoLin1997| 
+
 This module is part of the `qrtl/rbkk-custom <https://github.com/qrtl/rbkk-custom/tree/18.0/stock_location_report_manager_layout>`_ project on GitHub.
 
 You are welcome to contribute.

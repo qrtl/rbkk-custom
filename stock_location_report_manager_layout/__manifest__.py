@@ -8,7 +8,7 @@
     "author": "Quartile",
     "website": "https://www.quartile.co",
     "license": "AGPL-3",
-    "maintainer": ["Toshikimi Shigenobu"],
+    "maintainers": ["nobuQuartile", "AungKoKoLin1997"],
     "depends": ["stock"],
     "data": [
         "views/stock_quant_views.xml",
