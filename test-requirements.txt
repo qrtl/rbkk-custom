@@ -1,0 +1,1 @@
+odoo-addon-stock_reporting_access @ git+https://github.com/qrtl/rbkk-oca@18.0#subdirectory=stock_reporting_access
