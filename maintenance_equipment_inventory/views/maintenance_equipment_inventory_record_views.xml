@@ -84,12 +84,31 @@
         <field name="name">maintenance.equipment.inventory.record.list</field>
         <field name="model">maintenance.equipment.inventory.record</field>
         <field name="arch" type="xml">
-            <list>
+            <list editable="bottom">
+                <header>
+                    <button
+                        name="action_submit"
+                        type="object"
+                        string="Submit for Approval"
+                    />
+                    <button
+                        name="action_approve"
+                        type="object"
+                        string="Approve"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                </header>
                 <field name="name" />
-                <field name="equipment_id" />
-                <field name="inventory_date" />
-                <field name="result" />
-                <field name="checked_by_id" />
+                <field name="equipment_id" readonly="state == 'approved'" />
+                <field name="inventory_date" readonly="state == 'approved'" />
+                <field name="result" readonly="state == 'approved'" />
+                <field name="checked_by_id" readonly="state == 'approved'" />
                 <field name="approved_by_id" />
                 <field
                     name="state"

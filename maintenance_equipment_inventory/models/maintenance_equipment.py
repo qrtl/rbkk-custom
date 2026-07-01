@@ -1,7 +1,7 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 from .maintenance_equipment_inventory_record import RESULT_SELECTION
 
@@ -53,3 +53,26 @@ class MaintenanceEquipment(models.Model):
             )[:1]
             equipment.last_inventory_date = last.inventory_date
             equipment.last_inventory_result = last.result
+
+    def action_create_inventory_records(self):
+        """Bulk-create a draft inventory record per selected equipment.
+
+        Equipment that already have an open (draft or to approve) record are
+        skipped to avoid duplicates. The created records are then shown.
+        """
+        Record = self.env["maintenance.equipment.inventory.record"]
+        existing = Record.search(
+            [
+                ("equipment_id", "in", self.ids),
+                ("state", "in", ["draft", "to_approve"]),
+            ]
+        ).equipment_id
+        targets = self - existing
+        records = Record.create([{"equipment_id": eq.id} for eq in targets])
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Inventory Records"),
+            "res_model": "maintenance.equipment.inventory.record",
+            "view_mode": "list,form",
+            "domain": [("id", "in", records.ids)],
+        }

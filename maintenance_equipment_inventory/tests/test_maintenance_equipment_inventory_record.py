@@ -95,3 +95,37 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         self.equipment.invalidate_recordset()
         self.assertEqual(str(self.equipment.last_inventory_date), "2026-06-10")
         self.assertEqual(self.equipment.last_inventory_result, "abnormal")
+
+    def test_bulk_create_inventory_records(self):
+        equipment2 = self.env["maintenance.equipment"].create(
+            {"name": "Test Equipment 2"}
+        )
+        equipments = self.equipment | equipment2
+        action = equipments.action_create_inventory_records()
+        records = self.Record.search(action["domain"])
+        self.assertEqual(len(records), 2)
+        self.assertEqual(records.equipment_id, equipments)
+        # Records are created with just the equipment; defaults fill the rest.
+        self.assertTrue(all(r.state == "draft" for r in records))
+        self.assertTrue(all(r.name.startswith("INV/") for r in records))
+
+    def test_bulk_create_skips_open_records(self):
+        # An existing open (draft) record makes the equipment be skipped.
+        self._create_record()
+        equipment2 = self.env["maintenance.equipment"].create(
+            {"name": "Test Equipment 2"}
+        )
+        equipments = self.equipment | equipment2
+        action = equipments.action_create_inventory_records()
+        records = self.Record.search(action["domain"])
+        self.assertEqual(records.equipment_id, equipment2)
+
+    def test_bulk_create_reruns_after_approval(self):
+        # An equipment whose only record is approved is eligible again.
+        record = self._create_record()
+        record.action_submit()
+        record.with_user(self.manager).action_approve()
+        action = self.equipment.action_create_inventory_records()
+        records = self.Record.search(action["domain"])
+        self.assertEqual(len(records), 1)
+        self.assertEqual(records.equipment_id, self.equipment)

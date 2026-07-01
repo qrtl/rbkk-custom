@@ -32,11 +32,17 @@
                         name="inventory_record_ids"
                         context="{'default_equipment_id': id}"
                     >
-                        <list>
+                        <list editable="bottom">
                             <field name="name" />
-                            <field name="inventory_date" />
-                            <field name="result" />
-                            <field name="checked_by_id" />
+                            <field
+                                name="inventory_date"
+                                readonly="state == 'approved'"
+                            />
+                            <field name="result" readonly="state == 'approved'" />
+                            <field
+                                name="checked_by_id"
+                                readonly="state == 'approved'"
+                            />
                             <field name="approved_by_id" />
                             <field
                                 name="state"
@@ -49,5 +55,17 @@
                 </page>
             </xpath>
         </field>
+    </record>
+
+    <record
+        id="maintenance_equipment_create_inventory_record_action"
+        model="ir.actions.server"
+    >
+        <field name="name">Create Inventory Records</field>
+        <field name="model_id" ref="maintenance.model_maintenance_equipment" />
+        <field name="binding_model_id" ref="maintenance.model_maintenance_equipment" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_create_inventory_records()</field>
     </record>
 </odoo>
