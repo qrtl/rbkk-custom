@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="maintenance_equipment_view_form" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="set_name" />
+                <field name="generic_name_id" />
+                <field name="national_project_id" />
+                <field name="is_fixed_asset" />
+                <field name="fixed_asset_code" invisible="not is_fixed_asset" />
+                <field name="is_gmp" />
+                <field name="gmp_function" invisible="not is_gmp" />
+                <field name="gmp_category" invisible="not is_gmp" />
+                <field name="is_measuring_instrument" />
+            </xpath>
+            <!-- Replace the base free-text "location" (Char) with a
+                 structured stock.location Many2one. The base field is hidden
+                 rather than replaced to avoid breaking other inheriting views;
+                 it is no longer used on this form. -->
+            <field name="location" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="location" position="after">
+                <field name="location_id" />
+            </field>
+            <xpath expr="//field[@name='model']" position="after">
+                <field name="manufacturer" />
+            </xpath>
+            <xpath expr="//field[@name='effective_date']" position="after">
+                <field name="acquisition_date" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
