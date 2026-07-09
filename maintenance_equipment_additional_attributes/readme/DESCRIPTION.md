@@ -1,1 +1,0 @@
-This module adds attributes to maintenance equipment.

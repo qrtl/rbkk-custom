@@ -6,14 +6,14 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='category_id']" position="after">
+                <field name="equipment_department" />
                 <field name="set_name" />
                 <field name="generic_name_id" />
-                <field name="national_project_id" />
+                <field name="national_project" />
                 <field name="is_fixed_asset" />
                 <field name="fixed_asset_code" invisible="not is_fixed_asset" />
                 <field name="is_gmp" />
-                <field name="gmp_function" invisible="not is_gmp" />
-                <field name="gmp_category" invisible="not is_gmp" />
+                <field name="management_no" invisible="not is_gmp" />
                 <field name="is_measuring_instrument" />
             </xpath>
             <!-- Replace the base free-text "location" (Char) with a
@@ -28,6 +28,7 @@
             </field>
             <xpath expr="//field[@name='model']" position="after">
                 <field name="manufacturer" />
+                <field name="manufacturer_serial_no" />
             </xpath>
             <xpath expr="//field[@name='effective_date']" position="after">
                 <field name="acquisition_date" />

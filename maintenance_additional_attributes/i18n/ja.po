@@ -1,0 +1,148 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* maintenance_additional_attributes
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-03 03:10+0000\n"
+"PO-Revision-Date: 2026-07-03 03:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__acquisition_date
+msgid "Acquisition Date"
+msgstr "取得年月日"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__active
+msgid "Active"
+msgstr "有効"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_request__alert_period_months
+msgid "Alert Period Months"
+msgstr "アラート期間（月）"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_uid
+msgid "Created by"
+msgstr "作成者"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_date
+msgid "Created on"
+msgstr "作成日"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__equipment_department
+msgid "Equipment Department"
+msgstr "部門"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_fixed_asset
+msgid "Fixed Asset"
+msgstr "固定資産"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__fixed_asset_code
+msgid "Fixed Asset Code"
+msgstr "固定資産コード"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_gmp
+msgid "GMP"
+msgstr "GMP"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__generic_name_id
+msgid "General Name"
+msgstr "一般名称"
+
+#. module: maintenance_additional_attributes
+#: model:ir.actions.act_window,name:maintenance_additional_attributes.maintenance_equipment_generic_name_action
+#: model:ir.ui.menu,name:maintenance_additional_attributes.menu_maintenance_equipment_generic_name
+msgid "General Names"
+msgstr "一般名称"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__id
+msgid "ID"
+msgstr "ID"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__write_uid
+msgid "Last Updated by"
+msgstr "最終更新者"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__write_date
+msgid "Last Updated on"
+msgstr "最終更新日"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr "整備設備"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment_generic_name
+msgid "Maintenance Equipment General Name"
+msgstr "整備設備一般名称"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__management_no
+msgid "Management No"
+msgstr "管理番号"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__manufacturer
+msgid "Manufacturer"
+msgstr "メーカー"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__manufacturer_serial_no
+msgid "Manufacturer Serial No"
+msgstr "シリアル番号"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_measuring_instrument
+msgid "Measuring Instrument"
+msgstr "測定器"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__name
+msgid "Name"
+msgstr "名称"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__national_project
+msgid "National Project"
+msgstr "国家プロジェクト"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__set_name
+msgid "Set Name"
+msgstr "セット名称"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__smart_search
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__smart_search
+msgid "Smart Search"
+msgstr "スマート検索"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__location_id
+msgid "Used in location"
+msgstr "使用場所"
