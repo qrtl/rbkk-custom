@@ -24,6 +24,7 @@
                             <field name="label_width_margin" />
                             <field name="label_height_margin" />
                             <field name="with_qr_code" />
+                            <field name="with_barcode" />
                         </group>
                     </group>
                     <group>
@@ -36,6 +37,12 @@
                             <field name="qr_code_size" required="with_qr_code" />
                             <field name="qr_code_width_padding" />
                             <field name="qr_code_height_padding" />
+                        </group>
+                        <group string="Barcode" invisible="not with_barcode">
+                            <field name="barcode_width" required="with_barcode" />
+                            <field name="barcode_height" required="with_barcode" />
+                            <field name="barcode_width_padding" />
+                            <field name="barcode_height_padding" />
                         </group>
                     </group>
                 </sheet>
@@ -68,6 +75,7 @@
                 <field name="width_padding_lot" />
                 <field name="height_padding_lot" />
                 <field name="with_qr_code" />
+                <field name="with_barcode" />
             </list>
         </field>
     </record>

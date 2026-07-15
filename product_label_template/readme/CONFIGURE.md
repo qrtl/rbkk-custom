@@ -16,3 +16,5 @@ Product Label Template settings:
   left/top of the label (in cm).
 - **With QR Code**: whether a QR code (of the lot/serial number) is printed, with
   its own size and left/top position.
+- **With Barcode**: whether a barcode (Code128 of the lot/serial number) is
+  printed, with its own width, height and left/top position.

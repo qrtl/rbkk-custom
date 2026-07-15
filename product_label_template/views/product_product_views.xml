@@ -24,6 +24,7 @@
                             <field name="label_width_margin" />
                             <field name="label_height_margin" />
                             <field name="with_qr_code" />
+                            <field name="with_barcode" />
                         </list>
                     </field>
                 </page>

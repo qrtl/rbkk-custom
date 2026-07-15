@@ -27,6 +27,21 @@ msgid "Attribute Values"
 msgstr "属性値"
 
 #. module: product_label_template
+#: model_terms:ir.ui.view,arch_db:product_label_template.product_label_template_view_form
+msgid "Barcode"
+msgstr "バーコード"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__barcode_height
+msgid "Barcode Height"
+msgstr "バーコード高さ"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__barcode_width
+msgid "Barcode Width"
+msgstr "バーコード幅"
+
+#. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__coefficient
 msgid "Conversion Coefficient"
 msgstr "換算係数"
@@ -57,6 +72,11 @@ msgid "Group By"
 msgstr "グループ化"
 
 #. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__barcode_height_padding
+msgid "Height Padding (Barcode)"
+msgstr "バーコード位置(縦)"
+
+#. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__height_padding_lot
 msgid "Height Padding (Lot)"
 msgstr "ロット位置(縦)"
@@ -67,6 +87,11 @@ msgid "Height Padding (QR)"
 msgstr "QR位置(縦)"
 
 #. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__barcode_height
+msgid "Height of the printed barcode (in cm)"
+msgstr "印刷されるバーコードの高さ(cm)"
+
+#. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__label_height
 msgid "Height of the printed label image (in cm)"
 msgstr "印刷されるラベル画像の高さ(cm)"
@@ -75,6 +100,11 @@ msgstr "印刷されるラベル画像の高さ(cm)"
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__qr_code_width_padding
 msgid "Horizontal position of the QR code from the left of the label (in cm)"
 msgstr "ラベル左端からのQRコードの水平位置(cm)"
+
+#. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__barcode_width_padding
+msgid "Horizontal position of the barcode from the left of the label (in cm)"
+msgstr "ラベル左端からのバーコードの水平位置(cm)"
 
 #. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__width_padding_lot
@@ -267,9 +297,19 @@ msgid "Vertical position of the QR code from the top of the label (in cm)"
 msgstr "ラベル上端からのQRコードの垂直位置(cm)"
 
 #. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__barcode_height_padding
+msgid "Vertical position of the barcode from the top of the label (in cm)"
+msgstr "ラベル上端からのバーコードの垂直位置(cm)"
+
+#. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__height_padding_lot
 msgid "Vertical position of the lot from the top of the label (in cm)"
 msgstr "ラベル上端からのロットの垂直位置(cm)"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__barcode_width_padding
+msgid "Width Padding (Barcode)"
+msgstr "バーコード位置(横)"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__width_padding_lot
@@ -282,9 +322,19 @@ msgid "Width Padding (QR)"
 msgstr "QR位置(横)"
 
 #. module: product_label_template
+#: model:ir.model.fields,help:product_label_template.field_product_label_template__barcode_width
+msgid "Width of the printed barcode (in cm)"
+msgstr "印刷されるバーコードの幅(cm)"
+
+#. module: product_label_template
 #: model:ir.model.fields,help:product_label_template.field_product_label_template__label_width
 msgid "Width of the printed label image (in cm)"
 msgstr "印刷されるラベル画像の幅(cm)"
+
+#. module: product_label_template
+#: model:ir.model.fields,field_description:product_label_template.field_product_label_template__with_barcode
+msgid "With Barcode"
+msgstr "バーコードを印刷"
 
 #. module: product_label_template
 #: model:ir.model.fields,field_description:product_label_template.field_product_label_template__with_qr_code

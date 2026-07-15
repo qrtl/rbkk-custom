@@ -53,6 +53,17 @@ class ProductLabelTemplate(models.Model):
         "Height Padding (QR)",
         help="Vertical position of the QR code from the top of the label (in cm)",
     )
+    with_barcode = fields.Boolean()
+    barcode_width = fields.Float(help="Width of the printed barcode (in cm)")
+    barcode_height = fields.Float(help="Height of the printed barcode (in cm)")
+    barcode_width_padding = fields.Float(
+        "Width Padding (Barcode)",
+        help="Horizontal position of the barcode from the left of the label (in cm)",
+    )
+    barcode_height_padding = fields.Float(
+        "Height Padding (Barcode)",
+        help="Vertical position of the barcode from the top of the label (in cm)",
+    )
     coefficient = fields.Float(
         "Conversion Coefficient",
         default=38.55,
@@ -104,6 +115,17 @@ class ProductLabelTemplate(models.Model):
             f"top: {self.qr_code_height_padding * self.coefficient}mm",
             f"width: {self.qr_code_size * self.coefficient}mm",
             f"height: {self.qr_code_size * self.coefficient}mm",
+        ]
+        return ";".join(css_list)
+
+    def get_barcode_css(self):
+        self.ensure_one()
+        css_list = [
+            "position: absolute",
+            f"left: {self.barcode_width_padding * self.coefficient}mm",
+            f"top: {self.barcode_height_padding * self.coefficient}mm",
+            f"width: {self.barcode_width * self.coefficient}mm",
+            f"height: {self.barcode_height * self.coefficient}mm",
         ]
         return ";".join(css_list)
 

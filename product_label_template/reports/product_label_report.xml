@@ -15,6 +15,12 @@
                         t-att-style="product_label.get_qr_code_css()"
                     />
                 </t>
+                <t t-if="product_label.with_barcode">
+                    <img
+                        t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s' % ('Code128', quote_plus(lot.name or ''))"
+                        t-att-style="product_label.get_barcode_css()"
+                    />
+                </t>
             </div>
         </div>
     </template>
