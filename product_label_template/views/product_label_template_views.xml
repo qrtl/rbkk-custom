@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="view_product_label_template_form" model="ir.ui.view">
+    <record id="product_label_template_view_form" model="ir.ui.view">
         <field name="name">product.label.template.form</field>
         <field name="model">product.label.template</field>
         <field name="arch" type="xml">
@@ -9,7 +9,10 @@
                     <group string="Main Attributes">
                         <group>
                             <field name="product_id" />
-                            <field widget="many2many_tags" name="attribute_value_ids" />
+                            <field
+                                name="product_template_attribute_value_ids"
+                                widget="many2many_tags"
+                            />
                             <field name="paperformat_id" />
                             <field name="coefficient" />
                             <field name="label_image" widget="image" />
@@ -20,15 +23,7 @@
                             <field name="label_ratio" invisible="1" />
                             <field name="label_width_margin" />
                             <field name="label_height_margin" />
-                            <field
-                                name="with_individual_qr_code"
-                                attrs="{'invisible': [('with_qr_code','=',True)]}"
-                            />
-                            <field
-                                name="with_qr_code"
-                                attrs="{'invisible': [('with_individual_qr_code','=',True)]}"
-                            />
-                            <field name="with_gs1_code" />
+                            <field name="with_qr_code" />
                         </group>
                     </group>
                     <group>
@@ -36,67 +31,27 @@
                             <field name="font_size" />
                             <field name="width_padding_lot" />
                             <field name="height_padding_lot" />
-                            <field name="with_prod_date" />
-                            <field
-                                name="width_padding_production_date"
-                                attrs="{'invisible': [('with_prod_date','=',False)]}"
-                            />
-                            <field
-                                name="height_padding_production_date"
-                                attrs="{'invisible': [('with_prod_date','=',False)]}"
-                            />
-                            <field name="width_padding_expiry_date" />
-                            <field name="height_padding_expiry_date" />
                         </group>
-                        <group
-                            string="Individual QR Code Printing"
-                            attrs="{'invisible': [('with_individual_qr_code','=',False)]}"
-                        >
-                            <field
-                                name="qr_paperformat_id"
-                                attrs="{'required': [('with_individual_qr_code','=',True)]}"
-                            />
-                            <field
-                                name="qr_code_size"
-                                attrs="{'required': [('with_individual_qr_code','=',True)]}"
-                            />
-                            <field name="qr_code_width_margin" />
-                            <field name="qr_code_height_margin" />
-                        </group>
-                        <group
-                            string="QR Code"
-                            attrs="{'invisible': [('with_qr_code','=',False)]}"
-                        >
-                            <field
-                                name="qr_code_size"
-                                attrs="{'required': [('with_qr_code','=',True)]}"
-                            />
+                        <group string="QR Code" invisible="not with_qr_code">
+                            <field name="qr_code_size" required="with_qr_code" />
                             <field name="qr_code_width_padding" />
                             <field name="qr_code_height_padding" />
-                        </group>
-                        <group
-                            string="GS1 Datamatrix"
-                            attrs="{'invisible': [('with_gs1_code','=',False)]}"
-                        >
-                            <field
-                                name="gs1_code_size"
-                                attrs="{'required': [('with_gs1_code','=',True)]}"
-                            />
-                            <field name="gs1_code_width_padding" />
-                            <field name="gs1_code_height_padding" />
                         </group>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-    <record id="product_label_template_tree_view" model="ir.ui.view">
-        <field name="name">product.label.template.tree</field>
+    <record id="product_label_template_view_list" model="ir.ui.view">
+        <field name="name">product.label.template.list</field>
         <field name="model">product.label.template</field>
         <field name="arch" type="xml">
-            <tree string="Label Templates" editable="top">
+            <list string="Label Templates" editable="top">
                 <field name="product_id" />
-                <field widget="many2many_tags" name="attribute_value_ids" />
+                <field
+                    name="product_template_attribute_value_ids"
+                    widget="many2many_tags"
+                />
                 <field name="paperformat_id" />
                 <field name="coefficient" />
                 <field
@@ -106,44 +61,35 @@
                 />
                 <field name="label_width" />
                 <field name="label_height" />
-                <field name="label_ratio" invisible="1" />
+                <field name="label_ratio" column_invisible="1" />
                 <field name="label_width_margin" />
                 <field name="label_height_margin" />
                 <field name="font_size" />
                 <field name="width_padding_lot" />
                 <field name="height_padding_lot" />
-                <field name="with_prod_date" />
-                <field name="width_padding_production_date" />
-                <field name="height_padding_production_date" />
-                <field name="width_padding_expiry_date" />
-                <field name="height_padding_expiry_date" />
-                <field name="with_individual_qr_code" />
                 <field name="with_qr_code" />
-                <field name="with_gs1_code" />
-            </tree>
+            </list>
         </field>
     </record>
-    <record id="product_label_template_search_view" model="ir.ui.view">
+    <record id="product_label_template_view_search" model="ir.ui.view">
         <field name="name">product.label.template.search</field>
         <field name="model">product.label.template</field>
         <field name="arch" type="xml">
             <search string="Product Label Templates">
                 <field name="product_id" />
+                <field name="product_template_attribute_value_ids" />
                 <group expand="0" string="Group By">
                     <filter
                         string="Product Template"
                         name="by_product_template"
                         domain="[]"
-                        context="{'group_by':'product_tmpl_id'}"
+                        context="{'group_by': 'product_tmpl_id'}"
                     />
-                </group>
-                <field name="attribute_value_ids" />
-                <group expand="0" string="Group By">
                     <filter
                         string="Product variant attribute"
                         name="by_product_attribute"
                         domain="[]"
-                        context="{'group_by':'attribute_value_ids'}"
+                        context="{'group_by': 'product_template_attribute_value_ids'}"
                     />
                 </group>
             </search>
@@ -151,10 +97,8 @@
     </record>
     <record id="product_label_template_action" model="ir.actions.act_window">
         <field name="name">Product Label Templates</field>
-        <field name="type">ir.actions.act_window</field>
         <field name="res_model">product.label.template</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_type">form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'search_default_by_product_template': 1}</field>
     </record>
     <menuitem

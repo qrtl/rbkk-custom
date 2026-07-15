@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="basic_label_template">
+        <div
+            t-if="product_label"
+            t-att-style="product_label.get_label_layout_css('label')"
+        >
+            <div t-att-style="product_label.get_label_css()">
+                <div t-att-style="product_label.get_label_text_css('lot')">
+                    <span t-field="lot.name" />
+                </div>
+                <t t-if="product_label.with_qr_code">
+                    <img
+                        t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s' % ('QR', quote_plus(lot.name or ''))"
+                        t-att-style="product_label.get_qr_code_css()"
+                    />
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_product_label">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="lot">
+                <div class="page">
+                    <t t-call="product_label_template.basic_label_template">
+                        <t
+                            t-set="product_label"
+                            t-value="lot.product_id.product_label_template_ids[:1]"
+                        />
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_product_label" model="ir.actions.report">
+        <field name="name">Product Label</field>
+        <field name="model">stock.lot</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">product_label_template.report_product_label</field>
+        <field name="report_file">product_label_template.report_product_label</field>
+        <field name="use_plt_paperformat">True</field>
+        <field name="plt_paperformat_type">main</field>
+        <field name="print_report_name">'Product Label - %s' % object.name</field>
+        <field name="binding_model_id" ref="stock.model_stock_lot" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
