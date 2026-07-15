@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="purchase_order_line_tree_analytic_plan_account" model="ir.ui.view">
+        <field name="name">purchase.order.line.list</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_id']" position="after">
+                <field name="analytic_budget_id" />
+            </xpath>
+        </field>
+    </record>
+    <record id="purchase_order_line_search_analytic_plan_account" model="ir.ui.view">
+        <field name="name">purchase.order.line.search</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//search/field[@name='partner_id']" position="after">
+                <field name="analytic_budget_id" />
+            </xpath>
+            <xpath expr="//filter[@name='order_reference']" position="after">
+                <filter
+                    name="groupby_purchase_line_budget_account"
+                    string="Analytic Budget"
+                    domain="[]"
+                    context="{'group_by': 'analytic_budget_id'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
