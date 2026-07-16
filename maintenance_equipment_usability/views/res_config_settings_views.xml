@@ -10,8 +10,8 @@
             <xpath expr="//app[@name='maintenance']" position="inside">
                 <block title="Equipment Usability" name="usability">
                     <setting
-                        string="Usability Grace Period"
-                        help="Number of months after the latest completed maintenance result during which the equipment stays usable."
+                        string="Usability Validity Period"
+                        help="Number of months the equipment stays usable after its latest passed maintenance result. Validity extends to the end of the target month (e.g. passed on 15 June with 13 months stays usable until 31 July of the following year)."
                     >
                         <field name="usability_grace_period_months" />
                         <span class="text-muted ms-1">months</span>

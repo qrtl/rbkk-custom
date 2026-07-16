@@ -10,7 +10,9 @@ class ResConfigSettings(models.TransientModel):
     usability_grace_period_months = fields.Integer(
         related="company_id.usability_grace_period_months",
         readonly=False,
-        string="Usability Grace Period (Months)",
-        help="Number of months after the latest completed maintenance result "
-        "during which the equipment stays usable.",
+        string="Usability Validity Period (Months)",
+        help="Number of months the equipment stays usable after its latest "
+        "passed maintenance result. Validity extends to the end of the target "
+        "month (e.g. passed on 15 June with 13 months stays usable until 31 "
+        "July of the following year).",
     )

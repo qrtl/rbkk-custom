@@ -9,6 +9,7 @@
         <field name="arch" type="xml">
             <field name="close_date" position="after">
                 <field name="maintenance_result" invisible="not done" />
+                <field name="source_request_id" invisible="not source_request_id" />
                 <field name="followup_request_ids" invisible="1" />
             </field>
             <button name="archive_equipment_request" position="after">
