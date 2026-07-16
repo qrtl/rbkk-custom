@@ -27,4 +27,7 @@ class MaintenanceEquipment(models.Model):
     manufacturer = fields.Char()
     manufacturer_serial_no = fields.Char()
     acquisition_date = fields.Date()
-    equipment_department = fields.Char()
+    equipment_department_id = fields.Many2one(
+        comodel_name="maintenance.equipment.department",
+        string="Equipment Department",
+    )

@@ -12,6 +12,7 @@
     "depends": ["maintenance", "stock"],
     "data": [
         "security/ir.model.access.csv",
+        "views/maintenance_equipment_department_views.xml",
         "views/maintenance_equipment_generic_name_views.xml",
         "views/maintenance_equipment_views.xml",
         "views/maintenance_request_views.xml",

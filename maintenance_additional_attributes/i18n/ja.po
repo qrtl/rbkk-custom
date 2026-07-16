@@ -26,11 +26,6 @@ msgid "Active"
 msgstr "有効"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_request__alert_period_months
-msgid "Alert Period Months"
-msgstr "アラート期間（月）"
-
-#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_uid
 msgid "Created by"
 msgstr "作成者"
@@ -41,14 +36,20 @@ msgid "Created on"
 msgstr "作成日"
 
 #. module: maintenance_additional_attributes
+#: model:ir.actions.act_window,name:maintenance_additional_attributes.maintenance_equipment_department_action
+#: model:ir.ui.menu,name:maintenance_additional_attributes.menu_maintenance_equipment_department
+msgid "Departments"
+msgstr "部門"
+
+#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__display_name
 msgid "Display Name"
 msgstr "表示名"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__equipment_department
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__equipment_department_id
 msgid "Equipment Department"
-msgstr "部門"
+msgstr "設備部門"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_fixed_asset
@@ -95,6 +96,11 @@ msgstr "最終更新日"
 #: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment
 msgid "Maintenance Equipment"
 msgstr "整備設備"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment_department
+msgid "Maintenance Equipment Department"
+msgstr "整備設備部門"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment_generic_name
