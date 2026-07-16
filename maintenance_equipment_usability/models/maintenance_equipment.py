@@ -93,7 +93,8 @@ class MaintenanceEquipment(models.Model):
                 continue
             if request.maintenance_result == "failed":
                 equipment.usability_state = "unusable"
-            elif today > result_date + relativedelta(months=grace_months):
+            elif today > result_date + relativedelta(months=grace_months, day=31):
+                # Validity extends to the end of the target month.
                 equipment.usability_state = "unusable"
             else:
                 equipment.usability_state = "usable"
@@ -113,7 +114,9 @@ class MaintenanceEquipment(models.Model):
         if not states:
             return [("id", "=", False)]
         result = "latest_maintenance_result_request_id.maintenance_result"
-        threshold = fields.Date.context_today(self) - relativedelta(
+        # Validity extends to the end of the target month, so the earliest
+        # still-valid result date is the first day of its month.
+        threshold = fields.Date.context_today(self).replace(day=1) - relativedelta(
             months=self.env.company.usability_grace_period_months
         )
         domains = {

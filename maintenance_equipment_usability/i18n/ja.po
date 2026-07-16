@@ -103,9 +103,13 @@ msgstr "結果なし"
 #: model:ir.model.fields,help:maintenance_equipment_usability.field_res_config_settings__usability_grace_period_months
 #: model_terms:ir.ui.view,arch_db:maintenance_equipment_usability.res_config_settings_view_form
 msgid ""
-"Number of months after the latest completed maintenance result during which "
-"the equipment stays usable."
-msgstr "最新の完了した整備結果から、設備が使用可能であり続ける月数。"
+"Number of months the equipment stays usable after its latest passed "
+"maintenance result. Validity extends to the end of the target month (e.g. "
+"passed on 15 June with 13 months stays usable until 31 July of the following "
+"year)."
+msgstr ""
+"最後の合格結果から、設備が使用可能であり続ける月数。有効期限は対象月の月末まで"
+"延長されます（例：6月15日に合格・13ヶ月なら翌年7月31日まで使用可能）。"
 
 #. module: maintenance_equipment_usability
 #: model:ir.model.fields.selection,name:maintenance_equipment_usability.selection__maintenance_equipment__status__operating
@@ -175,14 +179,14 @@ msgstr "使用可否"
 
 #. module: maintenance_equipment_usability
 #: model_terms:ir.ui.view,arch_db:maintenance_equipment_usability.res_config_settings_view_form
-msgid "Usability Grace Period"
-msgstr "猶予期間"
+msgid "Usability Validity Period"
+msgstr "使用可否の有効期間"
 
 #. module: maintenance_equipment_usability
 #: model:ir.model.fields,field_description:maintenance_equipment_usability.field_res_company__usability_grace_period_months
 #: model:ir.model.fields,field_description:maintenance_equipment_usability.field_res_config_settings__usability_grace_period_months
-msgid "Usability Grace Period (Months)"
-msgstr "猶予期間（月）"
+msgid "Usability Validity Period (Months)"
+msgstr "使用可否の有効期間（月）"
 
 #. module: maintenance_equipment_usability
 #: model:ir.model.fields.selection,name:maintenance_equipment_usability.selection__maintenance_equipment__usability_state__usable

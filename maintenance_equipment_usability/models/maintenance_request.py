@@ -36,6 +36,7 @@ class MaintenanceRequest(models.Model):
             {
                 "name": _("Follow-up of %s", self.name),
                 "equipment_id": self.equipment_id.id,
+                "maintenance_team_id": self.maintenance_team_id.id,
                 "maintenance_type": "corrective",
                 "source_request_id": self.id,
             }
