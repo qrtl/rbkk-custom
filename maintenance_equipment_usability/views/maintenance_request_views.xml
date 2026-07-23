@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form" />
         <field name="arch" type="xml">
             <field name="close_date" position="after">
-                <field name="maintenance_result" invisible="not done" />
+                <field name="maintenance_result" />
                 <field name="source_request_id" invisible="not source_request_id" />
                 <field name="followup_request_ids" invisible="1" />
             </field>
