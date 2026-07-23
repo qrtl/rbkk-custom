@@ -15,3 +15,10 @@ class MaintenanceRequest(models.Model):
     alert_sent = fields.Boolean(
         copy=False,
     )
+
+    def write(self, vals):
+        res = super().write(vals)
+        # Keep the close date entered on completion.
+        if vals.get("close_date") and "stage_id" in vals:
+            self.filtered("done").write({"close_date": vals["close_date"]})
+        return res
