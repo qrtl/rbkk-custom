@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <field name="close_date" position="attributes">
                 <attribute name="readonly">0</attribute>
+                <attribute name="invisible">0</attribute>
             </field>
             <xpath expr="//field[@name='schedule_date']" position="after">
                 <field name="alert_period_months" />
