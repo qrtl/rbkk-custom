@@ -9,7 +9,7 @@
     "website": "https://www.quartile.co",
     "maintainers": ["smorita7749"],
     "license": "LGPL-3",
-    "depends": ["maintenance", "stock"],
+    "depends": ["maintenance", "purchase", "stock"],
     "data": [
         "security/ir.model.access.csv",
         "views/maintenance_equipment_department_views.xml",

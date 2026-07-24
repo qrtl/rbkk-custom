@@ -10,7 +10,11 @@
                 <attribute name="invisible">0</attribute>
             </field>
             <xpath expr="//field[@name='schedule_date']" position="after">
-                <field name="alert_period_months" />
+                <label for="alert_period" />
+                <div class="o_row">
+                    <field name="alert_period" />
+                    <field name="alert_period_uom" />
+                </div>
             </xpath>
         </field>
     </record>

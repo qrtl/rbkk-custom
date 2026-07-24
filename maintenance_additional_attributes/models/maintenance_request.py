@@ -7,10 +7,17 @@ from odoo import fields, models
 class MaintenanceRequest(models.Model):
     _inherit = "maintenance.request"
 
-    alert_period_months = fields.Integer(
-        string="Alert Period (Months)",
-        help="Number of months before the scheduled date at which the "
+    alert_period = fields.Integer(
+        help="Amount of time before the scheduled date at which the "
         "responsible user should be alerted about this maintenance.",
+    )
+    alert_period_uom = fields.Selection(
+        selection=[
+            ("day", "Days"),
+            ("week", "Weeks"),
+            ("month", "Months"),
+        ],
+        default="month",
     )
     alert_sent = fields.Boolean(
         copy=False,

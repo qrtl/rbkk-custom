@@ -29,6 +29,7 @@
             <xpath expr="//field[@name='model']" position="after">
                 <field name="manufacturer" />
                 <field name="manufacturer_serial_no" />
+                <field name="purchase_order_id" />
             </xpath>
             <xpath expr="//field[@name='effective_date']" position="after">
                 <field name="acquisition_date" />
