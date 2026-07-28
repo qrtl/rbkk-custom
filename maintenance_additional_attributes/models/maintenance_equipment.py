@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class MaintenanceEquipment(models.Model):
+    _name = "maintenance.equipment"
     _inherit = ["maintenance.equipment", "image.mixin"]
 
     set_name = fields.Char()
