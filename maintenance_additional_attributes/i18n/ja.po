@@ -33,8 +33,8 @@ msgid "Alert Period"
 msgstr "アラート期間"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_request__alert_period_uom
-msgid "Alert Period Uom"
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_request__alert_period_unit
+msgid "Alert Period Unit"
 msgstr "アラート期間の単位"
 
 #. module: maintenance_additional_attributes
@@ -62,7 +62,7 @@ msgid "Created on"
 msgstr "作成日"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_uom__day
+#: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_unit__day
 msgid "Days"
 msgstr "日"
 
@@ -168,7 +168,7 @@ msgid "Measuring Instrument"
 msgstr "測定器"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_uom__month
+#: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_unit__month
 msgid "Months"
 msgstr "月"
 
@@ -207,6 +207,6 @@ msgid "Used in location"
 msgstr "使用場所"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_uom__week
+#: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_unit__week
 msgid "Weeks"
 msgstr "週"

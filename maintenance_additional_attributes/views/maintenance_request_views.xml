@@ -13,7 +13,7 @@
                 <label for="alert_period" />
                 <div class="o_row">
                     <field name="alert_period" />
-                    <field name="alert_period_uom" />
+                    <field name="alert_period_unit" />
                 </div>
             </xpath>
         </field>

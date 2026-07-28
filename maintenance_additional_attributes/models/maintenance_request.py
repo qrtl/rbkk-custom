@@ -11,7 +11,7 @@ class MaintenanceRequest(models.Model):
         help="Amount of time before the scheduled date at which the "
         "responsible user should be alerted about this maintenance.",
     )
-    alert_period_uom = fields.Selection(
+    alert_period_unit = fields.Selection(
         selection=[
             ("day", "Days"),
             ("week", "Weeks"),
@@ -19,9 +19,7 @@ class MaintenanceRequest(models.Model):
         ],
         default="month",
     )
-    alert_sent = fields.Boolean(
-        copy=False,
-    )
+    alert_sent = fields.Boolean(copy=False)
 
     def write(self, vals):
         res = super().write(vals)
