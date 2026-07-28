@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class MaintenanceEquipment(models.Model):
-    _inherit = "maintenance.equipment"
+    _inherit = ["maintenance.equipment", "image.mixin"]
 
     set_name = fields.Char()
     generic_name_id = fields.Many2one(
