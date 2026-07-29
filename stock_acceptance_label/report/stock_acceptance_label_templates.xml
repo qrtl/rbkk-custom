@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="acceptance_label">
+        <table class="o_pal_label">
+            <tr>
+                <td class="o_pal_key">Product Name</td>
+                <td class="o_pal_value">
+                    <span t-field="move.product_id.name" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Acceptance Number</td>
+                <td class="o_pal_value">
+                    <span t-field="move.acceptance_number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Model Number</td>
+                <td class="o_pal_value">
+                    <span t-field="move.product_id.default_code" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Arrival Date</td>
+                <td class="o_pal_value">
+                    <span
+                        t-out="move.get_acceptance_arrival_date()"
+                        t-options="{'widget': 'date', 'format': 'yyyy/MM/dd'}"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Status</td>
+                <td class="o_pal_value">
+                    <div>□ Under Inspection</div>
+                    <div>↓</div>
+                    <div>□ Conforming or □ Rejected</div>
+                </td>
+            </tr>
+        </table>
+        <div class="o_pal_barcode">
+            <div
+                t-if="move.product_id.barcode"
+                t-out="move.product_id.barcode"
+                t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:70mm;height:14mm;'}"
+            />
+        </div>
+    </template>
+
+    <template id="report_stock_acceptance_label">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs.get_acceptance_label_pages()" t-as="sheet_moves">
+                <div class="o_pal_sheet">
+                    <div class="o_pal_cell" t-foreach="sheet_moves" t-as="move">
+                        <t t-call="stock_acceptance_label.acceptance_label" />
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

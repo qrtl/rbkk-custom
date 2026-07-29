@@ -1,0 +1,37 @@
+// Three labels per A4 portrait sheet (210mm x 297mm), one per horizontal band.
+.o_pal_sheet {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    page-break-before: always;
+    div.o_pal_cell {
+        box-sizing: border-box;
+        width: 210mm;
+        height: 98mm;
+        padding: 6mm 10mm;
+        overflow: hidden;
+    }
+    table.o_pal_label {
+        table-layout: fixed;
+        border-collapse: collapse;
+        width: 100%;
+        td {
+            border: 1px solid black;
+            padding: 1.5mm 3mm;
+            font-size: 13pt;
+            line-height: 1.4;
+            overflow: hidden;
+        }
+        // Narrow key column, as the product name often is long.
+        td.o_pal_key {
+            width: 22%;
+        }
+        td.o_pal_value {
+            text-align: center;
+        }
+    }
+    .o_pal_barcode {
+        margin-top: 4mm;
+        text-align: center;
+    }
+}
