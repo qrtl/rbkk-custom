@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mail_act_maintenance_alert" model="mail.activity.type">
+        <field name="name">Maintenance Alert</field>
+        <field name="icon">fa-bell</field>
+        <field name="res_model">maintenance.request</field>
+    </record>
+</odoo>

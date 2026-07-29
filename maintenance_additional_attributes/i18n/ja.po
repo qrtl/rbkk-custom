@@ -50,6 +50,12 @@ msgid ""
 msgstr "予定日より前に担当者へアラートを通知する期間。"
 
 #. module: maintenance_additional_attributes
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_department_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_generic_name_view_search
+msgid "Archived"
+msgstr "アーカイブ済"
+
+#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__create_uid
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_uid
 msgid "Created by"
@@ -128,6 +134,11 @@ msgid "Last Updated on"
 msgstr "最終更新日"
 
 #. module: maintenance_additional_attributes
+#: model:mail.activity.type,name:maintenance_additional_attributes.mail_act_maintenance_alert
+msgid "Maintenance Alert"
+msgstr "メンテナンスアラート"
+
+#. module: maintenance_additional_attributes
 #: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment
 msgid "Maintenance Equipment"
 msgstr "整備設備"
@@ -146,6 +157,11 @@ msgstr "整備設備一般名称"
 #: model:ir.model,name:maintenance_additional_attributes.model_maintenance_request
 msgid "Maintenance Request"
 msgstr "整備依頼"
+
+#. module: maintenance_additional_attributes
+#: model:ir.cron,name:maintenance_additional_attributes.maintenance_request_alert_cron
+msgid "Maintenance: Send Maintenance Request Alerts"
+msgstr "メンテナンス: 保守依頼のアラート送信"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__management_no
@@ -189,6 +205,11 @@ msgid "Purchase Order"
 msgstr "購買オーダ"
 
 #. module: maintenance_additional_attributes
+#: code:addons/maintenance_additional_attributes/models/maintenance_request.py:0
+msgid "Scheduled Maintenance"
+msgstr "メンテナンス予定"
+
+#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__set_name
 msgid "Set Name"
 msgstr "セット名称"
@@ -200,6 +221,11 @@ msgstr "セット名称"
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_request__smart_search
 msgid "Smart Search"
 msgstr "スマート検索"
+
+#. module: maintenance_additional_attributes
+#: code:addons/maintenance_additional_attributes/models/maintenance_request.py:0
+msgid "The scheduled maintenance date (%s) is approaching."
+msgstr "メンテナンス予定日（%s）が近づいています。"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__location_id

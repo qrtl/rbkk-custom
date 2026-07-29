@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <record id="maintenance_equipment_department_view_list" model="ir.ui.view">
+        <field name="name">maintenance.equipment.department.list</field>
+        <field name="model">maintenance.equipment.department</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name" />
+                <field name="active" widget="boolean_toggle" />
+            </list>
+        </field>
+    </record>
+    <record id="maintenance_equipment_department_view_search" model="ir.ui.view">
+        <field name="name">maintenance.equipment.department.search</field>
+        <field name="model">maintenance.equipment.department</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <filter
+                    name="inactive"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+            </search>
+        </field>
+    </record>
     <record id="maintenance_equipment_department_action" model="ir.actions.act_window">
         <field name="name">Departments</field>
         <field name="res_model">maintenance.equipment.department</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list</field>
     </record>
     <menuitem
         id="menu_maintenance_equipment_department"
