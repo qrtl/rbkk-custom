@@ -10,13 +10,14 @@ RESULT_SELECTION = [
     ("lost", "Lost"),
 ]
 
-# Fields that may still be written on an approved record. These are limited to
-# the workflow/system fields needed by the approval reset and the mail chatter,
-# so that the business data of an approved record stays effectively locked.
+# Fields that may still be written on an approved record without going through
+# the state machine. This is limited to the mail chatter field that the mail
+# framework writes without our ``allow_approved_write`` context (e.g. when an
+# attachment is added). Workflow fields (state/approved_*) are intentionally
+# excluded: they are only changed via the action methods, which set that
+# context, so leaving them out keeps an approved record from being unlocked by
+# a raw ``write({"state": "draft"})``.
 APPROVED_WRITABLE_FIELDS = {
-    "state",
-    "approved_by_id",
-    "approved_date",
     "message_main_attachment_id",
 }
 
@@ -150,6 +151,15 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         )
 
     def action_reset_to_draft(self):
+        if any(r.state == "approved" for r in self) and not self.env.user.has_group(
+            "maintenance.group_equipment_manager"
+        ):
+            raise UserError(
+                _(
+                    "Only Maintenance Managers can reset approved inventory "
+                    "records to draft."
+                )
+            )
         self.with_context(allow_approved_write=True).write(
             {
                 "state": "draft",

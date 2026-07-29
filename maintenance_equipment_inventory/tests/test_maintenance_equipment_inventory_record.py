@@ -60,6 +60,16 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         with self.assertRaises(UserError):
             record.unlink()
 
+    def test_approved_state_cannot_be_reset_by_raw_write(self):
+        # A raw write on the workflow field must not bypass the lock; resetting
+        # an approved record has to go through action_reset_to_draft.
+        record = self._create_record()
+        record.action_submit()
+        record.with_user(self.manager).action_approve()
+        with self.assertRaises(UserError):
+            record.with_user(self.user).write({"state": "draft"})
+        self.assertEqual(record.state, "approved")
+
     def test_reset_to_draft_unlocks(self):
         record = self._create_record()
         record.action_submit()
@@ -70,6 +80,22 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         # Editing is allowed again once back in draft.
         record.write({"result": "abnormal"})
         self.assertEqual(record.result, "abnormal")
+
+    def test_reset_to_draft_requires_manager(self):
+        record = self._create_record()
+        record.action_submit()
+        record.with_user(self.manager).action_approve()
+        # A plain user cannot reset an approved record to draft.
+        with self.assertRaises(UserError):
+            record.with_user(self.user).action_reset_to_draft()
+
+    def test_reset_to_approve_by_user(self):
+        # A plain user may pull a not-yet-approved record back to draft.
+        record = self._create_record()
+        record.action_submit()
+        self.assertEqual(record.state, "to_approve")
+        record.with_user(self.user).action_reset_to_draft()
+        self.assertEqual(record.state, "draft")
 
     def test_equipment_last_inventory_computed(self):
         first = self._create_record()

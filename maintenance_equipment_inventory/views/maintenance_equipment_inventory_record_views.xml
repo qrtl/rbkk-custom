@@ -25,7 +25,13 @@
                         name="action_reset_to_draft"
                         type="object"
                         string="Reset to Draft"
-                        invisible="state == 'draft'"
+                        invisible="state != 'to_approve'"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                        invisible="state != 'approved'"
                         groups="maintenance.group_equipment_manager"
                     />
                     <field
@@ -101,7 +107,6 @@
                         name="action_reset_to_draft"
                         type="object"
                         string="Reset to Draft"
-                        groups="maintenance.group_equipment_manager"
                     />
                 </header>
                 <field name="name" />
@@ -181,8 +186,9 @@
     <menuitem
         id="maintenance_equipment_inventory_record_menu"
         name="Inventory Records"
-        parent="maintenance.menu_m_reports"
+        parent="maintenance.menu_maintenance_title"
         action="maintenance_equipment_inventory_record_action"
-        sequence="50"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="3"
     />
 </odoo>
