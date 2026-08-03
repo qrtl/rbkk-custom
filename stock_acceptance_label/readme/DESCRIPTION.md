@@ -3,8 +3,8 @@ per A4 portrait sheet (one per horizontal band of the sheet).
 
 Each label shows the product name, the acceptance number, the model number
 (product internal reference), the arrival date (the effective date of the
-transfer), a status area with checkboxes to be ticked by hand, and the product
-barcode (Code128).
+transfer, or any other date field selected in the settings), a status area with
+checkboxes to be ticked by hand, and the product barcode (Code128).
 
 One label is printed per transfer line, and several transfers can be selected at
 once so that all their lines are printed in a single PDF.

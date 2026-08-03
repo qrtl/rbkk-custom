@@ -5,6 +5,10 @@ from odoo import Command, fields
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
+from odoo.addons.stock_acceptance_label.models.stock_move import (
+    ARRIVAL_DATE_FIELD_PARAM,
+)
+
 
 # This module is loaded early in the module graph, so the tests have to run once
 # every module is loaded: creating a product otherwise fails on the not-null
@@ -73,6 +77,12 @@ class TestStockAcceptanceLabel(TransactionCase):
         # depending on the modules installed (quality checks, backorders, ...).
         picking._action_done()
 
+    def _set_arrival_date_field(self, model, name):
+        self.env["ir.config_parameter"].sudo().set_param(
+            ARRIVAL_DATE_FIELD_PARAM,
+            self.env["ir.model.fields"]._get(model, name).id,
+        )
+
     def test_acceptance_number_is_not_copied(self):
         self.picking.move_ids[0].acceptance_number = "R016-20251017-01"
         self.assertFalse(self.picking.copy().move_ids[0].acceptance_number)
@@ -98,6 +108,45 @@ class TestStockAcceptanceLabel(TransactionCase):
             self.picking, self.picking.date_done
         ).date()
         self.assertEqual(move.get_acceptance_arrival_date(), expected)
+
+    def test_arrival_date_from_configured_field(self):
+        self._set_arrival_date_field("stock.picking", "scheduled_date")
+        move = self.picking.move_ids[0]
+        expected = fields.Datetime.context_timestamp(
+            self.picking, self.picking.scheduled_date
+        ).date()
+        self.assertEqual(move.get_acceptance_arrival_date(), expected)
+        # A field of the line itself can be selected as well.
+        self._set_arrival_date_field("stock.move", "date_deadline")
+        move.date_deadline = "2026-08-03 00:30:00"
+        expected = fields.Datetime.context_timestamp(move, move.date_deadline).date()
+        self.assertEqual(move.get_acceptance_arrival_date(), expected)
+
+    def test_arrival_date_falls_back_on_invalid_setting(self):
+        self.env["ir.config_parameter"].sudo().set_param(ARRIVAL_DATE_FIELD_PARAM, "0")
+        self._validate(self.picking)
+        expected = fields.Datetime.context_timestamp(
+            self.picking, self.picking.date_done
+        ).date()
+        self.assertEqual(
+            self.picking.move_ids[0].get_acceptance_arrival_date(), expected
+        )
+
+    def test_arrival_date_setting(self):
+        settings = self.env["res.config.settings"].create({})
+        # The setting reflects the effective date of the transfer by default.
+        self.assertEqual(
+            settings.acceptance_label_arrival_date_field_id,
+            self.env["ir.model.fields"]._get("stock.picking", "date_done"),
+        )
+        settings.acceptance_label_arrival_date_field_id = self.env[
+            "ir.model.fields"
+        ]._get("stock.picking", "scheduled_date")
+        settings.execute()
+        self.assertEqual(
+            self.env["stock.move"]._get_acceptance_arrival_date_field().name,
+            "scheduled_date",
+        )
 
     def test_report_html(self):
         self.picking.move_ids[0].acceptance_number = "R016-20251017-01"
