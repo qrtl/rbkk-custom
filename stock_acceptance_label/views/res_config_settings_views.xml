@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form.acceptance.label</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//block[@name='operations_setting_container']"
+                position="after"
+            >
+                <block
+                    title="Acceptance Label"
+                    name="acceptance_label_setting_container"
+                >
+                    <setting
+                        id="acceptance_label_arrival_date"
+                        string="Arrival Date"
+                        help="Field printed as the arrival date on the acceptance label"
+                    >
+                        <field
+                            name="acceptance_label_arrival_date_field_id"
+                            options="{'no_create': True, 'no_open': True}"
+                        />
+                    </setting>
+                    <setting
+                        id="acceptance_label_status"
+                        string="Status Area"
+                        help="Status area printed on the acceptance label, to be filled in by hand"
+                    >
+                        <div class="content-group">
+                            <field
+                                name="acceptance_label_status_html"
+                                class="mt-2 w-100"
+                            />
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

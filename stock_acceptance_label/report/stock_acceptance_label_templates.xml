@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Status area used as long as none is set in the inventory settings. Kept
+         as a template so that it stays translatable. -->
+    <template id="acceptance_label_status">
+        <div>□ Under Inspection</div>
+        <div>↓</div>
+        <div>□ Conforming or □ Rejected</div>
+    </template>
+
+    <template id="acceptance_label">
+        <table class="o_pal_label">
+            <tr>
+                <td class="o_pal_key">Product Name</td>
+                <td class="o_pal_value">
+                    <span t-field="move.product_id.name" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Acceptance Number</td>
+                <td class="o_pal_value">
+                    <span t-field="move.acceptance_number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Model Number</td>
+                <td class="o_pal_value">
+                    <span t-field="move.product_id.default_code" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Lot No.</td>
+                <td class="o_pal_value">
+                    <span t-out="move.get_acceptance_lot_names()" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Expiration Date</td>
+                <td class="o_pal_value">
+                    <span t-out="move.get_acceptance_expiration_dates()" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Arrival Date</td>
+                <td class="o_pal_value">
+                    <span
+                        t-out="move.get_acceptance_arrival_date()"
+                        t-options="{'widget': 'date', 'format': 'yyyy/MM/dd'}"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Status</td>
+                <td class="o_pal_value">
+                    <t t-out="move.get_acceptance_status_html()" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Barcode</td>
+                <td class="o_pal_value o_pal_barcode">
+                    <div
+                        t-if="move.product_id.barcode"
+                        t-out="move.product_id.barcode"
+                        t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:60mm;height:10mm;'}"
+                    />
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <template id="report_stock_acceptance_label">
+        <t t-call="web.basic_layout">
+            <!-- Kept in the template rather than in an asset bundle, so that the
+                 layout of the label travels with the report: the bundles are
+                 fetched over HTTP by wkhtmltopdf, and are shared by every
+                 report of the database. -->
+            <style>
+                /* Three labels per A4 portrait sheet (210mm x 297mm), one per
+                   horizontal band. */
+                .o_pal_sheet {
+                    width: 210mm;
+                    height: 297mm;
+                    overflow: hidden;
+                    page-break-before: always;
+                }
+                .o_pal_sheet div.o_pal_cell {
+                    box-sizing: border-box;
+                    width: 210mm;
+                    height: 98mm;
+                    padding: 6mm 10mm;
+                    overflow: hidden;
+                }
+                .o_pal_sheet table.o_pal_label {
+                    table-layout: fixed;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+                .o_pal_sheet table.o_pal_label td {
+                    border: 1px solid black;
+                    /* Tight padding, as the label has eight rows to fit in its
+                       band. */
+                    padding: 1mm 3mm;
+                    font-size: 13pt;
+                    line-height: 1.3;
+                    overflow: hidden;
+                }
+                /* Narrow key column, as the product name often is long. */
+                .o_pal_sheet table.o_pal_label td.o_pal_key {
+                    width: 22%;
+                }
+                .o_pal_sheet table.o_pal_label td.o_pal_value {
+                    text-align: center;
+                }
+                .o_pal_sheet table.o_pal_label td.o_pal_barcode img {
+                    display: block;
+                    margin: 0 auto;
+                }
+            </style>
+            <t t-foreach="docs.get_acceptance_label_pages()" t-as="sheet_moves">
+                <div class="o_pal_sheet">
+                    <div class="o_pal_cell" t-foreach="sheet_moves" t-as="move">
+                        <t t-call="stock_acceptance_label.acceptance_label" />
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
