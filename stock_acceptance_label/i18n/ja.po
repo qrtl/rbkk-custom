@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-31 09:36+0000\n"
-"PO-Revision-Date: 2026-07-31 09:36+0000\n"
+"POT-Creation-Date: 2026-08-04 09:31+0000\n"
+"PO-Revision-Date: 2026-08-04 09:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -44,9 +44,19 @@ msgid "Arrival Date Field"
 msgstr "入荷日フィールド"
 
 #. module: stock_acceptance_label
+#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
+msgid "Barcode"
+msgstr "バーコード"
+
+#. module: stock_acceptance_label
 #: model:ir.model,name:stock_acceptance_label.model_res_config_settings
 msgid "Config Settings"
 msgstr "コンフィグ設定"
+
+#. module: stock_acceptance_label
+#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
+msgid "Expiration Date"
+msgstr "使用期限"
 
 #. module: stock_acceptance_label
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.res_config_settings_view_form
@@ -67,6 +77,11 @@ msgstr ""
 
 #. module: stock_acceptance_label
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
+msgid "Lot No."
+msgstr "ロットNo."
+
+#. module: stock_acceptance_label
+#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
 msgid "Model Number"
 msgstr "型番"
 
@@ -81,6 +96,29 @@ msgid "Status"
 msgstr "ステータス"
 
 #. module: stock_acceptance_label
+#: model:ir.model.fields,field_description:stock_acceptance_label.field_res_config_settings__acceptance_label_status_html
+#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.res_config_settings_view_form
+msgid "Status Area"
+msgstr "ステータス欄"
+
+#. module: stock_acceptance_label
+#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.res_config_settings_view_form
+msgid "Status area printed on the acceptance label, to be filled in by hand"
+msgstr "受入ラベルに印字する、手書きで記入するためのステータス欄"
+
+#. module: stock_acceptance_label
+#: model:ir.model.fields,help:stock_acceptance_label.field_res_config_settings__acceptance_label_status_html
+msgid ""
+"Status area printed on the acceptance label. It is meant to be filled in by "
+"hand, and can be edited freely as long as it stays within a few lines: the "
+"label has a fixed height, and anything that does not fit is cut off. Empty "
+"it to restore the built-in status area."
+msgstr ""
+"受入ラベルに印字するステータス欄。手書きで記入するための欄で、数行に収まる範囲"
+"であれば自由に編集できます。ラベルの高さは固定されているため、収まらない部分は"
+"切り捨てられます。空欄にすると既定のステータス欄に戻ります。"
+
+#. module: stock_acceptance_label
 #: model:ir.model,name:stock_acceptance_label.model_stock_move
 msgid "Stock Move"
 msgstr "在庫移動"
@@ -91,11 +129,11 @@ msgid "Transfer"
 msgstr "転送"
 
 #. module: stock_acceptance_label
-#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
+#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label_status
 msgid "□ Conforming or □ Rejected"
 msgstr "□適合　or　□不合格"
 
 #. module: stock_acceptance_label
-#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
+#: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label_status
 msgid "□ Under Inspection"
 msgstr "□検査中"

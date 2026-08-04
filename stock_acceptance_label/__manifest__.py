@@ -9,7 +9,7 @@
     "website": "https://www.quartile.co",
     "license": "AGPL-3",
     "maintainers": ["kanda999"],
-    "depends": ["stock"],
+    "depends": ["product_expiry", "stock"],
     "data": [
         "report/stock_acceptance_label_report.xml",
         "report/stock_acceptance_label_templates.xml",

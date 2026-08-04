@@ -23,6 +23,18 @@
                             options="{'no_create': True, 'no_open': True}"
                         />
                     </setting>
+                    <setting
+                        id="acceptance_label_status"
+                        string="Status Area"
+                        help="Status area printed on the acceptance label, to be filled in by hand"
+                    >
+                        <div class="content-group">
+                            <field
+                                name="acceptance_label_status_html"
+                                class="mt-2 w-100"
+                            />
+                        </div>
+                    </setting>
                 </block>
             </xpath>
         </field>

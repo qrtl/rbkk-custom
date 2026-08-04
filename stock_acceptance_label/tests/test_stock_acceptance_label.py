@@ -7,6 +7,7 @@ from odoo.tests.common import TransactionCase
 
 from odoo.addons.stock_acceptance_label.models.stock_move import (
     ARRIVAL_DATE_FIELD_PARAM,
+    STATUS_HTML_PARAM,
 )
 
 
@@ -30,6 +31,16 @@ class TestStockAcceptanceLabel(TransactionCase):
         cls.product_b = cls.env["product.product"].create(
             {"name": "Product B", "is_storable": True}
         )
+        cls.product_lot = cls.env["product.product"].create(
+            {
+                "name": "Product Lot",
+                "is_storable": True,
+                "tracking": "lot",
+                "use_expiration_date": True,
+            }
+        )
+        # Fixed time zone, as the label prints dates and not datetimes.
+        cls.env.user.tz = "Asia/Tokyo"
         cls.picking_type = cls.env["stock.picking.type"].search(
             [("code", "=", "incoming"), ("company_id", "=", cls.env.company.id)],
             limit=1,
@@ -60,6 +71,15 @@ class TestStockAcceptanceLabel(TransactionCase):
                 ],
             }
         )
+
+    def setUp(self):
+        super().setUp()
+        # Drop the settings stored in the database, so that the tests describe
+        # the behaviour of the module and not how the label happens to be
+        # configured in the database they run on.
+        config_parameter = self.env["ir.config_parameter"].sudo()
+        config_parameter.set_param(ARRIVAL_DATE_FIELD_PARAM, False)
+        config_parameter.set_param(STATUS_HTML_PARAM, False)
 
     def _validate(self, picking):
         picking.action_confirm()
@@ -148,6 +168,84 @@ class TestStockAcceptanceLabel(TransactionCase):
             "scheduled_date",
         )
 
+    def _create_lot(self, name, expiration_date):
+        return self.env["stock.lot"].create(
+            {
+                "name": name,
+                "product_id": self.product_lot.id,
+                "expiration_date": expiration_date,
+            }
+        )
+
+    def test_lot_and_expiration_date(self):
+        picking = self._create_picking(self.product_lot)
+        picking.action_confirm()
+        move = picking.move_ids[0]
+        # Nothing is printed as long as the lot of the line is unknown.
+        self.assertFalse(move.get_acceptance_lot_names())
+        self.assertFalse(move.get_acceptance_expiration_dates())
+        # 2027-03-31 00:30 in Asia/Tokyo, to cover the time zone conversion.
+        move.move_line_ids.lot_id = self._create_lot("LOT-0001", "2027-03-30 15:30:00")
+        self.assertEqual(move.get_acceptance_lot_names(), "LOT-0001")
+        self.assertEqual(move.get_acceptance_expiration_dates(), "2027/03/31")
+
+    def test_lot_without_expiration_date(self):
+        picking = self._create_picking(self.product_lot)
+        picking.action_confirm()
+        move = picking.move_ids[0]
+        move.move_line_ids.lot_id = self._create_lot("LOT-0002", False)
+        self.assertEqual(move.get_acceptance_lot_names(), "LOT-0002")
+        self.assertFalse(move.get_acceptance_expiration_dates())
+
+    def test_several_lots_on_one_line(self):
+        picking = self._create_picking(self.product_lot)
+        picking.move_ids[0].product_uom_qty = 2.0
+        picking.action_confirm()
+        move = picking.move_ids[0]
+        move.move_line_ids.write({"quantity": 1.0})
+        move.move_line_ids[0].lot_id = self._create_lot(
+            "LOT-0003", "2027-03-30 15:30:00"
+        )
+        move.move_line_ids.create(
+            {
+                "move_id": move.id,
+                "product_id": self.product_lot.id,
+                "quantity": 1.0,
+                "location_id": move.location_id.id,
+                "location_dest_id": move.location_dest_id.id,
+                "lot_id": self._create_lot("LOT-0004", "2027-04-01 15:30:00").id,
+            }
+        )
+        self.assertEqual(move.get_acceptance_lot_names(), "LOT-0003, LOT-0004")
+        self.assertEqual(
+            move.get_acceptance_expiration_dates(), "2027/03/31, 2027/04/02"
+        )
+
+    def test_status_area_setting(self):
+        settings = self.env["res.config.settings"].create({})
+        # The setting comes filled in with the default status area.
+        self.assertIn("Under Inspection", settings.acceptance_label_status_html)
+        settings.acceptance_label_status_html = "<div>Accepted</div>"
+        settings.execute()
+        self.assertIn("Accepted", self.env["stock.move"].get_acceptance_status_html())
+        # Emptying the setting restores the default status area.
+        settings.acceptance_label_status_html = "<p><br></p>"
+        settings.execute()
+        self.assertFalse(
+            self.env["ir.config_parameter"].sudo().get_param(STATUS_HTML_PARAM)
+        )
+        self.assertIn(
+            "Under Inspection", self.env["stock.move"].get_acceptance_status_html()
+        )
+
+    def test_status_area_is_sanitized(self):
+        self.env["ir.config_parameter"].sudo().set_param(
+            STATUS_HTML_PARAM, "<div>Accepted</div><script>alert(1)</script>"
+        )
+        status_html = self.env["stock.move"].get_acceptance_status_html()
+        self.assertIn("Accepted", status_html)
+        self.assertNotIn("script", status_html)
+
     def test_report_html(self):
         self.picking.move_ids[0].acceptance_number = "R016-20251017-01"
         html = (
@@ -160,4 +258,8 @@ class TestStockAcceptanceLabel(TransactionCase):
         )
         self.assertIn("R016-20251017-01", html)
         self.assertIn("SH30221.26", html)
+        self.assertIn("Under Inspection", html)
         self.assertEqual(html.count("o_pal_cell"), 2)
+        # The barcode is a row of the label, printed for the product that has one.
+        self.assertEqual(html.count("o_pal_barcode"), 2)
+        self.assertEqual(html.count("<img"), 1)

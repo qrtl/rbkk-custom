@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <!-- Status area used as long as none is set in the inventory settings. Kept
+         as a template so that it stays translatable. -->
+    <template id="acceptance_label_status">
+        <div>□ Under Inspection</div>
+        <div>↓</div>
+        <div>□ Conforming or □ Rejected</div>
+    </template>
+
     <template id="acceptance_label">
         <table class="o_pal_label">
             <tr>
@@ -21,6 +29,18 @@
                 </td>
             </tr>
             <tr>
+                <td class="o_pal_key">Lot No.</td>
+                <td class="o_pal_value">
+                    <span t-out="move.get_acceptance_lot_names()" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Expiration Date</td>
+                <td class="o_pal_value">
+                    <span t-out="move.get_acceptance_expiration_dates()" />
+                </td>
+            </tr>
+            <tr>
                 <td class="o_pal_key">Arrival Date</td>
                 <td class="o_pal_value">
                     <span
@@ -32,19 +52,20 @@
             <tr>
                 <td class="o_pal_key">Status</td>
                 <td class="o_pal_value">
-                    <div>□ Under Inspection</div>
-                    <div>↓</div>
-                    <div>□ Conforming or □ Rejected</div>
+                    <t t-out="move.get_acceptance_status_html()" />
+                </td>
+            </tr>
+            <tr>
+                <td class="o_pal_key">Barcode</td>
+                <td class="o_pal_value o_pal_barcode">
+                    <div
+                        t-if="move.product_id.barcode"
+                        t-out="move.product_id.barcode"
+                        t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:60mm;height:10mm;'}"
+                    />
                 </td>
             </tr>
         </table>
-        <div class="o_pal_barcode">
-            <div
-                t-if="move.product_id.barcode"
-                t-out="move.product_id.barcode"
-                t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:70mm;height:14mm;'}"
-            />
-        </div>
     </template>
 
     <template id="report_stock_acceptance_label">
