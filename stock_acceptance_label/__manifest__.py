@@ -16,10 +16,5 @@
         "views/res_config_settings_views.xml",
         "views/stock_picking_views.xml",
     ],
-    "assets": {
-        "web.report_assets_common": [
-            "stock_acceptance_label/static/src/scss/report_acceptance_label.scss",
-        ],
-    },
     "installable": True,
 }

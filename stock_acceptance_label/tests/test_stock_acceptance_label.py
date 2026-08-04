@@ -259,7 +259,9 @@ class TestStockAcceptanceLabel(TransactionCase):
         self.assertIn("R016-20251017-01", html)
         self.assertIn("SH30221.26", html)
         self.assertIn("Under Inspection", html)
-        self.assertEqual(html.count("o_pal_cell"), 2)
+        # Counted on the class attributes, as the class names also appear in the
+        # selectors of the stylesheet of the report.
+        self.assertEqual(html.count('class="o_pal_cell"'), 2)
         # The barcode is a row of the label, printed for the product that has one.
-        self.assertEqual(html.count("o_pal_barcode"), 2)
+        self.assertEqual(html.count('class="o_pal_value o_pal_barcode"'), 2)
         self.assertEqual(html.count("<img"), 1)

@@ -70,6 +70,52 @@
 
     <template id="report_stock_acceptance_label">
         <t t-call="web.basic_layout">
+            <!-- Kept in the template rather than in an asset bundle, so that the
+                 layout of the label travels with the report: the bundles are
+                 fetched over HTTP by wkhtmltopdf, and are shared by every
+                 report of the database. -->
+            <style>
+                /* Three labels per A4 portrait sheet (210mm x 297mm), one per
+                   horizontal band. */
+                .o_pal_sheet {
+                    width: 210mm;
+                    height: 297mm;
+                    overflow: hidden;
+                    page-break-before: always;
+                }
+                .o_pal_sheet div.o_pal_cell {
+                    box-sizing: border-box;
+                    width: 210mm;
+                    height: 98mm;
+                    padding: 6mm 10mm;
+                    overflow: hidden;
+                }
+                .o_pal_sheet table.o_pal_label {
+                    table-layout: fixed;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+                .o_pal_sheet table.o_pal_label td {
+                    border: 1px solid black;
+                    /* Tight padding, as the label has eight rows to fit in its
+                       band. */
+                    padding: 1mm 3mm;
+                    font-size: 13pt;
+                    line-height: 1.3;
+                    overflow: hidden;
+                }
+                /* Narrow key column, as the product name often is long. */
+                .o_pal_sheet table.o_pal_label td.o_pal_key {
+                    width: 22%;
+                }
+                .o_pal_sheet table.o_pal_label td.o_pal_value {
+                    text-align: center;
+                }
+                .o_pal_sheet table.o_pal_label td.o_pal_barcode img {
+                    display: block;
+                    margin: 0 auto;
+                }
+            </style>
             <t t-foreach="docs.get_acceptance_label_pages()" t-as="sheet_moves">
                 <div class="o_pal_sheet">
                     <div class="o_pal_cell" t-foreach="sheet_moves" t-as="move">
