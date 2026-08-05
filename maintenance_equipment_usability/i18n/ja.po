@@ -99,8 +99,6 @@ msgid "No Result"
 msgstr "結果なし"
 
 #. module: maintenance_equipment_usability
-#: model:ir.model.fields,help:maintenance_equipment_usability.field_res_company__usability_grace_period_months
-#: model:ir.model.fields,help:maintenance_equipment_usability.field_res_config_settings__usability_grace_period_months
 #: model_terms:ir.ui.view,arch_db:maintenance_equipment_usability.res_config_settings_view_form
 msgid ""
 "Number of months the equipment stays usable after its latest passed "

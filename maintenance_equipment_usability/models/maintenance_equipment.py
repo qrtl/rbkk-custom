@@ -75,12 +75,12 @@ class MaintenanceEquipment(models.Model):
             )
 
     @api.depends(
+        "company_id",
         "status",
         "latest_maintenance_result_request_id.maintenance_result",
         "latest_maintenance_result_date",
     )
     def _compute_usability(self):
-        grace_months = self.env.company.usability_grace_period_months
         today = fields.Date.context_today(self)
         for equipment in self:
             if equipment.status != "operating":
@@ -93,7 +93,10 @@ class MaintenanceEquipment(models.Model):
                 continue
             if request.maintenance_result == "failed":
                 equipment.usability_state = "unusable"
-            elif today > result_date + relativedelta(months=grace_months, day=31):
+                continue
+            company = equipment.company_id or self.env.company
+            grace_months = company.usability_grace_period_months
+            if today > result_date + relativedelta(months=grace_months, day=31):
                 # Validity extends to the end of the target month.
                 equipment.usability_state = "unusable"
             else:
