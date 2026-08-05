@@ -223,6 +223,12 @@ msgid "Smart Search"
 msgstr "スマート検索"
 
 #. module: maintenance_additional_attributes
+#: model:ir.model.constraint,message:maintenance_additional_attributes.constraint_maintenance_equipment_department_name_uniq
+#: model:ir.model.constraint,message:maintenance_additional_attributes.constraint_maintenance_equipment_generic_name_name_uniq
+msgid "The name must be unique."
+msgstr "名称は一意である必要があります。"
+
+#. module: maintenance_additional_attributes
 #: code:addons/maintenance_additional_attributes/models/maintenance_request.py:0
 msgid "The scheduled maintenance date (%s) is approaching."
 msgstr "メンテナンス予定日（%s）が近づいています。"

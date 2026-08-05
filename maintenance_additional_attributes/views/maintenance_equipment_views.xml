@@ -15,24 +15,20 @@
             </div>
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="equipment_department_id" />
-                <field name="set_name" />
                 <field name="generic_name_id" />
+                <field name="set_name" />
+            </xpath>
+            <field name="location" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="location" position="after">
+                <field name="location_id" />
                 <field name="national_project" />
                 <field name="is_fixed_asset" />
                 <field name="fixed_asset_code" invisible="not is_fixed_asset" />
                 <field name="is_gmp" />
                 <field name="management_no" invisible="not is_gmp" />
                 <field name="is_measuring_instrument" />
-            </xpath>
-            <!-- Replace the base free-text "location" (Char) with a
-                 structured stock.location Many2one. The base field is hidden
-                 rather than replaced to avoid breaking other inheriting views;
-                 it is no longer used on this form. -->
-            <field name="location" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-            <field name="location" position="after">
-                <field name="location_id" />
             </field>
             <xpath expr="//field[@name='model']" position="after">
                 <field name="manufacturer" />
@@ -42,6 +38,78 @@
             <xpath expr="//field[@name='effective_date']" position="after">
                 <field name="acquisition_date" />
             </xpath>
+        </field>
+    </record>
+    <record id="maintenance_equipment_view_list" model="ir.ui.view">
+        <field name="name">maintenance.equipment.list</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_tree" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="equipment_department_id" optional="show" />
+                <field name="generic_name_id" optional="show" />
+                <field name="location_id" optional="show" />
+                <field name="set_name" optional="hide" />
+                <field name="management_no" optional="hide" />
+                <field name="fixed_asset_code" optional="hide" />
+                <field name="manufacturer" optional="hide" />
+                <field name="manufacturer_serial_no" optional="hide" />
+                <field name="national_project" optional="hide" />
+                <field name="acquisition_date" optional="hide" />
+                <field name="is_fixed_asset" optional="hide" />
+                <field name="is_gmp" optional="hide" />
+                <field name="is_measuring_instrument" optional="hide" />
+            </field>
+        </field>
+    </record>
+    <record id="maintenance_equipment_view_search" model="ir.ui.view">
+        <field name="name">maintenance.equipment.search</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_search" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="equipment_department_id" />
+                <field name="generic_name_id" />
+                <field name="location_id" />
+                <field name="management_no" />
+                <field name="fixed_asset_code" />
+                <field name="manufacturer" />
+                <field name="manufacturer_serial_no" />
+            </field>
+            <filter name="under_maintenance" position="after">
+                <separator />
+                <filter
+                    name="fixed_asset"
+                    string="Fixed Asset"
+                    domain="[('is_fixed_asset', '=', True)]"
+                />
+                <filter name="gmp" string="GMP" domain="[('is_gmp', '=', True)]" />
+                <filter
+                    name="measuring_instrument"
+                    string="Measuring Instrument"
+                    domain="[('is_measuring_instrument', '=', True)]"
+                />
+            </filter>
+            <group position="inside">
+                <filter
+                    name="equipment_department"
+                    string="Equipment Department"
+                    domain="[]"
+                    context="{'group_by': 'equipment_department_id'}"
+                />
+                <filter
+                    name="generic_name"
+                    string="General Name"
+                    domain="[]"
+                    context="{'group_by': 'generic_name_id'}"
+                />
+                <filter
+                    name="location"
+                    string="Used in location"
+                    domain="[]"
+                    context="{'group_by': 'location_id'}"
+                />
+            </group>
         </field>
     </record>
 </odoo>

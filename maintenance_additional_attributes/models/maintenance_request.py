@@ -3,7 +3,7 @@
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, fields, models
+from odoo import api, fields, models
 from odoo.tools.misc import format_datetime
 
 
@@ -24,6 +24,17 @@ class MaintenanceRequest(models.Model):
     )
     alert_sent = fields.Boolean(copy=False)
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        requests = super().create(vals_list)
+        # The close date can be recorded before the request is completed, but
+        # the standard create() clears it while the request is not in a done
+        # stage. Restore the date the user entered.
+        for request, vals in zip(requests, vals_list, strict=True):
+            if vals.get("close_date") and not request.close_date:
+                request.close_date = vals["close_date"]
+        return requests
+
     def write(self, vals):
         # Drop the outdated alert and let it be sent again on the new timing.
         if any(
@@ -34,15 +45,32 @@ class MaintenanceRequest(models.Model):
             self.activity_unlink(
                 ["maintenance_additional_attributes.mail_act_maintenance_alert"]
             )
+        # The standard write() rewrites the close date on every stage change
+        # (today() when the request is completed, empty otherwise), so keep
+        # track of the date the user entered to restore it afterwards.
+        close_dates = (
+            {request.id: request.close_date for request in self}
+            if "stage_id" in vals
+            else {}
+        )
         res = super().write(vals)
         if "stage_id" in vals:
             # Mark the alert as handled once the request is completed.
             self.filtered("done").activity_feedback(
                 ["maintenance_additional_attributes.mail_act_maintenance_alert"]
             )
-        # Keep the close date entered on completion.
-        if vals.get("close_date") and "stage_id" in vals:
-            self.filtered("done").write({"close_date": vals["close_date"]})
+            for request in self:
+                if "close_date" in vals:
+                    close_date = vals["close_date"]
+                elif close_dates.get(request.id):
+                    close_date = close_dates[request.id]
+                else:
+                    # No date was ever recorded: let the standard behavior of
+                    # stamping the completion date apply.
+                    continue
+                close_date = fields.Date.to_date(close_date)
+                if request.close_date != close_date:
+                    request.close_date = close_date
         return res
 
     def _cron_send_maintenance_alerts(self):
@@ -63,17 +91,21 @@ class MaintenanceRequest(models.Model):
             )
             if now < alert_date:
                 continue
-            user = request.user_id or request.owner_user_id
+            user = request.user_id or request.equipment_id.technician_user_id
             if not user:
                 continue
-            request.activity_schedule(
+            env = self.env(context={**self.env.context, "lang": user.lang})
+            activity = request.activity_schedule(
                 "maintenance_additional_attributes.mail_act_maintenance_alert",
-                date_deadline=alert_date.date(),
-                summary=_("Scheduled Maintenance"),
-                note=_(
+                date_deadline=fields.Datetime.context_timestamp(
+                    request.with_context(tz=user.tz), alert_date
+                ).date(),
+                summary=env._("Scheduled Maintenance"),
+                note=env._(
                     "The scheduled maintenance date (%s) is approaching.",
-                    format_datetime(self.env, request.schedule_date),
+                    format_datetime(env, request.schedule_date, tz=user.tz),
                 ),
                 user_id=user.id,
             )
-            request.alert_sent = True
+            if activity:
+                request.alert_sent = True
