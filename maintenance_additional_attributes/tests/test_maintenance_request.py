@@ -60,6 +60,12 @@ class TestMaintenanceRequest(TransactionCase):
         request.stage_id = self.stage_done
         self.assertEqual(request.close_date, self.close_date)
 
+    def test_close_date_can_be_updated(self):
+        """The recorded date must remain editable after the request is created."""
+        request = self._create_request(close_date=self.close_date)
+        request.close_date = self.close_date + relativedelta(days=1)
+        self.assertEqual(request.close_date, self.close_date + relativedelta(days=1))
+
     def test_close_date_defaults_to_today_on_completion(self):
         """Without a recorded date, the standard behavior still applies."""
         request = self._create_request()

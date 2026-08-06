@@ -26,16 +26,29 @@ class MaintenanceRequest(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        requests = super().create(vals_list)
-        # The close date can be recorded before the request is completed, but
-        # the standard create() clears it while the request is not in a done
-        # stage. Restore the date the user entered.
-        for request, vals in zip(requests, vals_list, strict=True):
-            if vals.get("close_date") and not request.close_date:
-                request.close_date = vals["close_date"]
-        return requests
+        # The standard create() and write() derive the close date from the
+        # stage, discarding the date the user recorded (see write()). Return the
+        # requests in the original environment so that the context does not leak
+        # to the caller.
+        return (
+            super(
+                MaintenanceRequest, self.with_context(maintenance_keep_close_date=True)
+            )
+            .create(vals_list)
+            .with_env(self.env)
+        )
 
     def write(self, vals):
+        # The standard create() and write() rewrite the close date whenever the
+        # stage changes (today() when the request is completed, empty
+        # otherwise), which discards the date the user recorded. Those updates
+        # come back here as a write on the close date alone, so ignore them,
+        # except for the requests that have no date recorded yet.
+        if list(vals) == ["close_date"] and self.env.context.get(
+            "maintenance_keep_close_date"
+        ):
+            requests = self.filtered(lambda request: not request.close_date)
+            return super(MaintenanceRequest, requests).write(vals) if requests else True
         # Drop the outdated alert and let it be sent again on the new timing.
         if any(
             field in vals
@@ -45,32 +58,14 @@ class MaintenanceRequest(models.Model):
             self.activity_unlink(
                 ["maintenance_additional_attributes.mail_act_maintenance_alert"]
             )
-        # The standard write() rewrites the close date on every stage change
-        # (today() when the request is completed, empty otherwise), so keep
-        # track of the date the user entered to restore it afterwards.
-        close_dates = (
-            {request.id: request.close_date for request in self}
-            if "stage_id" in vals
-            else {}
-        )
-        res = super().write(vals)
+        res = super(
+            MaintenanceRequest, self.with_context(maintenance_keep_close_date=True)
+        ).write(vals)
         if "stage_id" in vals:
             # Mark the alert as handled once the request is completed.
             self.filtered("done").activity_feedback(
                 ["maintenance_additional_attributes.mail_act_maintenance_alert"]
             )
-            for request in self:
-                if "close_date" in vals:
-                    close_date = vals["close_date"]
-                elif close_dates.get(request.id):
-                    close_date = close_dates[request.id]
-                else:
-                    # No date was ever recorded: let the standard behavior of
-                    # stamping the completion date apply.
-                    continue
-                close_date = fields.Date.to_date(close_date)
-                if request.close_date != close_date:
-                    request.close_date = close_date
         return res
 
     def _cron_send_maintenance_alerts(self):
