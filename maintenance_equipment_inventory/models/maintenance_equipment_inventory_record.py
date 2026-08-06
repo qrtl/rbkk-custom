@@ -5,20 +5,21 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 RESULT_SELECTION = [
-    ("ok", "Normal"),
+    ("normal", "Normal"),
     ("abnormal", "Abnormal"),
     ("lost", "Lost"),
 ]
 
-# Fields that may still be written on an approved record without going through
-# the state machine. This is limited to the mail chatter field that the mail
-# framework writes without our ``allow_approved_write`` context (e.g. when an
-# attachment is added). Workflow fields (state/approved_*) are intentionally
-# excluded: they are only changed via the action methods, which set that
-# context, so leaving them out keeps an approved record from being unlocked by
-# a raw ``write({"state": "draft"})``.
-APPROVED_WRITABLE_FIELDS = {
-    "message_main_attachment_id",
+# Business fields that are frozen once the record is approved. Workflow fields
+# are deliberately left out so that the action methods can still move the
+# record through its states; they are protected by being readonly on the model
+# (the UI cannot write them) plus the group checks in those methods.
+LOCKED_FIELDS = {
+    "equipment_id",
+    "inventory_date",
+    "result",
+    "checked_by_id",
+    "note",
 }
 
 
@@ -27,7 +28,6 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
     _description = "Maintenance Equipment Inventory Record"
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "inventory_date desc, id desc"
-    _check_company_auto = True
 
     name = fields.Char(
         string="Reference",
@@ -43,13 +43,11 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         ondelete="cascade",
         index=True,
         tracking=True,
-        check_company=True,
     )
     company_id = fields.Many2one(
         related="equipment_id.company_id",
         store=True,
         index=True,
-        readonly=True,
     )
     inventory_date = fields.Date(
         required=True,
@@ -60,7 +58,7 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         RESULT_SELECTION,
         string="Inventory Result",
         required=True,
-        default="ok",
+        default="normal",
         tracking=True,
     )
     checked_by_id = fields.Many2one(
@@ -70,22 +68,18 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         tracking=True,
     )
     note = fields.Html(string="Remarks")
-    attachment_ids = fields.Many2many(
-        "ir.attachment",
-        "maintenance_equipment_inventory_record_attachment_rel",
-        "record_id",
-        "attachment_id",
-        string="Attachments",
-    )
     state = fields.Selection(
         [
             ("draft", "Draft"),
             ("to_approve", "To Approve"),
             ("approved", "Approved"),
+            ("refused", "Refused"),
+            ("cancelled", "Cancelled"),
         ],
         string="Status",
         default="draft",
         required=True,
+        readonly=True,
         copy=False,
         tracking=True,
     )
@@ -112,15 +106,13 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         return super().create(vals_list)
 
     def write(self, vals):
-        if not self.env.context.get("allow_approved_write"):
-            locked = self.filtered(lambda r: r.state == "approved")
-            if locked and set(vals) - APPROVED_WRITABLE_FIELDS:
-                raise UserError(
-                    _(
-                        "Approved inventory records cannot be modified. "
-                        "Reset the record to draft first."
-                    )
+        if set(vals) & LOCKED_FIELDS and any(r.state == "approved" for r in self):
+            raise UserError(
+                _(
+                    "Approved inventory records cannot be modified. "
+                    "Reset the record to draft first."
                 )
+            )
         return super().write(vals)
 
     def unlink(self):
@@ -130,8 +122,10 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
 
     def action_submit(self):
         for record in self:
-            if record.state != "draft":
-                raise UserError(_("Only draft records can be submitted for approval."))
+            if record.state not in ("draft", "refused"):
+                raise UserError(
+                    _("Only draft or refused records can be submitted for approval.")
+                )
         self.write({"state": "to_approve"})
 
     def action_approve(self):
@@ -150,6 +144,25 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
             }
         )
 
+    def action_refuse(self):
+        if not self.env.user.has_group("maintenance.group_equipment_manager"):
+            raise UserError(
+                _("Only Maintenance Managers can refuse inventory records.")
+            )
+        for record in self:
+            if record.state != "to_approve":
+                raise UserError(_("Only records pending approval can be refused."))
+        self.write({"state": "refused"})
+
+    def action_cancel(self):
+        # Used when the equipment turns out to be out of scope for the round
+        # (e.g. already scrapped). Cancelling instead of deleting keeps the
+        # equipment out of the next bulk creation.
+        for record in self:
+            if record.state == "approved":
+                raise UserError(_("Approved inventory records cannot be cancelled."))
+        self.write({"state": "cancelled"})
+
     def action_reset_to_draft(self):
         if any(r.state == "approved" for r in self) and not self.env.user.has_group(
             "maintenance.group_equipment_manager"
@@ -160,7 +173,7 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
                     "records to draft."
                 )
             )
-        self.with_context(allow_approved_write=True).write(
+        self.write(
             {
                 "state": "draft",
                 "approved_by_id": False,

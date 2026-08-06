@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 from .maintenance_equipment_inventory_record import RESULT_SELECTION
 
@@ -29,14 +30,8 @@ class MaintenanceEquipment(models.Model):
 
     @api.depends("inventory_record_ids")
     def _compute_inventory_record_count(self):
-        data = self.env["maintenance.equipment.inventory.record"]._read_group(
-            [("equipment_id", "in", self.ids)],
-            ["equipment_id"],
-            ["__count"],
-        )
-        mapped = {equipment.id: count for equipment, count in data}
         for equipment in self:
-            equipment.inventory_record_count = mapped.get(equipment.id, 0)
+            equipment.inventory_record_count = len(equipment.inventory_record_ids)
 
     @api.depends(
         "inventory_record_ids.state",
@@ -57,17 +52,26 @@ class MaintenanceEquipment(models.Model):
     def action_create_inventory_records(self):
         """Bulk-create a draft inventory record per selected equipment.
 
-        Equipment that already have an open (draft or to approve) record are
-        skipped to avoid duplicates. The created records are then shown.
+        Equipment that already have a record in any state but approved are
+        skipped to avoid duplicates: such a record means the stocktaking round
+        is either still unfinished or deliberately closed (refused/cancelled)
+        for that equipment. The created records are then shown.
         """
         Record = self.env["maintenance.equipment.inventory.record"]
         existing = Record.search(
             [
                 ("equipment_id", "in", self.ids),
-                ("state", "in", ["draft", "to_approve"]),
+                ("state", "!=", "approved"),
             ]
         ).equipment_id
         targets = self - existing
+        if not targets:
+            raise UserError(
+                _(
+                    "All the selected equipment already have an open inventory "
+                    "record."
+                )
+            )
         records = Record.create([{"equipment_id": eq.id} for eq in targets])
         return {
             "type": "ir.actions.act_window",

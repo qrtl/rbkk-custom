@@ -1,1 +1,2 @@
-- Quartile \<https://www.quartile.co\>
+- [Quartile](https://www.quartile.co):
+  - Tatsuki Kanda

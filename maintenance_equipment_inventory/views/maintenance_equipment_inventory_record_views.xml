@@ -11,7 +11,7 @@
                         type="object"
                         string="Submit for Approval"
                         class="oe_highlight"
-                        invisible="state != 'draft'"
+                        invisible="state not in ('draft', 'refused')"
                     />
                     <button
                         name="action_approve"
@@ -22,10 +22,23 @@
                         groups="maintenance.group_equipment_manager"
                     />
                     <button
+                        name="action_refuse"
+                        type="object"
+                        string="Refuse"
+                        invisible="state != 'to_approve'"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                    <button
+                        name="action_cancel"
+                        type="object"
+                        string="Cancel"
+                        invisible="state in ('approved', 'cancelled')"
+                    />
+                    <button
                         name="action_reset_to_draft"
                         type="object"
                         string="Reset to Draft"
-                        invisible="state != 'to_approve'"
+                        invisible="state not in ('to_approve', 'cancelled')"
                     />
                     <button
                         name="action_reset_to_draft"
@@ -68,18 +81,9 @@
                             />
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Remarks" name="remarks">
-                            <field name="note" readonly="state == 'approved'" />
-                        </page>
-                        <page string="Attachments" name="attachments">
-                            <field
-                                name="attachment_ids"
-                                widget="many2many_binary"
-                                readonly="state == 'approved'"
-                            />
-                        </page>
-                    </notebook>
+                    <group string="Remarks">
+                        <field name="note" nolabel="1" readonly="state == 'approved'" />
+                    </group>
                 </sheet>
                 <chatter />
             </form>
@@ -104,6 +108,13 @@
                         groups="maintenance.group_equipment_manager"
                     />
                     <button
+                        name="action_refuse"
+                        type="object"
+                        string="Refuse"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                    <button name="action_cancel" type="object" string="Cancel" />
+                    <button
                         name="action_reset_to_draft"
                         type="object"
                         string="Reset to Draft"
@@ -120,6 +131,8 @@
                     widget="badge"
                     decoration-info="state == 'to_approve'"
                     decoration-success="state == 'approved'"
+                    decoration-danger="state == 'refused'"
+                    decoration-muted="state == 'cancelled'"
                 />
                 <field
                     name="company_id"
@@ -152,6 +165,16 @@
                     name="approved"
                     string="Approved"
                     domain="[('state', '=', 'approved')]"
+                />
+                <filter
+                    name="refused"
+                    string="Refused"
+                    domain="[('state', '=', 'refused')]"
+                />
+                <filter
+                    name="cancelled"
+                    string="Cancelled"
+                    domain="[('state', '=', 'cancelled')]"
                 />
                 <group expand="0" string="Group By">
                     <filter
@@ -188,7 +211,7 @@
         name="Inventory Records"
         parent="maintenance.menu_maintenance_title"
         action="maintenance_equipment_inventory_record_action"
-        groups="maintenance.group_equipment_manager,base.group_user"
+        groups="base.group_user"
         sequence="3"
     />
 </odoo>
