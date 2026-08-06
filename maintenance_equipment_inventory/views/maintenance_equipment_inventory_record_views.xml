@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="maintenance_equipment_inventory_record_view_form" model="ir.ui.view">
+        <field name="name">maintenance.equipment.inventory.record.form</field>
+        <field name="model">maintenance.equipment.inventory.record</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_submit"
+                        type="object"
+                        string="Submit for Approval"
+                        class="oe_highlight"
+                        invisible="state not in ('draft', 'refused')"
+                    />
+                    <button
+                        name="action_approve"
+                        type="object"
+                        string="Approve"
+                        class="oe_highlight"
+                        invisible="state != 'to_approve'"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                    <button
+                        name="action_refuse"
+                        type="object"
+                        string="Refuse"
+                        invisible="state != 'to_approve'"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                    <button
+                        name="action_cancel"
+                        type="object"
+                        string="Cancel"
+                        invisible="state in ('approved', 'cancelled')"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                        invisible="state not in ('to_approve', 'cancelled')"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                        invisible="state != 'approved'"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,to_approve,approved"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="equipment_id" readonly="state == 'approved'" />
+                            <field
+                                name="inventory_date"
+                                readonly="state == 'approved'"
+                            />
+                            <field name="result" readonly="state == 'approved'" />
+                        </group>
+                        <group>
+                            <field
+                                name="checked_by_id"
+                                readonly="state == 'approved'"
+                            />
+                            <field name="approved_by_id" />
+                            <field name="approved_date" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                    </group>
+                    <group string="Remarks">
+                        <field name="note" nolabel="1" readonly="state == 'approved'" />
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="maintenance_equipment_inventory_record_view_tree" model="ir.ui.view">
+        <field name="name">maintenance.equipment.inventory.record.list</field>
+        <field name="model">maintenance.equipment.inventory.record</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <header>
+                    <button
+                        name="action_submit"
+                        type="object"
+                        string="Submit for Approval"
+                    />
+                    <button
+                        name="action_approve"
+                        type="object"
+                        string="Approve"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                    <button
+                        name="action_refuse"
+                        type="object"
+                        string="Refuse"
+                        groups="maintenance.group_equipment_manager"
+                    />
+                    <button name="action_cancel" type="object" string="Cancel" />
+                    <button
+                        name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                    />
+                </header>
+                <field name="name" />
+                <field name="equipment_id" readonly="state == 'approved'" />
+                <field name="inventory_date" readonly="state == 'approved'" />
+                <field name="result" readonly="state == 'approved'" />
+                <field name="checked_by_id" readonly="state == 'approved'" />
+                <field name="approved_by_id" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'to_approve'"
+                    decoration-success="state == 'approved'"
+                    decoration-danger="state == 'refused'"
+                    decoration-muted="state == 'cancelled'"
+                />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="hide"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="maintenance_equipment_inventory_record_view_search" model="ir.ui.view">
+        <field name="name">maintenance.equipment.inventory.record.search</field>
+        <field name="model">maintenance.equipment.inventory.record</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="equipment_id" />
+                <field name="checked_by_id" />
+                <filter
+                    name="draft"
+                    string="Draft"
+                    domain="[('state', '=', 'draft')]"
+                />
+                <filter
+                    name="to_approve"
+                    string="To Approve"
+                    domain="[('state', '=', 'to_approve')]"
+                />
+                <filter
+                    name="approved"
+                    string="Approved"
+                    domain="[('state', '=', 'approved')]"
+                />
+                <filter
+                    name="refused"
+                    string="Refused"
+                    domain="[('state', '=', 'refused')]"
+                />
+                <filter
+                    name="cancelled"
+                    string="Cancelled"
+                    domain="[('state', '=', 'cancelled')]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_equipment"
+                        string="Equipment"
+                        context="{'group_by': 'equipment_id'}"
+                    />
+                    <filter
+                        name="group_state"
+                        string="Status"
+                        context="{'group_by': 'state'}"
+                    />
+                    <filter
+                        name="group_result"
+                        string="Result"
+                        context="{'group_by': 'result'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record
+        id="maintenance_equipment_inventory_record_action"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Inventory Records</field>
+        <field name="res_model">maintenance.equipment.inventory.record</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="maintenance_equipment_inventory_record_menu"
+        name="Inventory Records"
+        parent="maintenance.menu_maintenance_title"
+        action="maintenance_equipment_inventory_record_action"
+        groups="base.group_user"
+        sequence="3"
+    />
+</odoo>
