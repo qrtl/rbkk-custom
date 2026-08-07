@@ -195,9 +195,14 @@ msgid "Name"
 msgstr "名称"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__national_project
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_national_project
 msgid "National Project"
 msgstr "国家プロジェクト"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__national_project_name
+msgid "National Project Name"
+msgstr "国家プロジェクト名"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__purchase_order_id

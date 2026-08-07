@@ -18,7 +18,8 @@ class MaintenanceEquipment(models.Model):
     is_gmp = fields.Boolean(string="GMP")
     management_no = fields.Char()
     is_measuring_instrument = fields.Boolean(string="Measuring Instrument")
-    national_project = fields.Char()
+    is_national_project = fields.Boolean(string="National Project")
+    national_project_name = fields.Char()
     location_id = fields.Many2one(
         comodel_name="stock.location",
         string="Used in location",

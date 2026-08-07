@@ -23,7 +23,11 @@
             </field>
             <field name="location" position="after">
                 <field name="location_id" />
-                <field name="national_project" />
+                <field name="is_national_project" />
+                <field
+                    name="national_project_name"
+                    invisible="not is_national_project"
+                />
                 <field name="is_fixed_asset" />
                 <field name="fixed_asset_code" invisible="not is_fixed_asset" />
                 <field name="is_gmp" />
@@ -54,8 +58,9 @@
                 <field name="fixed_asset_code" optional="hide" />
                 <field name="manufacturer" optional="hide" />
                 <field name="manufacturer_serial_no" optional="hide" />
-                <field name="national_project" optional="hide" />
+                <field name="national_project_name" optional="hide" />
                 <field name="acquisition_date" optional="hide" />
+                <field name="is_national_project" optional="hide" />
                 <field name="is_fixed_asset" optional="hide" />
                 <field name="is_gmp" optional="hide" />
                 <field name="is_measuring_instrument" optional="hide" />
