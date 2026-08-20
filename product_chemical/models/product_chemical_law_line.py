@@ -14,9 +14,7 @@ class ProductChemicalLawLine(models.Model):
         ondelete="cascade",
         index=True,
     )
-    law_id = fields.Many2one(
-        "product.chemical.law", required=True, ondelete="restrict"
-    )
+    law_id = fields.Many2one("product.chemical.law", required=True, ondelete="restrict")
     major_category_id = fields.Many2one(
         "product.chemical.major.category",
         domain="[('law_id', '=', law_id)]",

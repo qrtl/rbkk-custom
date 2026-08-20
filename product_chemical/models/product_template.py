@@ -23,9 +23,7 @@ class ProductTemplate(models.Model):
         string="Substances",
     )
     risk_assessment_pdf = fields.Binary(string="Risk Assessment Sheet")
-    risk_assessment_pdf_filename = fields.Char(
-        string="Risk Assessment Sheet Filename"
-    )
+    risk_assessment_pdf_filename = fields.Char(string="Risk Assessment Sheet Filename")
     chemical_location_amount_ids = fields.One2many(
         "product.chemical.location.amount",
         "product_tmpl_id",

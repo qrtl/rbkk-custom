@@ -60,7 +60,10 @@
                                 <list editable="bottom">
                                     <field name="sequence" widget="handle" />
                                     <field name="name" />
-                                    <field name="minor_category_ids" widget="many2many_tags" />
+                                    <field
+                                        name="minor_category_ids"
+                                        widget="many2many_tags"
+                                    />
                                 </list>
                             </field>
                         </page>

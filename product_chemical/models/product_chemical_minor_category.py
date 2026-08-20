@@ -16,9 +16,7 @@ class ProductChemicalMinorCategory(models.Model):
         ondelete="cascade",
         index=True,
     )
-    law_id = fields.Many2one(
-        related="major_category_id.law_id", store=True, index=True
-    )
+    law_id = fields.Many2one(related="major_category_id.law_id", store=True, index=True)
     sequence = fields.Integer(default=10)
     active = fields.Boolean(default=True)
 
