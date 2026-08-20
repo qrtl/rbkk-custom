@@ -14,8 +14,9 @@
                                 <field name="cas_no" />
                                 <field name="product_tmpl_id" />
                                 <field name="quantity" />
+                                <field name="product_uom_id" />
                                 <field name="content_rate" />
-                                <field name="component_amount" sum="Total" />
+                                <field name="component_amount" />
                             </list>
                         </field>
                     </page>

@@ -10,7 +10,7 @@ class ProductChemicalLocationAmount(models.Model):
     _auto = False
     _order = "product_tmpl_id, location_id, substance_id"
     _depends = {
-        "product.template": ["is_chemical"],
+        "product.template": ["is_chemical", "uom_id"],
         "product.product": ["product_tmpl_id"],
         "product.chemical.substance.line": [
             "product_tmpl_id",
@@ -25,16 +25,15 @@ class ProductChemicalLocationAmount(models.Model):
     product_tmpl_id = fields.Many2one(
         "product.template", string="Product", readonly=True
     )
-    location_id = fields.Many2one(
-        "stock.location", string="Location", readonly=True
-    )
+    location_id = fields.Many2one("stock.location", string="Location", readonly=True)
     substance_id = fields.Many2one(
         "product.chemical.substance", string="Substance", readonly=True
     )
     cas_no = fields.Char(string="CAS No.", readonly=True)
     quantity = fields.Float(string="On Hand Qty", readonly=True)
+    product_uom_id = fields.Many2one("uom.uom", string="Unit of Measure", readonly=True)
     content_rate = fields.Float(string="Content Rate (%)", readonly=True)
-    component_amount = fields.Float(string="Component Amount", readonly=True)
+    component_amount = fields.Float(readonly=True)
 
     @property
     def _table_query(self):
@@ -46,6 +45,7 @@ class ProductChemicalLocationAmount(models.Model):
                 sub_line.substance_id AS substance_id,
                 sub.cas_no AS cas_no,
                 SUM(sq.quantity) AS quantity,
+                pt.uom_id AS product_uom_id,
                 sub_line.content_rate AS content_rate,
                 SUM(sq.quantity) * sub_line.content_rate / 100.0
                     AS component_amount
@@ -61,6 +61,7 @@ class ProductChemicalLocationAmount(models.Model):
             WHERE pt.is_chemical = TRUE
             GROUP BY
                 pt.id,
+                pt.uom_id,
                 sq.location_id,
                 sub_line.substance_id,
                 sub.cas_no,

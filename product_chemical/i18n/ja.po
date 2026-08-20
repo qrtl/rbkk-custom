@@ -220,6 +220,12 @@ msgid "Location"
 msgstr "ロケーション"
 
 #. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__product_uom_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
+msgid "Unit of Measure"
+msgstr "単位"
+
+#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__component_amount
 msgid "Component Amount"
 msgstr "成分量"

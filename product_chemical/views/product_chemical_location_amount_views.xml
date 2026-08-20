@@ -10,8 +10,9 @@
                 <field name="cas_no" />
                 <field name="product_tmpl_id" />
                 <field name="quantity" />
+                <field name="product_uom_id" />
                 <field name="content_rate" />
-                <field name="component_amount" sum="Total" />
+                <field name="component_amount" />
             </list>
         </field>
     </record>
@@ -40,6 +41,11 @@
                         name="group_product"
                         context="{'group_by': 'product_tmpl_id'}"
                     />
+                    <filter
+                        string="Unit of Measure"
+                        name="group_uom"
+                        context="{'group_by': 'product_uom_id'}"
+                    />
                 </group>
             </search>
         </field>
@@ -50,6 +56,6 @@
         <field name="view_mode">list</field>
         <field
             name="context"
-        >{'search_default_group_location': 1, 'search_default_group_substance': 1}</field>
+        >{'search_default_group_location': 1, 'search_default_group_substance': 2, 'search_default_group_uom': 3}</field>
     </record>
 </odoo>

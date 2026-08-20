@@ -7,7 +7,11 @@ flag on a product is enabled, a "Chemical" tab is shown that allows users to:
 * Register CAS Numbers contained in the product together with their content
   rate (%).
 * Review the component amount per stock location, calculated from on-hand
-  quantity multiplied by each CAS content rate.
+  quantity multiplied by each CAS content rate. The amount is expressed in the
+  stock unit of measure of the product, which is shown next to the quantity.
+  As products are managed in different units of measure, no total across
+  units is displayed; group the report by unit of measure to obtain
+  meaningful subtotals.
 
 Master data managed by this module:
 

@@ -9,11 +9,7 @@
                 <field name="is_chemical" />
             </xpath>
             <xpath expr="//notebook" position="inside">
-                <page
-                    string="Chemical"
-                    name="chemical"
-                    invisible="not is_chemical"
-                >
+                <page string="Chemical" name="chemical" invisible="not is_chemical">
                     <group>
                         <group>
                             <field
@@ -21,19 +17,13 @@
                                 filename="risk_assessment_pdf_filename"
                                 widget="binary"
                             />
-                            <field
-                                name="risk_assessment_pdf_filename"
-                                invisible="1"
-                            />
+                            <field name="risk_assessment_pdf_filename" invisible="1" />
                         </group>
                     </group>
                     <separator string="Applicable Laws" />
                     <field name="chemical_law_line_ids">
                         <list editable="bottom">
-                            <field
-                                name="law_id"
-                                options="{'no_quick_create': True}"
-                            />
+                            <field name="law_id" options="{'no_quick_create': True}" />
                             <field
                                 name="major_category_id"
                                 domain="[('law_id', '=', law_id)]"
@@ -66,8 +56,9 @@
                             <field name="substance_id" />
                             <field name="cas_no" />
                             <field name="quantity" />
+                            <field name="product_uom_id" />
                             <field name="content_rate" />
-                            <field name="component_amount" sum="Total" />
+                            <field name="component_amount" />
                         </list>
                     </field>
                 </page>
