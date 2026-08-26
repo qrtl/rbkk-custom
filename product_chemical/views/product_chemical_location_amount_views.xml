@@ -12,7 +12,9 @@
                 <field name="quantity" />
                 <field name="product_uom_id" />
                 <field name="content_rate" />
-                <field name="component_amount" />
+                <field name="component_amount" sum="Total" />
+                <field name="amount_uom_id" />
+                <field name="uom_category_id" column_invisible="True" />
             </list>
         </field>
     </record>
@@ -25,7 +27,24 @@
                 <field name="cas_no" />
                 <field name="location_id" />
                 <field name="product_tmpl_id" />
+                <field name="amount_uom_id" />
+                <filter
+                    string="Aggregated Only"
+                    name="aggregated"
+                    domain="[('uom_category_id.chemical_uom_id', '!=', False)]"
+                    help="Only amounts converted into a chemical aggregation unit, i.e. excluding count-managed products."
+                />
                 <group expand="0" string="Group By">
+                    <filter
+                        string="Amount UoM"
+                        name="group_amount_uom"
+                        context="{'group_by': 'amount_uom_id'}"
+                    />
+                    <filter
+                        string="UoM Category"
+                        name="group_uom_category"
+                        context="{'group_by': 'uom_category_id'}"
+                    />
                     <filter
                         string="Location"
                         name="group_location"
@@ -41,11 +60,6 @@
                         name="group_product"
                         context="{'group_by': 'product_tmpl_id'}"
                     />
-                    <filter
-                        string="Unit of Measure"
-                        name="group_uom"
-                        context="{'group_by': 'product_uom_id'}"
-                    />
                 </group>
             </search>
         </field>
@@ -54,8 +68,10 @@
         <field name="name">Chemicals by Location</field>
         <field name="res_model">product.chemical.location.amount</field>
         <field name="view_mode">list</field>
+        <!-- The amount unit has to be the outermost group, otherwise weight and
+             volume amounts end up in the same subtotal. -->
         <field
             name="context"
-        >{'search_default_group_location': 1, 'search_default_group_substance': 2, 'search_default_group_uom': 3}</field>
+        >{'search_default_group_amount_uom': 1, 'search_default_group_location': 1, 'search_default_group_substance': 1}</field>
     </record>
 </odoo>

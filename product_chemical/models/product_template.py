@@ -41,3 +41,12 @@ class ProductTemplate(models.Model):
             [("substance_id", operator, value)]
         )
         return [("id", "in", lines.product_tmpl_id.ids)]
+
+    def _get_chemical_amount_uom(self):
+        """Return the unit chemical amounts of this product are expressed in.
+
+        The same rule is applied in SQL by product.chemical.location.amount, so
+        that both reports aggregate amounts into the same unit.
+        """
+        self.ensure_one()
+        return self.uom_id.category_id.chemical_uom_id or self.uom_id

@@ -5,5 +5,8 @@ from . import product_chemical_substance
 from . import product_chemical_law_line
 from . import product_chemical_substance_line
 from . import product_chemical_location_amount
+from . import product_chemical_move_amount
 from . import product_template
 from . import stock_location
+from . import stock_move
+from . import uom_category

@@ -6,3 +6,5 @@ access_product_chemical_substance_user,product.chemical.substance user,model_pro
 access_product_chemical_law_line_user,product.chemical.law.line user,model_product_chemical_law_line,base.group_user,1,1,1,1
 access_product_chemical_substance_line_user,product.chemical.substance.line user,model_product_chemical_substance_line,base.group_user,1,1,1,1
 access_product_chemical_location_amount_user,product.chemical.location.amount user,model_product_chemical_location_amount,base.group_user,1,0,0,0
+access_product_chemical_move_amount_user,product.chemical.move.amount user,model_product_chemical_move_amount,base.group_user,1,0,0,0
+access_product_chemical_move_amount_manager,product.chemical.move.amount manager,model_product_chemical_move_amount,stock.group_stock_manager,1,1,1,1

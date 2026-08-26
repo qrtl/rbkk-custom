@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="stock_location_view_form" model="ir.ui.view">
-        <field name="name">stock.location.form.chemical</field>
+        <field name="name">stock.location.form</field>
         <field name="model">stock.location</field>
         <field name="inherit_id" ref="stock.view_location_form" />
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="inside">
                 <notebook>
                     <page string="Chemicals" name="chemicals">
+                        <!-- No total on the component amount: this list mixes
+                             products of every UoM category and a one2many
+                             cannot be grouped, so any sum here would add
+                             weights to volumes. Use the "Chemicals by
+                             Location" report for aggregated figures. -->
                         <field name="chemical_amount_ids">
                             <list>
                                 <field name="substance_id" />
@@ -17,6 +22,7 @@
                                 <field name="product_uom_id" />
                                 <field name="content_rate" />
                                 <field name="component_amount" />
+                                <field name="amount_uom_id" />
                             </list>
                         </field>
                     </page>

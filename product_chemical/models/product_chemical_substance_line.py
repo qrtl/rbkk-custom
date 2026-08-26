@@ -10,6 +10,7 @@ class ProductChemicalSubstanceLine(models.Model):
 
     product_tmpl_id = fields.Many2one(
         "product.template",
+        string="Product",
         required=True,
         ondelete="cascade",
         index=True,

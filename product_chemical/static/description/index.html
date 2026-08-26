@@ -8,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -274,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -300,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -373,17 +374,13 @@ ul.auto-toc {
 “Chemical” flag on a product is enabled, a “Chemical” tab is shown that
 allows users to:</p>
 <ul class="simple">
-<li>Attach one or more applicable laws to the product (with optional
-major / minor category per law).</li>
+<li>Attach one or more applicable laws to the product (with optional major
+/ minor category per law).</li>
 <li>Upload a risk assessment sheet (PDF).</li>
 <li>Register CAS Numbers contained in the product together with their
 content rate (%).</li>
 <li>Review the component amount per stock location, calculated from
-on-hand quantity multiplied by each CAS content rate. The amount is
-expressed in the stock unit of measure of the product, which is shown
-next to the quantity. As products are managed in different units of
-measure, no total across units is displayed; group the report by unit
-of measure to obtain meaningful subtotals.</li>
+on-hand quantity multiplied by each CAS content rate.</li>
 </ul>
 <p>Master data managed by this module:</p>
 <ul class="simple">
@@ -393,20 +390,63 @@ use it.</li>
 <li><strong>CAS Numbers</strong> — reusable across products.</li>
 </ul>
 <p>Products can be searched by CAS Number from the product search view.</p>
+<div class="section" id="aggregation-units">
+<h1>Aggregation units</h1>
+<p>Products holding the same substance are rarely measured in the same
+unit, so component amounts have to be converted before they can be added
+up. Each unit of measure category therefore carries a <strong>Chemical
+Aggregation UoM</strong>: component amounts of every product in that category
+are converted into it, which keeps each total expressed in a single unit
+and keeps amounts of a different kind (weight versus volume) in separate
+totals.</p>
+<p>Set it on the unit of measure category, for instance kilograms for
+<em>Weight</em> and litres for <em>Volume</em>. Note that a coarse unit makes trace
+amounts round away in the report — pick the smallest unit in use if the
+products are measured in milligrams or microlitres.</p>
+<p>Leaving a category without an aggregation unit turns conversion off for
+it: the amounts are still listed, unconverted, but they no longer join
+the weight or volume totals. That is what count-managed products need,
+since a percentage of a piece count is not a meaningful quantity.</p>
+<p>The <strong>Chemicals by Location</strong> report groups by aggregation unit first
+for this reason, and offers an <em>Aggregated Only</em> filter to hide the
+categories that have none.</p>
+</div>
+<div class="section" id="chemical-movements">
+<h1>Chemical movements</h1>
+<p>Validating a stock move of a chemical product records how much of each
+contained substance was moved, one record per substance, listed in the
+<strong>Chemical Movements</strong> report. Amounts are converted into the
+aggregation unit in the same way as the on-hand report, and are signed:
+positive for a receipt into an internal location, negative for a
+delivery out of one. A move between two internal locations is recorded
+as an internal transfer and left out of the totals by default, since it
+changes no handled amount; a move that never touches an internal
+location, such as a drop shipping, is not recorded at all.</p>
+<p>Unlike the on-hand report, these records are a snapshot: they keep the
+content rate that applied when the move was validated, so revising the
+composition of a product does not rewrite what was handled in the past.
+An inventory manager can still correct a record from its form view when
+the composition was wrong at the time, and the amount is recalculated
+from the corrected rate.</p>
+<p>The <strong>Update Chemical Amounts</strong> action, available to inventory managers
+from the stock move list and from the Chemical Movements list, records
+the movements of moves that were validated before the module was
+installed, and rebuilds them when the composition of a product was
+registered wrongly. The rebuild replaces the records of the whole move,
+so a substance added to or removed from the product is reflected too —
+which also means the manual corrections made on those records are lost.
+Bear in mind that a rebuild applies the composition registered <em>today</em>:
+it cannot restore a rate that was correct at the time of the move and
+has legitimately changed since.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#bug-tracker" id="toc-entry-1">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-2">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-3">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-4">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-5">Maintainers</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#credits" id="toc-entry-2">Credits</a></li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-1">Bug Tracker</a></h1>
+<h2><a class="toc-backref" href="#toc-entry-1">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/qrtl/rbkk-custom/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -414,15 +454,17 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-2">Credits</a></h1>
+<h2><a class="toc-backref" href="#toc-entry-2">Credits</a></h2>
+</div>
+</div>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-3">Authors</a></h2>
+<h1>Authors</h1>
 <ul class="simple">
 <li>Quartile</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-4">Contributors</a></h2>
+<h1>Contributors</h1>
 <ul class="simple">
 <li><a class="reference external" href="https://www.quartile.co">Quartile</a>:<ul>
 <li>Tatsuki Kanda</li>
@@ -431,10 +473,9 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-5">Maintainers</a></h2>
+<h1>Maintainers</h1>
 <p>This module is part of the <a class="reference external" href="https://github.com/qrtl/rbkk-custom/tree/18.0/product_chemical">qrtl/rbkk-custom</a> project on GitHub.</p>
 <p>You are welcome to contribute.</p>
-</div>
 </div>
 </div>
 </body>

@@ -41,4 +41,11 @@
         action="product_chemical_location_amount_action"
         sequence="100"
     />
+    <menuitem
+        id="menu_product_chemical_move_amount"
+        name="Chemical Movements"
+        parent="stock.menu_warehouse_report"
+        action="product_chemical_move_amount_action"
+        sequence="110"
+    />
 </odoo>

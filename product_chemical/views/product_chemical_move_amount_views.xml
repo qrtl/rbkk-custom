@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_chemical_move_amount_view_list" model="ir.ui.view">
+        <field name="name">product.chemical.move.amount.list</field>
+        <field name="model">product.chemical.move.amount</field>
+        <field name="arch" type="xml">
+            <!-- Not editable on purpose: a correction has to be made from the
+                 form view, where the whole movement is visible. -->
+            <list create="false">
+                <field name="actual_date" />
+                <field name="product_id" />
+                <field name="substance_id" />
+                <field name="direction" />
+                <field name="quantity" />
+                <field name="product_uom_id" />
+                <field name="content_rate" />
+                <field name="amount" sum="Total" />
+                <field name="amount_uom_id" />
+                <field name="location_id" optional="hide" />
+                <field name="location_dest_id" optional="hide" />
+                <field name="picking_type_id" optional="hide" />
+                <field name="move_id" optional="hide" />
+                <field name="company_id" column_invisible="True" />
+            </list>
+        </field>
+    </record>
+    <record id="product_chemical_move_amount_view_form" model="ir.ui.view">
+        <field name="name">product.chemical.move.amount.form</field>
+        <field name="model">product.chemical.move.amount</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group name="move">
+                            <field name="move_id" />
+                            <field name="product_id" />
+                            <field name="actual_date" />
+                            <field name="direction" />
+                            <field name="location_id" />
+                            <field name="location_dest_id" />
+                            <field name="picking_type_id" />
+                            <field name="company_id" invisible="1" />
+                        </group>
+                        <group name="amount">
+                            <field name="substance_id" />
+                            <label for="quantity" />
+                            <div class="o_row">
+                                <field name="quantity" />
+                                <field name="product_uom_id" />
+                            </div>
+                            <field name="content_rate" />
+                            <label for="amount" />
+                            <div class="o_row">
+                                <field name="amount" />
+                                <field name="amount_uom_id" />
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="product_chemical_move_amount_view_pivot" model="ir.ui.view">
+        <field name="name">product.chemical.move.amount.pivot</field>
+        <field name="model">product.chemical.move.amount</field>
+        <field name="arch" type="xml">
+            <!-- The amount unit has to be the outermost group, otherwise weight
+                 and volume amounts end up in the same subtotal. -->
+            <pivot>
+                <field name="amount_uom_id" type="row" />
+                <field name="substance_id" type="row" />
+                <field name="actual_date" interval="month" type="col" />
+                <field name="amount" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="product_chemical_move_amount_view_search" model="ir.ui.view">
+        <field name="name">product.chemical.move.amount.search</field>
+        <field name="model">product.chemical.move.amount</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="substance_id" />
+                <field name="product_id" />
+                <field name="move_id" />
+                <field name="location_id" />
+                <field name="location_dest_id" />
+                <filter
+                    string="Receipts"
+                    name="direction_in"
+                    domain="[('direction', '=', 'in')]"
+                />
+                <filter
+                    string="Deliveries"
+                    name="direction_out"
+                    domain="[('direction', '=', 'out')]"
+                />
+                <separator />
+                <filter
+                    string="Excluding Internal Transfers"
+                    name="exclude_internal"
+                    domain="[('direction', '!=', 'internal')]"
+                    help="A transfer between two internal locations changes no handled amount, so it is left out of the totals."
+                />
+                <separator />
+                <filter
+                    string="Actual Date"
+                    name="filter_actual_date"
+                    date="actual_date"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Amount UoM"
+                        name="group_amount_uom"
+                        context="{'group_by': 'amount_uom_id'}"
+                    />
+                    <filter
+                        string="Substance"
+                        name="group_substance"
+                        context="{'group_by': 'substance_id'}"
+                    />
+                    <filter
+                        string="Product"
+                        name="group_product"
+                        context="{'group_by': 'product_id'}"
+                    />
+                    <filter
+                        string="Direction"
+                        name="group_direction"
+                        context="{'group_by': 'direction'}"
+                    />
+                    <filter
+                        string="Operation Type"
+                        name="group_picking_type"
+                        context="{'group_by': 'picking_type_id'}"
+                    />
+                    <filter
+                        string="Actual Date"
+                        name="group_actual_date"
+                        context="{'group_by': 'actual_date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- The rebuild is driven by the move, so that substances added to or
+         removed from the product are picked up too, not only changed rates. -->
+    <record
+        id="product_chemical_move_amount_action_sync"
+        model="ir.actions.server"
+    >
+        <field name="name">Update from Stock Move</field>
+        <field name="model_id" ref="model_product_chemical_move_amount" />
+        <field name="binding_model_id" ref="model_product_chemical_move_amount" />
+        <field name="binding_view_types">list</field>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('stock.group_stock_manager'))]"
+        />
+        <field name="state">code</field>
+        <field name="code">action = records.action_sync_from_move()</field>
+    </record>
+    <record id="product_chemical_move_amount_action" model="ir.actions.act_window">
+        <field name="name">Chemical Movements</field>
+        <field name="res_model">product.chemical.move.amount</field>
+        <field name="view_mode">list,pivot,form</field>
+        <!-- The amount unit has to be the outermost group, otherwise weight and
+             volume amounts end up in the same subtotal. -->
+        <field
+            name="context"
+        >{'search_default_exclude_internal': 1, 'search_default_group_amount_uom': 1, 'search_default_group_substance': 1}</field>
+    </record>
+</odoo>

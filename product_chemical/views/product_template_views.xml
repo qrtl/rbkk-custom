@@ -58,7 +58,8 @@
                             <field name="quantity" />
                             <field name="product_uom_id" />
                             <field name="content_rate" />
-                            <field name="component_amount" />
+                            <field name="component_amount" sum="Total" />
+                            <field name="amount_uom_id" />
                         </list>
                     </field>
                 </page>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Records the chemical movements of moves validated before the module was
+         installed, and refreshes them when the composition of a product was
+         registered wrongly. -->
+    <record id="stock_move_action_sync_chemical_amounts" model="ir.actions.server">
+        <field name="name">Update Chemical Amounts</field>
+        <field name="model_id" ref="stock.model_stock_move" />
+        <field name="binding_model_id" ref="stock.model_stock_move" />
+        <field name="binding_view_types">list,form</field>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('stock.group_stock_manager'))]"
+        />
+        <field name="state">code</field>
+        <field name="code">action = records.action_sync_chemical_amounts()</field>
+    </record>
+</odoo>
