@@ -7,6 +7,10 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='type']" position="after">
                 <field name="is_chemical" />
+                <field
+                    name="track_chemical_consumption"
+                    invisible="not is_chemical"
+                />
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Chemical" name="chemical" invisible="not is_chemical">
@@ -81,6 +85,11 @@
                     string="Chemical"
                     name="is_chemical"
                     domain="[('is_chemical', '=', True)]"
+                />
+                <filter
+                    string="Tracked Chemical Consumption"
+                    name="track_chemical_consumption"
+                    domain="[('track_chemical_consumption', '=', True)]"
                 />
                 <separator />
             </xpath>

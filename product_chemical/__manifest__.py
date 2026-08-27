@@ -2,13 +2,13 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 {
     "name": "Product Chemical",
-    "version": "18.0.1.3.0",
+    "version": "18.0.1.4.0",
     "category": "Inventory/Inventory",
     "summary": "Manage chemical substance information on products",
     "author": "Quartile",
     "website": "https://www.quartile.co",
     "license": "LGPL-3",
-    "depends": ["product", "stock", "uom"],
+    "depends": ["mrp", "product", "stock", "uom"],
     "data": [
         "security/ir.model.access.csv",
         "views/uom_category_views.xml",

@@ -10,7 +10,6 @@
                 <field name="actual_date" />
                 <field name="product_id" />
                 <field name="substance_id" />
-                <field name="direction" />
                 <field name="quantity" />
                 <field name="product_uom_id" />
                 <field name="content_rate" />
@@ -18,7 +17,6 @@
                 <field name="amount_uom_id" />
                 <field name="location_id" optional="hide" />
                 <field name="location_dest_id" optional="hide" />
-                <field name="picking_type_id" optional="hide" />
                 <field name="move_id" optional="hide" />
                 <field name="company_id" column_invisible="True" />
             </list>
@@ -35,10 +33,8 @@
                             <field name="move_id" />
                             <field name="product_id" />
                             <field name="actual_date" />
-                            <field name="direction" />
                             <field name="location_id" />
                             <field name="location_dest_id" />
-                            <field name="picking_type_id" />
                             <field name="company_id" invisible="1" />
                         </group>
                         <group name="amount">
@@ -69,7 +65,7 @@
             <pivot>
                 <field name="amount_uom_id" type="row" />
                 <field name="substance_id" type="row" />
-                <field name="actual_date" interval="month" type="col" />
+                <field name="actual_date" interval="month" type="row" />
                 <field name="amount" type="measure" />
             </pivot>
         </field>
@@ -85,21 +81,14 @@
                 <field name="location_id" />
                 <field name="location_dest_id" />
                 <filter
-                    string="Receipts"
-                    name="direction_in"
-                    domain="[('direction', '=', 'in')]"
+                    string="Consumption"
+                    name="consumption"
+                    domain="[('amount', '&lt;', 0)]"
                 />
                 <filter
-                    string="Deliveries"
-                    name="direction_out"
-                    domain="[('direction', '=', 'out')]"
-                />
-                <separator />
-                <filter
-                    string="Excluding Internal Transfers"
-                    name="exclude_internal"
-                    domain="[('direction', '!=', 'internal')]"
-                    help="A transfer between two internal locations changes no handled amount, so it is left out of the totals."
+                    string="Returns"
+                    name="returns"
+                    domain="[('amount', '&gt;', 0)]"
                 />
                 <separator />
                 <filter
@@ -124,14 +113,14 @@
                         context="{'group_by': 'product_id'}"
                     />
                     <filter
-                        string="Direction"
-                        name="group_direction"
-                        context="{'group_by': 'direction'}"
+                        string="Source Location"
+                        name="group_location"
+                        context="{'group_by': 'location_id'}"
                     />
                     <filter
-                        string="Operation Type"
-                        name="group_picking_type"
-                        context="{'group_by': 'picking_type_id'}"
+                        string="Destination Location"
+                        name="group_location_dest"
+                        context="{'group_by': 'location_dest_id'}"
                     />
                     <filter
                         string="Actual Date"
@@ -144,10 +133,7 @@
     </record>
     <!-- The rebuild is driven by the move, so that substances added to or
          removed from the product are picked up too, not only changed rates. -->
-    <record
-        id="product_chemical_move_amount_action_sync"
-        model="ir.actions.server"
-    >
+    <record id="product_chemical_move_amount_action_sync" model="ir.actions.server">
         <field name="name">Update from Stock Move</field>
         <field name="model_id" ref="model_product_chemical_move_amount" />
         <field name="binding_model_id" ref="model_product_chemical_move_amount" />
@@ -167,6 +153,6 @@
              volume amounts end up in the same subtotal. -->
         <field
             name="context"
-        >{'search_default_exclude_internal': 1, 'search_default_group_amount_uom': 1, 'search_default_group_substance': 1}</field>
+        >{'search_default_group_amount_uom': 1, 'search_default_group_substance': 1}</field>
     </record>
 </odoo>

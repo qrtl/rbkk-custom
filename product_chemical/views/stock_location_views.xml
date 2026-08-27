@@ -5,6 +5,9 @@
         <field name="model">stock.location</field>
         <field name="inherit_id" ref="stock.view_location_form" />
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='usage']" position="after">
+                <field name="is_chemical_consumption_location" />
+            </xpath>
             <xpath expr="//sheet" position="inside">
                 <notebook>
                     <page string="Chemicals" name="chemicals">

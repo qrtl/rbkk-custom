@@ -32,19 +32,7 @@ class ProductChemicalMoveAmount(models.Model):
     location_dest_id = fields.Many2one(
         related="move_id.location_dest_id", string="Destination Location", store=True
     )
-    picking_type_id = fields.Many2one(related="move_id.picking_type_id", store=True)
-    direction = fields.Selection(
-        [
-            ("in", "Receipt"),
-            ("out", "Delivery"),
-            ("internal", "Internal Transfer"),
-        ],
-        compute="_compute_direction",
-        store=True,
-        precompute=True,
-        index=True,
-    )
-    # The direction, the quantity, the units and the content rate are
+    # The quantity, the units and the content rate are
     # snapshots: they are precomputed from the move when the record is created
     # and are not recomputed when the product composition is revised
     # afterwards, so that past movements keep the amounts that were actually
@@ -77,7 +65,7 @@ class ProductChemicalMoveAmount(models.Model):
         compute="_compute_amount",
         store=True,
         precompute=True,
-        help="Amount of the substance moved, negative for a delivery.",
+        help="Amount of the substance moved, negative when it leaves the site.",
     )
     amount_uom_id = fields.Many2one(
         "uom.uom",
@@ -102,18 +90,6 @@ class ProductChemicalMoveAmount(models.Model):
             "Content rate must be between 0 and 100.",
         ),
     ]
-
-    @api.depends("move_id")
-    def _compute_direction(self):
-        for rec in self:
-            from_internal = rec.move_id.location_id.usage == "internal"
-            to_internal = rec.move_id.location_dest_id.usage == "internal"
-            if from_internal and to_internal:
-                rec.direction = "internal"
-            elif to_internal:
-                rec.direction = "in"
-            else:
-                rec.direction = "out"
 
     @api.depends("move_id")
     def _compute_quantity(self):
@@ -141,7 +117,7 @@ class ProductChemicalMoveAmount(models.Model):
             rec.content_rate = rates.get(rec.substance_id, 0.0)
 
     @api.depends(
-        "quantity", "product_uom_id", "amount_uom_id", "content_rate", "direction"
+        "quantity", "product_uom_id", "amount_uom_id", "content_rate", "move_id"
     )
     def _compute_amount(self):
         # Amounts are converted into the chemical aggregation unit of the
@@ -153,7 +129,7 @@ class ProductChemicalMoveAmount(models.Model):
                 quantity = rec.product_uom_id._compute_quantity(
                     quantity, rec.amount_uom_id, round=False
                 )
-            sign = -1 if rec.direction == "out" else 1
+            sign = rec.move_id._get_chemical_amount_sign()
             rec.amount = sign * quantity * rec.content_rate / 100.0
 
     def action_sync_from_move(self):

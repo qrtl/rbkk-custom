@@ -12,17 +12,50 @@ class StockMove(models.Model):
         "product.chemical.move.amount", "move_id", string="Chemical Amounts"
     )
 
+    def _is_chemical_consumption_issue(self):
+        self.ensure_one()
+        return (
+            self.location_id.usage == "internal"
+            and self.location_dest_id.usage == "internal"
+            and not self.location_id.is_chemical_consumption_location
+            and self.location_dest_id.is_chemical_consumption_location
+        )
+
+    def _is_chemical_consumption_receipt(self):
+        self.ensure_one()
+        return (
+            self.location_id.usage == "internal"
+            and self.location_dest_id.usage == "internal"
+            and self.location_id.is_chemical_consumption_location
+            and not self.location_dest_id.is_chemical_consumption_location
+        )
+
+    def _get_chemical_amount_sign(self):
+        """Return the sign the moved amount has to be recorded with.
+
+        Only moves between a regular internal location and a chemical
+        consumption location are tracked. A move into the consumption location
+        is treated as a consumption and recorded as negative; the reverse move
+        restores stock and is recorded as positive.
+        """
+        self.ensure_one()
+        if self._is_chemical_consumption_receipt():
+            return 1
+        if self._is_chemical_consumption_issue():
+            return -1
+        return 0
+
     def _is_chemical_amount_move(self):
         """Return whether the move has to be recorded as a chemical movement."""
         self.ensure_one()
-        if self.state != "done" or not self.product_id.is_chemical:
+        if self.state != "done" or not self.product_id.track_chemical_consumption:
             return False
         if float_is_zero(self.quantity, precision_rounding=self.product_uom.rounding):
             return False
-        # Only a move touching the site is a handling of the substance; a move
-        # between two non-internal locations (drop shipping, for instance)
-        # never makes the goods enter or leave the stock.
-        return "internal" in (self.location_id.usage, self.location_dest_id.usage)
+        return (
+            self._is_chemical_consumption_issue()
+            or self._is_chemical_consumption_receipt()
+        )
 
     def _create_chemical_amounts(self):
         vals_list = []

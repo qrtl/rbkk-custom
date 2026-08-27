@@ -7,6 +7,9 @@ from odoo import fields, models
 class StockLocation(models.Model):
     _inherit = "stock.location"
 
+    is_chemical_consumption_location = fields.Boolean(
+        string="Chemical Consumption Location"
+    )
     chemical_amount_ids = fields.One2many(
         "product.chemical.location.amount",
         "location_id",

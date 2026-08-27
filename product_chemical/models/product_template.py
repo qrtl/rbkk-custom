@@ -8,6 +8,9 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     is_chemical = fields.Boolean(string="Chemical")
+    track_chemical_consumption = fields.Boolean(
+        string="Track Chemical Consumption", default=False
+    )
     chemical_law_line_ids = fields.One2many(
         "product.chemical.law.line", "product_tmpl_id", string="Laws"
     )
