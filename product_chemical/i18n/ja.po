@@ -23,36 +23,6 @@ msgid "%(count)s chemical consumption record(s) created."
 msgstr "%(count)s件の化学物質使用量を記録しました。"
 
 #. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_2_propanol
-msgid "2-Propanol"
-msgstr "2-プロパノール"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_2_propanol
-msgid "2-Propanol (Reagent Grade)"
-msgstr "2-プロパノール（試薬）"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_acetic_acid
-msgid "Acetic Acid (Glacial)"
-msgstr "酢酸（氷酢酸）"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_acetic_acid
-msgid "Acetic acid"
-msgstr "酢酸"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_acetone
-msgid "Acetone"
-msgstr "アセトン"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_acetone
-msgid "Acetone (Reagent Grade)"
-msgstr "アセトン（試薬）"
-
-#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__active
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__active
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__active
@@ -70,11 +40,6 @@ msgstr "実施日時"
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Aggregated Only"
 msgstr "集計対象のみ"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_alcohols
-msgid "Alcohols"
-msgstr "アルコール類"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__amount_uom_id
@@ -104,11 +69,6 @@ msgstr "適用法律"
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_substance_view_search
 msgid "Archived"
 msgstr "アーカイブ済"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_buffer_kit
-msgid "Buffer Preparation Kit (10 vials)"
-msgstr "緩衝液調製キット（10本入）"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__cas_no
@@ -205,56 +165,6 @@ msgid "Chemicals by Location"
 msgstr "ロケーション別化学物質"
 
 #. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_chloroform
-msgid "Chloroform"
-msgstr "クロロホルム"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_chloroform
-msgid "Chloroform (Ethanol Stabilized)"
-msgstr "クロロホルム（エタノール添加）"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_fsa_class1
-msgid "Class 1 Oxidizing Solids"
-msgstr "第1類 酸化性固体"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_class1
-msgid "Class 1 Substance"
-msgstr "第1類物質"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_class2
-msgid "Class 2 Substance"
-msgstr "第2類物質"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_class3
-msgid "Class 3 Substance"
-msgstr "第3類物質"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_fsa_class4
-msgid "Class 4 Flammable Liquids"
-msgstr "第4類 引火性液体"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_fsa_class6
-msgid "Class 6 Oxidizing Liquids"
-msgstr "第6類 酸化性液体"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_prtr_class1
-msgid "Class I Designated Chemical Substance"
-msgstr "第一種指定化学物質"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_prtr_class2
-msgid "Class II Designated Chemical Substance"
-msgstr "第二種指定化学物質"
-
-#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__code
 msgid "Code"
 msgstr "コード"
@@ -335,25 +245,10 @@ msgstr ""
 "この化学物質をプロダクトに追加する際に使用されるデフォルトの含有率(%)。"
 
 #. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_pdsca_deleterious
-msgid "Deleterious Substance"
-msgstr "劇物"
-
-#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__location_dest_id
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 msgid "Destination Location"
 msgstr "移動先ロケーション"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_dmso_vial
-msgid "Dimethyl Sulfoxide, 5 mL Vial"
-msgstr "ジメチルスルホキシド 5mLバイアル"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_dmso
-msgid "Dimethyl sulfoxide"
-msgstr "ジメチルスルホキシド"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__display_name
@@ -366,11 +261,6 @@ msgstr "ジメチルスルホキシド"
 #: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__display_name
 msgid "Display Name"
 msgstr "表示名"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_edta
-msgid "EDTA disodium salt dihydrate"
-msgstr "エチレンジアミン四酢酸二ナトリウム二水和物"
 
 #. module: product_chemical
 #: model:ir.model.constraint,message:product_chemical.constraint_product_template_chemical_law_line_product_law_uniq
@@ -388,87 +278,12 @@ msgid "Each substance can be recorded only once per stock move."
 msgstr "各化学物質は在庫移動ごとに1回のみ記録できます。"
 
 #. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_ethanol
-msgid "Ethanol"
-msgstr "エタノール"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_ethanol
-msgid "Ethanol 99.5% (Reagent Grade)"
-msgstr "エタノール99.5%（試薬）"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_ethyl_acetate
-msgid "Ethyl Acetate (Reagent Grade)"
-msgstr "酢酸エチル（試薬）"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_ethyl_acetate
-msgid "Ethyl acetate"
-msgstr "酢酸エチル"
-
-#. module: product_chemical
-#: model:product.chemical.law,name:product_chemical.chemical_law_fsa
-msgid "Fire Service Act"
-msgstr "消防法"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_formaldehyde
-msgid "Formaldehyde"
-msgstr "ホルムアルデヒド"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_formalin
-msgid "Formalin Solution 37%"
-msgstr "ホルマリン溶液37%"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_prtr_general
-msgid "General Class I"
-msgstr "一般第一種"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_glycerol
-msgid "Glycerol"
-msgstr "グリセリン"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_glycerol
-msgid "Glycerol 50% Solution"
-msgstr "グリセリン50%溶液"
-
-#. module: product_chemical
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_major_category_view_search
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_minor_category_view_search
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Group By"
 msgstr "グループ化"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_class6_g1
-msgid "Group I Oxidizing Liquid"
-msgstr "第1種酸化性液体"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_class1_g1
-msgid "Group I Oxidizing Solid"
-msgstr "第1種酸化性固体"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_class1_g2
-msgid "Group II Oxidizing Solid"
-msgstr "第2種酸化性固体"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_hydrogen_peroxide
-msgid "Hydrogen Peroxide 30% Solution"
-msgstr "過酸化水素30%水溶液"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_hydrogen_peroxide
-msgid "Hydrogen peroxide"
-msgstr "過酸化水素"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__id
@@ -483,24 +298,9 @@ msgid "ID"
 msgstr "ID"
 
 #. module: product_chemical
-#: model:product.chemical.law,name:product_chemical.chemical_law_isha
-msgid "Industrial Safety and Health Act"
-msgstr "労働安全衛生法"
-
-#. module: product_chemical
 #: model:ir.model,name:product_chemical.model_stock_location
 msgid "Inventory Locations"
 msgstr "在庫ロケーション"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_isha_notifiable
-msgid "Labelling / SDS Notifiable Substances"
-msgstr "表示・通知対象物質"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_labelling
-msgid "Labelling Required"
-msgstr "表示対象物"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__write_uid
@@ -577,16 +377,6 @@ msgid "Major category name must be unique per law."
 msgstr "大分類名は法律ごとに一意である必要があります。"
 
 #. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_methanol
-msgid "Methanol"
-msgstr "メタノール"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_methanol
-msgid "Methanol (Analytical Grade)"
-msgstr "メタノール（分析用）"
-
-#. module: product_chemical
 #: model:ir.actions.act_window,name:product_chemical.product_chemical_law_minor_category_action
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__minor_category_ids
 #: model:ir.ui.menu,name:product_chemical.menu_product_chemical_law_minor_category
@@ -639,51 +429,6 @@ msgid ""
 "Only amounts converted into a chemical aggregation unit, i.e. excluding "
 "count-managed products."
 msgstr "化学物質集計単位に換算された成分量のみ（個数管理品を除く）。"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_isha_solvent
-msgid "Organic Solvents"
-msgstr "有機溶剤"
-
-#. module: product_chemical
-#: model:product.chemical.law,name:product_chemical.chemical_law_prtr
-msgid "PRTR Act"
-msgstr "PRTR法"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_petroleum1
-msgid "Petroleum Class 1"
-msgstr "第1石油類"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_petroleum2
-msgid "Petroleum Class 2"
-msgstr "第2石油類"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_petroleum3
-msgid "Petroleum Class 3"
-msgstr "第3石油類"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_phenol
-msgid "Phenol"
-msgstr "フェノール"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_phenol_crystal
-msgid "Phenol (Crystalline)"
-msgstr "フェノール（結晶）"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_pdsca_poison
-msgid "Poisonous Substance"
-msgstr "毒物"
-
-#. module: product_chemical
-#: model:product.chemical.law,name:product_chemical.chemical_law_pdsca
-msgid "Poisonous and Deleterious Substances Control Act"
-msgstr "毒物及び劇物取締法"
 
 #. module: product_chemical
 #: model:ir.model,name:product_chemical.model_product_template
@@ -745,11 +490,6 @@ msgid "Risk Assessment Sheet Filename"
 msgstr "リスクアセスメント表ファイル名"
 
 #. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_sds
-msgid "SDS Notification Required"
-msgstr "通知対象物"
-
-#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__sequence
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__sequence
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__sequence
@@ -773,60 +513,10 @@ msgid "Smart Search"
 msgstr "スマート検索"
 
 #. module: product_chemical
-#: model:product.template,name:product_chemical.product_sodium_chloride
-msgid "Sodium Chloride (Reagent Grade)"
-msgstr "塩化ナトリウム（試薬）"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_sds_solution
-msgid "Sodium Dodecyl Sulfate 10% Solution"
-msgstr "ドデシル硫酸ナトリウム10%溶液"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_sodium_hydroxide
-msgid "Sodium Hydroxide Pellets"
-msgstr "水酸化ナトリウム（粒状）"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_sodium_chloride
-msgid "Sodium chloride"
-msgstr "塩化ナトリウム"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_sds
-msgid "Sodium dodecyl sulfate"
-msgstr "ドデシル硫酸ナトリウム"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_sodium_hydroxide
-msgid "Sodium hydroxide"
-msgstr "水酸化ナトリウム"
-
-#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__location_id
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 msgid "Source Location"
 msgstr "移動元ロケーション"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_special
-msgid "Special Flammable Materials"
-msgstr "特殊引火物"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_isha_specified
-msgid "Specified Chemical Substances"
-msgstr "特定化学物質"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_prtr_specified
-msgid "Specified Class I"
-msgstr "特定第一種"
-
-#. module: product_chemical
-#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_pdsca_specified
-msgid "Specified Poisonous Substance"
-msgstr "特定毒物"
 
 #. module: product_chemical
 #: model:ir.model,name:product_chemical.model_stock_move
@@ -855,16 +545,6 @@ msgid "Substances"
 msgstr "化学物質"
 
 #. module: product_chemical
-#: model:product.template,name:product_chemical.product_sulfuric_acid
-msgid "Sulfuric Acid 98%"
-msgstr "硫酸98%"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_sulfuric_acid
-msgid "Sulfuric acid"
-msgstr "硫酸"
-
-#. module: product_chemical
 #. odoo-python
 #: code:addons/product_chemical/models/uom_category.py:0
 msgid ""
@@ -887,16 +567,6 @@ msgid "The operations brings product to this location"
 msgstr "オペレーションはこのロケーションにプロダクトを移動します"
 
 #. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_toluene
-msgid "Toluene"
-msgstr "トルエン"
-
-#. module: product_chemical
-#: model:product.template,name:product_chemical.product_toluene
-msgid "Toluene (Reagent Grade)"
-msgstr "トルエン（試薬）"
-
-#. module: product_chemical
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_list
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_list
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
@@ -913,26 +583,6 @@ msgstr "化学物質消費追跡"
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
 msgid "Tracked Chemical Consumption"
 msgstr "化学物質消費追跡対象"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_tris
-msgid "Tris(hydroxymethyl)aminomethane"
-msgstr "トリス(ヒドロキシメチル)アミノメタン"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_solvent1
-msgid "Type 1 Organic Solvent"
-msgstr "第1種有機溶剤"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_solvent2
-msgid "Type 2 Organic Solvent"
-msgstr "第2種有機溶剤"
-
-#. module: product_chemical
-#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_solvent3
-msgid "Type 3 Organic Solvent"
-msgstr "第3種有機溶剤"
 
 #. module: product_chemical
 #: model:ir.model.fields,help:product_chemical.field_product_chemical_stock__amount_uom_id
@@ -979,8 +629,3 @@ msgstr "化学物質使用量を更新"
 #: model:ir.actions.server,name:product_chemical.product_chemical_consumption_action_sync
 msgid "Update from Stock Move"
 msgstr "在庫移動から更新"
-
-#. module: product_chemical
-#: model:product.chemical.substance,name:product_chemical.chemical_substance_water
-msgid "Water"
-msgstr "水"
