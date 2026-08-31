@@ -9,13 +9,20 @@ class ProductTemplate(models.Model):
 
     is_chemical = fields.Boolean(string="Chemical")
     track_chemical_consumption = fields.Boolean(default=False)
+    # Copied over on duplication: One2many defaults to copy=False, which would
+    # leave the duplicate flagged as a chemical while holding no composition at
+    # all, so it would be reported nowhere and record no consumption.
     chemical_law_line_ids = fields.One2many(
-        "product.template.chemical.law.line", "product_tmpl_id", string="Laws"
+        "product.template.chemical.law.line",
+        "product_tmpl_id",
+        string="Laws",
+        copy=True,
     )
     chemical_substance_line_ids = fields.One2many(
         "product.template.chemical.substance.line",
         "product_tmpl_id",
         string="Chemical Substances",
+        copy=True,
     )
     chemical_substance_ids = fields.Many2many(
         "product.chemical.substance",
