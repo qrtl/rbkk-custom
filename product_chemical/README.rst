@@ -28,17 +28,18 @@ allows users to:
 
 - Attach one or more applicable laws to the product (with optional major
   / minor category per law).
-- Upload a risk assessment sheet (PDF).
-- Register CAS Numbers contained in the product together with their
-  content rate (%).
+- Upload a risk assessment sheet.
+- Register the chemical substances contained in the product together
+  with their content rate (%).
 - Review the component amount per stock location, calculated from
-  on-hand quantity multiplied by each CAS content rate.
+  on-hand quantity multiplied by each substance content rate.
 
 Master data managed by this module:
 
 - **Laws** — referenced by products.
 - **Major / Minor categories** — organised under their parent law.
-- **CAS Numbers** — reusable across products.
+- **Chemical Substances** — a CAS Number together with the substance
+  name, reusable across products.
 
 Products can be searched by CAS Number from the product search view.
 
@@ -113,16 +114,17 @@ An inventory manager can still correct a record from its form view when
 the composition was wrong at the time, and the amount is recalculated
 from the corrected rate.
 
-The **Update Chemical Amounts** action, available to inventory managers
-from the stock move list and from the Chemical Consumption list, records
-the consumption of moves that were validated before the module was
-installed, and rebuilds them when the composition of a product was
-registered wrongly. The rebuild replaces the records of the whole move,
-so a substance added to or removed from the product is reflected too —
-which also means the manual corrections made on those records are lost.
-Bear in mind that a rebuild applies the composition registered *today*:
-it cannot restore a rate that was correct at the time of the move and
-has legitimately changed since.
+Two actions rebuild these records, both restricted to inventory
+managers: **Update Chemical Consumption** on the stock move list and
+form, and **Update from Stock Move** on the Chemical Consumption list.
+They record the consumption of moves that were validated before the
+module was installed, and rebuild it when the composition of a product
+was registered wrongly. The rebuild replaces the records of the whole
+move, so a substance added to or removed from the product is reflected
+too — which also means the manual corrections made on those records are
+lost. Bear in mind that a rebuild applies the composition registered
+*today*: it cannot restore a rate that was correct at the time of the
+move and has legitimately changed since.
 
 **Table of contents**
 

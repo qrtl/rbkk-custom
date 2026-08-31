@@ -376,17 +376,18 @@ allows users to:</p>
 <ul class="simple">
 <li>Attach one or more applicable laws to the product (with optional major
 / minor category per law).</li>
-<li>Upload a risk assessment sheet (PDF).</li>
-<li>Register CAS Numbers contained in the product together with their
-content rate (%).</li>
+<li>Upload a risk assessment sheet.</li>
+<li>Register the chemical substances contained in the product together
+with their content rate (%).</li>
 <li>Review the component amount per stock location, calculated from
-on-hand quantity multiplied by each CAS content rate.</li>
+on-hand quantity multiplied by each substance content rate.</li>
 </ul>
 <p>Master data managed by this module:</p>
 <ul class="simple">
 <li><strong>Laws</strong> — referenced by products.</li>
 <li><strong>Major / Minor categories</strong> — organised under their parent law.</li>
-<li><strong>CAS Numbers</strong> — reusable across products.</li>
+<li><strong>Chemical Substances</strong> — a CAS Number together with the substance
+name, reusable across products.</li>
 </ul>
 <p>Products can be searched by CAS Number from the product search view.</p>
 <div class="section" id="aggregation-units">
@@ -466,16 +467,17 @@ composition of a product does not rewrite what was handled in the past.
 An inventory manager can still correct a record from its form view when
 the composition was wrong at the time, and the amount is recalculated
 from the corrected rate.</p>
-<p>The <strong>Update Chemical Amounts</strong> action, available to inventory managers
-from the stock move list and from the Chemical Consumption list, records
-the consumption of moves that were validated before the module was
-installed, and rebuilds them when the composition of a product was
-registered wrongly. The rebuild replaces the records of the whole move,
-so a substance added to or removed from the product is reflected too —
-which also means the manual corrections made on those records are lost.
-Bear in mind that a rebuild applies the composition registered <em>today</em>:
-it cannot restore a rate that was correct at the time of the move and
-has legitimately changed since.</p>
+<p>Two actions rebuild these records, both restricted to inventory
+managers: <strong>Update Chemical Consumption</strong> on the stock move list and
+form, and <strong>Update from Stock Move</strong> on the Chemical Consumption list.
+They record the consumption of moves that were validated before the
+module was installed, and rebuild it when the composition of a product
+was registered wrongly. The rebuild replaces the records of the whole
+move, so a substance added to or removed from the product is reflected
+too — which also means the manual corrections made on those records are
+lost. Bear in mind that a rebuild applies the composition registered
+<em>today</em>: it cannot restore a rate that was correct at the time of the
+move and has legitimately changed since.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
