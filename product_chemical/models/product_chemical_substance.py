@@ -8,6 +8,7 @@ class ProductChemicalSubstance(models.Model):
     _name = "product.chemical.substance"
     _description = "Chemical Substance"
     _order = "name"
+    _rec_names_search = ["name", "cas_no"]
 
     name = fields.Char(required=True, translate=True)
     cas_no = fields.Char(string="CAS No.", required=True)

@@ -4,9 +4,9 @@
 from odoo import api, fields, models
 
 
-class ProductChemicalMoveAmount(models.Model):
-    _name = "product.chemical.move.amount"
-    _description = "Product Chemical Amount by Stock Move"
+class ProductChemicalConsumption(models.Model):
+    _name = "product.chemical.consumption"
+    _description = "Product Chemical Consumption"
     _order = "actual_date desc, id desc"
 
     move_id = fields.Many2one(
@@ -35,7 +35,7 @@ class ProductChemicalMoveAmount(models.Model):
     # The quantity, the units and the content rate are
     # snapshots: they are precomputed from the move when the record is created
     # and are not recomputed when the product composition is revised
-    # afterwards, so that past movements keep the amounts that were actually
+    # afterwards, so that past records keep the amounts that were actually
     # handled. Precomputing them matters: computed on flush instead, they would
     # pick up whatever the product holds by the end of the transaction.
     quantity = fields.Float(
@@ -61,11 +61,12 @@ class ProductChemicalMoveAmount(models.Model):
         readonly=False,
     )
     amount = fields.Float(
-        string="Component Amount",
+        string="Consumed Amount",
         compute="_compute_amount",
         store=True,
         precompute=True,
-        help="Amount of the substance moved, negative when it leaves the site.",
+        help="Amount of the substance used up, negative when it is returned "
+        "to the stock.",
     )
     amount_uom_id = fields.Many2one(
         "uom.uom",
@@ -73,7 +74,7 @@ class ProductChemicalMoveAmount(models.Model):
         compute="_compute_amount_uom_id",
         store=True,
         precompute=True,
-        help="Unit of measure the component amount is expressed in: the chemical "
+        help="Unit of measure the consumed amount is expressed in: the chemical "
         "aggregation unit of the UoM category, or the product unit when the "
         "category has none.",
     )
@@ -122,16 +123,16 @@ class ProductChemicalMoveAmount(models.Model):
     def _compute_amount(self):
         # Amounts are converted into the chemical aggregation unit of the
         # product's UoM category, so that amounts of the same kind (weight,
-        # volume) add up, the way product.chemical.location.amount does it.
+        # volume) add up, the way product.chemical.stock does it.
         for rec in self:
             quantity = rec.quantity
             if rec.product_uom_id and rec.amount_uom_id:
                 quantity = rec.product_uom_id._compute_quantity(
                     quantity, rec.amount_uom_id, round=False
                 )
-            sign = rec.move_id._get_chemical_amount_sign()
+            sign = rec.move_id._get_chemical_consumption_sign()
             rec.amount = sign * quantity * rec.content_rate / 100.0
 
     def action_sync_from_move(self):
         """Rebuild the amounts of the moves these records belong to."""
-        return self.move_id.action_sync_chemical_amounts()
+        return self.move_id.action_sync_chemical_consumption()

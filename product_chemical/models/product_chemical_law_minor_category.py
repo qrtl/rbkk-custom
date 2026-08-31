@@ -4,14 +4,14 @@
 from odoo import fields, models
 
 
-class ProductChemicalMinorCategory(models.Model):
-    _name = "product.chemical.minor.category"
-    _description = "Chemical Minor Category"
+class ProductChemicalLawMinorCategory(models.Model):
+    _name = "product.chemical.law.minor.category"
+    _description = "Chemical Law Minor Category"
     _order = "major_category_id, sequence, name"
 
     name = fields.Char(required=True, translate=True)
     major_category_id = fields.Many2one(
-        "product.chemical.major.category",
+        "product.chemical.law.major.category",
         required=True,
         ondelete="cascade",
         index=True,

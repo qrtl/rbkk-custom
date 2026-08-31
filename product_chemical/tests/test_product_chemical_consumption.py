@@ -5,7 +5,7 @@ from odoo import Command
 from odoo.tests.common import TransactionCase
 
 
-class TestProductChemicalMoveAmount(TransactionCase):
+class TestProductChemicalConsumption(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -78,6 +78,13 @@ class TestProductChemicalMoveAmount(TransactionCase):
                 ],
             }
         )
+        cls.virtual_consumption_location = cls.env["stock.location"].create(
+            {
+                "name": "Chemical Production",
+                "usage": "production",
+                "is_chemical_consumption_location": True,
+            }
+        )
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
@@ -99,23 +106,41 @@ class TestProductChemicalMoveAmount(TransactionCase):
         return move
 
     def _amount_a(self, move):
-        return move.chemical_amount_ids.filtered(
+        return move.chemical_consumption_ids.filtered(
             lambda a: a.substance_id == self.substance_a
         )
 
-    def test_internal_to_consumption_is_recorded_as_negative(self):
+    def test_internal_to_consumption_is_recorded_as_positive(self):
+        # The amounts measure consumption, not the stock variation, so issuing
+        # the goods into the consumption location is the positive direction.
         move = self._make_move(self.stock_location, self.consumption_location)
-        amounts = move.chemical_amount_ids
+        amounts = move.chemical_consumption_ids
         self.assertEqual(len(amounts), 2)
         amount_a = amounts.filtered(lambda a: a.substance_id == self.substance_a)
         # 10 L converted into the aggregation unit (mL) at a 60% content rate.
         self.assertEqual(amount_a.amount_uom_id, self.uom_ml)
-        self.assertAlmostEqual(amount_a.amount, -6000.0)
+        self.assertAlmostEqual(amount_a.amount, 6000.0)
 
-    def test_consumption_to_internal_is_recorded_as_positive(self):
+    def test_consumption_to_internal_is_recorded_as_negative(self):
         move = self._make_move(self.consumption_location, self.stock_location)
         amount_a = self._amount_a(move)
-        self.assertAlmostEqual(amount_a.amount, 6000.0)
+        self.assertAlmostEqual(amount_a.amount, -6000.0)
+
+    def test_virtual_consumption_location_is_recorded(self):
+        # A consumption location is normally a virtual one (a production or an
+        # inventory adjustment location), so only its counterpart has to be
+        # internal. This fails if the internal-on-both-sides guard comes back.
+        move = self._make_move(self.stock_location, self.virtual_consumption_location)
+        self.assertAlmostEqual(self._amount_a(move).amount, 6000.0)
+
+    def test_consumption_location_needs_an_internal_counterpart(self):
+        # A move between two non-stock locations takes nothing out of the site,
+        # so it is not a consumption. This fails if the usage check is dropped
+        # altogether rather than being moved onto the counterpart.
+        move = self._make_move(
+            self.supplier_location, self.virtual_consumption_location
+        )
+        self.assertFalse(move.chemical_consumption_ids)
 
     def test_only_tracked_products_create_records(self):
         move = self._make_move(
@@ -123,35 +148,45 @@ class TestProductChemicalMoveAmount(TransactionCase):
             self.consumption_location,
             product=self.untracked_product,
         )
-        self.assertFalse(move.chemical_amount_ids)
+        self.assertFalse(move.chemical_consumption_ids)
+
+    def test_unsetting_is_chemical_stops_the_tracking(self):
+        # The consumption report and the on hand report have to describe the
+        # same products, and the on hand report is driven by is_chemical alone.
+        # This fails if the flag is merely hidden in the form instead of being
+        # cleared, or if the move path stops checking is_chemical.
+        self.tracked_product.product_tmpl_id.is_chemical = False
+        self.assertFalse(self.tracked_product.track_chemical_consumption)
+        move = self._make_move(self.stock_location, self.consumption_location)
+        self.assertFalse(move.chemical_consumption_ids)
 
     def test_regular_internal_transfer_is_not_recorded(self):
         move = self._make_move(self.stock_location, self.stock_location_2)
-        self.assertFalse(move.chemical_amount_ids)
+        self.assertFalse(move.chemical_consumption_ids)
 
     def test_supplier_to_internal_is_not_recorded(self):
         move = self._make_move(self.supplier_location, self.stock_location)
-        self.assertFalse(move.chemical_amount_ids)
+        self.assertFalse(move.chemical_consumption_ids)
 
     def test_internal_to_customer_is_not_recorded(self):
         move = self._make_move(self.stock_location, self.customer_location)
-        self.assertFalse(move.chemical_amount_ids)
+        self.assertFalse(move.chemical_consumption_ids)
 
     def test_amounts_are_snapshots(self):
         # A later revision of the product composition must not rewrite the
-        # amounts of past movements, while a correction on the movement itself
+        # amounts of past records, while a correction on the record itself
         # has to recompute its amount.
         move = self._make_move(self.stock_location, self.consumption_location)
-        amount_a = move.chemical_amount_ids.filtered(
+        amount_a = move.chemical_consumption_ids.filtered(
             lambda a: a.substance_id == self.substance_a
         )
         self.tracked_product.chemical_substance_line_ids.filtered(
             lambda line: line.substance_id == self.substance_a
         ).content_rate = 30.0
         self.assertAlmostEqual(amount_a.content_rate, 60.0)
-        self.assertAlmostEqual(amount_a.amount, -6000.0)
+        self.assertAlmostEqual(amount_a.amount, 6000.0)
         amount_a.content_rate = 30.0
-        self.assertAlmostEqual(amount_a.amount, -3000.0)
+        self.assertAlmostEqual(amount_a.amount, 3000.0)
 
     def test_sync_follows_the_composition_of_the_product(self):
         # The rebuild has to replace the records, not recompute them in place:
@@ -167,19 +202,19 @@ class TestProductChemicalMoveAmount(TransactionCase):
         self.tracked_product.chemical_substance_line_ids = [
             Command.create({"substance_id": substance_c.id, "content_rate": 25.0})
         ]
-        move.action_sync_chemical_amounts()
-        amounts = move.chemical_amount_ids
+        move.action_sync_chemical_consumption()
+        amounts = move.chemical_consumption_ids
         self.assertEqual(amounts.substance_id, self.substance_a | substance_c)
         amount_c = amounts.filtered(lambda a: a.substance_id == substance_c)
-        self.assertAlmostEqual(amount_c.amount, -2500.0)
+        self.assertAlmostEqual(amount_c.amount, 2500.0)
 
     def test_sync_records_a_move_validated_before_installation(self):
         # Backfilling a past move must keep the date of the move, so that the
         # amount lands in the period it was actually handled in.
         move = self._make_move(self.stock_location, self.consumption_location)
-        move.chemical_amount_ids.unlink()
-        move.action_sync_chemical_amounts()
-        self.assertEqual(len(move.chemical_amount_ids), 2)
+        move.chemical_consumption_ids.unlink()
+        move.action_sync_chemical_consumption()
+        self.assertEqual(len(move.chemical_consumption_ids), 2)
         self.assertEqual(
-            set(move.chemical_amount_ids.mapped("actual_date")), {move.date}
+            set(move.chemical_consumption_ids.mapped("actual_date")), {move.date}
         )

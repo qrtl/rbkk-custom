@@ -8,7 +8,6 @@
                 <field name="sequence" widget="handle" />
                 <field name="code" />
                 <field name="name" />
-                <field name="product_count" string="Products" />
             </list>
         </field>
     </record>
@@ -17,22 +16,7 @@
         <field name="model">product.chemical.law</field>
         <field name="arch" type="xml">
             <form>
-                <header />
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button
-                            name="action_view_products"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-cubes"
-                        >
-                            <field
-                                name="product_count"
-                                widget="statinfo"
-                                string="Products"
-                            />
-                        </button>
-                    </div>
                     <widget
                         name="web_ribbon"
                         title="Archived"

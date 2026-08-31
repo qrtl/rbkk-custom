@@ -36,8 +36,7 @@ allows users to:
 
 Master data managed by this module:
 
-- **Laws** — referenced by products; each law lists the products that
-  use it.
+- **Laws** — referenced by products.
 - **Major / Minor categories** — organised under their parent law.
 - **CAS Numbers** — reusable across products.
 
@@ -68,18 +67,44 @@ The **Chemicals by Location** report groups by aggregation unit first
 for this reason, and offers an *Aggregated Only* filter to hide the
 categories that have none.
 
-Chemical movements
-------------------
+Chemical consumption
+--------------------
 
-Validating a stock move of a chemical product records how much of each
-contained substance was moved, one record per substance, listed in the
-**Chemical Movements** report. Amounts are converted into the
-aggregation unit in the same way as the on-hand report, and are signed:
-positive for a receipt into an internal location, negative for a
-delivery out of one. A move between two internal locations is recorded
-as an internal transfer and left out of the totals by default, since it
-changes no handled amount; a move that never touches an internal
-location, such as a drop shipping, is not recorded at all.
+Consumption is tracked by moving the goods, so that the amount consumed
+is whatever the stock move says it is. Configure it in two steps:
+
+1. Flag the locations the substance is used up through — a production
+   location, or an inventory adjustment location standing for a
+   scrapping or a non-manufacturing issue — with **Chemical Consumption
+   Location** on the location form. A virtual location is the usual
+   choice; a physical bench works just as well.
+2. Enable **Track Chemical Consumption** on the products whose
+   consumption has to be followed. The flag is offered on chemical
+   products only.
+
+Issuing such a product out of stock into a consumption location then
+records how much of each contained substance was consumed, one record
+per substance, listed in the **Chemical Consumption** report. Moving it
+back out records the same amounts with the opposite sign, so returning
+an unused remainder cancels the consumption it was booked against.
+
+======================================== =====================
+Move                                     Recorded as
+======================================== =====================
+Internal location → consumption location consumption, positive
+Consumption location → internal location return, negative
+Anything else                            not recorded
+======================================== =====================
+
+A move counts only when exactly one of its two sides is a consumption
+location and the other one is internal, i.e. holds the stock the
+substance is taken from or returned to. The consumption location itself
+may be of any kind, which is what lets a virtual one be used. Receipts,
+deliveries and ordinary internal transfers are deliberately left out:
+they relocate the substance without using any of it, and the amount held
+at each location is already reported by **Chemicals by Location**.
+Amounts are converted into the aggregation unit in the same way as that
+report, so the two agree.
 
 Unlike the on-hand report, these records are a snapshot: they keep the
 content rate that applied when the move was validated, so revising the
@@ -89,8 +114,8 @@ the composition was wrong at the time, and the amount is recalculated
 from the corrected rate.
 
 The **Update Chemical Amounts** action, available to inventory managers
-from the stock move list and from the Chemical Movements list, records
-the movements of moves that were validated before the module was
+from the stock move list and from the Chemical Consumption list, records
+the consumption of moves that were validated before the module was
 installed, and rebuilds them when the composition of a product was
 registered wrongly. The rebuild replaces the records of the whole move,
 so a substance added to or removed from the product is reflected too —

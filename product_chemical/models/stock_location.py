@@ -10,9 +10,3 @@ class StockLocation(models.Model):
     is_chemical_consumption_location = fields.Boolean(
         string="Chemical Consumption Location"
     )
-    chemical_amount_ids = fields.One2many(
-        "product.chemical.location.amount",
-        "location_id",
-        string="Chemical Components",
-        readonly=True,
-    )

@@ -8,14 +8,12 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     is_chemical = fields.Boolean(string="Chemical")
-    track_chemical_consumption = fields.Boolean(
-        string="Track Chemical Consumption", default=False
-    )
+    track_chemical_consumption = fields.Boolean(default=False)
     chemical_law_line_ids = fields.One2many(
-        "product.chemical.law.line", "product_tmpl_id", string="Laws"
+        "product.template.chemical.law.line", "product_tmpl_id", string="Laws"
     )
     chemical_substance_line_ids = fields.One2many(
-        "product.chemical.substance.line",
+        "product.template.chemical.substance.line",
         "product_tmpl_id",
         string="Chemical Substances",
     )
@@ -25,10 +23,10 @@ class ProductTemplate(models.Model):
         search="_search_chemical_substance_ids",
         string="Substances",
     )
-    risk_assessment_pdf = fields.Binary(string="Risk Assessment Sheet")
-    risk_assessment_pdf_filename = fields.Char(string="Risk Assessment Sheet Filename")
-    chemical_location_amount_ids = fields.One2many(
-        "product.chemical.location.amount",
+    risk_assessment_file = fields.Binary(string="Risk Assessment Sheet")
+    risk_assessment_filename = fields.Char(string="Risk Assessment Sheet Filename")
+    chemical_stock_ids = fields.One2many(
+        "product.chemical.stock",
         "product_tmpl_id",
         string="Component Amount by Location",
         readonly=True,
@@ -40,15 +38,28 @@ class ProductTemplate(models.Model):
             rec.chemical_substance_ids = rec.chemical_substance_line_ids.substance_id
 
     def _search_chemical_substance_ids(self, operator, value):
-        lines = self.env["product.chemical.substance.line"].search(
-            [("substance_id", operator, value)]
-        )
-        return [("id", "in", lines.product_tmpl_id.ids)]
+        return [("chemical_substance_line_ids.substance_id", operator, value)]
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get("is_chemical"):
+                vals["track_chemical_consumption"] = False
+        return super().create(vals_list)
+
+    def write(self, vals):
+        # Consumption is only tracked for a chemical product, so that the
+        # consumption report and the on hand report describe the same set of
+        # products. Clearing the flag here keeps a product that stops being a
+        # chemical from carrying a tracking flag nothing acts on any more.
+        if "is_chemical" in vals and not vals["is_chemical"]:
+            vals = dict(vals, track_chemical_consumption=False)
+        return super().write(vals)
 
     def _get_chemical_amount_uom(self):
         """Return the unit chemical amounts of this product are expressed in.
 
-        The same rule is applied in SQL by product.chemical.location.amount, so
+        The same rule is applied in SQL by product.chemical.stock, so
         that both reports aggregate amounts into the same unit.
         """
         self.ensure_one()

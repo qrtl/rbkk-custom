@@ -8,28 +8,15 @@
             <xpath expr="//field[@name='usage']" position="after">
                 <field name="is_chemical_consumption_location" />
             </xpath>
-            <xpath expr="//sheet" position="inside">
-                <notebook>
-                    <page string="Chemicals" name="chemicals">
-                        <!-- No total on the component amount: this list mixes
-                             products of every UoM category and a one2many
-                             cannot be grouped, so any sum here would add
-                             weights to volumes. Use the "Chemicals by
-                             Location" report for aggregated figures. -->
-                        <field name="chemical_amount_ids">
-                            <list>
-                                <field name="substance_id" />
-                                <field name="cas_no" />
-                                <field name="product_tmpl_id" />
-                                <field name="quantity" />
-                                <field name="product_uom_id" />
-                                <field name="content_rate" />
-                                <field name="component_amount" />
-                                <field name="amount_uom_id" />
-                            </list>
-                        </field>
-                    </page>
-                </notebook>
+        </field>
+    </record>
+    <record id="stock_location_view_list" model="ir.ui.view">
+        <field name="name">stock.location.list</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_tree2" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='usage']" position="after">
+                <field name="is_chemical_consumption_location" optional="hide" />
             </xpath>
         </field>
     </record>

@@ -4,15 +4,15 @@
 from odoo import fields, models
 
 
-class ProductChemicalLocationAmount(models.Model):
-    _name = "product.chemical.location.amount"
-    _description = "Product Chemical Amount by Location"
+class ProductChemicalStock(models.Model):
+    _name = "product.chemical.stock"
+    _description = "Product Chemical Stock"
     _auto = False
     _order = "product_tmpl_id, location_id, substance_id"
     _depends = {
         "product.template": ["is_chemical", "uom_id"],
         "product.product": ["product_tmpl_id"],
-        "product.chemical.substance.line": [
+        "product.template.chemical.substance.line": [
             "product_tmpl_id",
             "substance_id",
             "content_rate",
@@ -78,7 +78,7 @@ class ProductChemicalLocationAmount(models.Model):
                     AS component_amount
             FROM product_template pt
             JOIN product_product pp ON pp.product_tmpl_id = pt.id
-            JOIN product_chemical_substance_line sub_line
+            JOIN product_template_chemical_substance_line sub_line
                 ON sub_line.product_tmpl_id = pt.id
             JOIN product_chemical_substance sub
                 ON sub.id = sub_line.substance_id

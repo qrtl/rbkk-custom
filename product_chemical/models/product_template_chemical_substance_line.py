@@ -4,8 +4,8 @@
 from odoo import api, fields, models
 
 
-class ProductChemicalSubstanceLine(models.Model):
-    _name = "product.chemical.substance.line"
+class ProductTemplateChemicalSubstanceLine(models.Model):
+    _name = "product.template.chemical.substance.line"
     _description = "Product Chemical Substance Line"
 
     product_tmpl_id = fields.Many2one(

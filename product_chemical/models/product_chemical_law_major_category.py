@@ -4,9 +4,9 @@
 from odoo import fields, models
 
 
-class ProductChemicalMajorCategory(models.Model):
-    _name = "product.chemical.major.category"
-    _description = "Chemical Major Category"
+class ProductChemicalLawMajorCategory(models.Model):
+    _name = "product.chemical.law.major.category"
+    _description = "Chemical Law Major Category"
     _order = "law_id, sequence, name"
 
     name = fields.Char(required=True, translate=True)
@@ -16,7 +16,7 @@ class ProductChemicalMajorCategory(models.Model):
     sequence = fields.Integer(default=10)
     active = fields.Boolean(default=True)
     minor_category_ids = fields.One2many(
-        "product.chemical.minor.category",
+        "product.chemical.law.minor.category",
         "major_category_id",
         string="Minor Categories",
     )

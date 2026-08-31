@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="product_chemical_move_amount_view_list" model="ir.ui.view">
-        <field name="name">product.chemical.move.amount.list</field>
-        <field name="model">product.chemical.move.amount</field>
+    <record id="product_chemical_consumption_view_list" model="ir.ui.view">
+        <field name="name">product.chemical.consumption.list</field>
+        <field name="model">product.chemical.consumption</field>
         <field name="arch" type="xml">
             <!-- Not editable on purpose: a correction has to be made from the
-                 form view, where the whole movement is visible. -->
+                 form view, where the whole record is visible. -->
             <list create="false">
                 <field name="actual_date" />
                 <field name="product_id" />
@@ -22,9 +22,9 @@
             </list>
         </field>
     </record>
-    <record id="product_chemical_move_amount_view_form" model="ir.ui.view">
-        <field name="name">product.chemical.move.amount.form</field>
-        <field name="model">product.chemical.move.amount</field>
+    <record id="product_chemical_consumption_view_form" model="ir.ui.view">
+        <field name="name">product.chemical.consumption.form</field>
+        <field name="model">product.chemical.consumption</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
@@ -56,9 +56,9 @@
             </form>
         </field>
     </record>
-    <record id="product_chemical_move_amount_view_pivot" model="ir.ui.view">
-        <field name="name">product.chemical.move.amount.pivot</field>
-        <field name="model">product.chemical.move.amount</field>
+    <record id="product_chemical_consumption_view_pivot" model="ir.ui.view">
+        <field name="name">product.chemical.consumption.pivot</field>
+        <field name="model">product.chemical.consumption</field>
         <field name="arch" type="xml">
             <!-- The amount unit has to be the outermost group, otherwise weight
                  and volume amounts end up in the same subtotal. -->
@@ -70,9 +70,9 @@
             </pivot>
         </field>
     </record>
-    <record id="product_chemical_move_amount_view_search" model="ir.ui.view">
-        <field name="name">product.chemical.move.amount.search</field>
-        <field name="model">product.chemical.move.amount</field>
+    <record id="product_chemical_consumption_view_search" model="ir.ui.view">
+        <field name="name">product.chemical.consumption.search</field>
+        <field name="model">product.chemical.consumption</field>
         <field name="arch" type="xml">
             <search>
                 <field name="substance_id" />
@@ -83,12 +83,12 @@
                 <filter
                     string="Consumption"
                     name="consumption"
-                    domain="[('amount', '&lt;', 0)]"
+                    domain="[('amount', '&gt;', 0)]"
                 />
                 <filter
                     string="Returns"
                     name="returns"
-                    domain="[('amount', '&gt;', 0)]"
+                    domain="[('amount', '&lt;', 0)]"
                 />
                 <separator />
                 <filter
@@ -133,10 +133,10 @@
     </record>
     <!-- The rebuild is driven by the move, so that substances added to or
          removed from the product are picked up too, not only changed rates. -->
-    <record id="product_chemical_move_amount_action_sync" model="ir.actions.server">
+    <record id="product_chemical_consumption_action_sync" model="ir.actions.server">
         <field name="name">Update from Stock Move</field>
-        <field name="model_id" ref="model_product_chemical_move_amount" />
-        <field name="binding_model_id" ref="model_product_chemical_move_amount" />
+        <field name="model_id" ref="model_product_chemical_consumption" />
+        <field name="binding_model_id" ref="model_product_chemical_consumption" />
         <field name="binding_view_types">list</field>
         <field
             name="groups_id"
@@ -145,9 +145,9 @@
         <field name="state">code</field>
         <field name="code">action = records.action_sync_from_move()</field>
     </record>
-    <record id="product_chemical_move_amount_action" model="ir.actions.act_window">
-        <field name="name">Chemical Movements</field>
-        <field name="res_model">product.chemical.move.amount</field>
+    <record id="product_chemical_consumption_action" model="ir.actions.act_window">
+        <field name="name">Chemical Consumption</field>
+        <field name="res_model">product.chemical.consumption</field>
         <field name="view_mode">list,pivot,form</field>
         <!-- The amount unit has to be the outermost group, otherwise weight and
              volume amounts end up in the same subtotal. -->

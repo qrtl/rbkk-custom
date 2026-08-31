@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-26 03:45+0000\n"
+"POT-Creation-Date: 2026-08-28 06:42+0000\n"
 "PO-Revision-Date: 2026-05-26 00:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,8 +19,8 @@ msgstr ""
 #. module: product_chemical
 #. odoo-python
 #: code:addons/product_chemical/models/stock_move.py:0
-msgid "%(count)s chemical movement(s) recorded."
-msgstr "%(count)s件の化学物質移動を記録しました。"
+msgid "%(count)s chemical consumption record(s) created."
+msgstr "%(count)s件の化学物質使用量を記録しました。"
 
 #. module: product_chemical
 #: model:product.chemical.substance,name:product_chemical.chemical_substance_2_propanol
@@ -31,14 +31,6 @@ msgstr "2-プロパノール"
 #: model:product.template,name:product_chemical.product_2_propanol
 msgid "2-Propanol (Reagent Grade)"
 msgstr "2-プロパノール（試薬）"
-
-#. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
-msgid ""
-"A transfer between two internal locations changes no handled amount, so it "
-"is left out of the totals."
-msgstr ""
-"内部ロケーション間の移動は取扱量を変動させないため、集計から除外されます。"
 
 #. module: product_chemical
 #: model:product.template,name:product_chemical.product_acetic_acid
@@ -62,51 +54,52 @@ msgstr "アセトン（試薬）"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__active
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__active
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__active
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__active
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__active
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__active
 msgid "Active"
 msgstr "有効"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__actual_date
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__actual_date
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 msgid "Actual Date"
 msgstr "実施日時"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Aggregated Only"
 msgstr "集計対象のみ"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_fsa_alcohols
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_alcohols
 msgid "Alcohols"
 msgstr "アルコール類"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__amount_uom_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__amount_uom_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__amount_uom_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__amount_uom_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Amount UoM"
 msgstr "成分量単位"
 
 #. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_move_amount__amount
-msgid "Amount of the substance moved, negative for a delivery."
-msgstr "移動した化学物質の量。出荷の場合はマイナスになります。"
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__amount
+msgid ""
+"Amount of the substance used up, negative when it is returned to the stock."
+msgstr "使用された化学物質の量。在庫へ戻した場合はマイナスになります。"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
 msgid "Applicable Laws"
 msgstr "適用法律"
 
 #. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_major_category_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_minor_category_view_form
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_search
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_form
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_form
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_substance_view_form
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_substance_view_search
 msgid "Archived"
@@ -118,10 +111,10 @@ msgid "Buffer Preparation Kit (10 vials)"
 msgstr "緩衝液調製キット（10本入）"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__cas_no
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__cas_no
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__cas_no
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__cas_no
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_search_view
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__cas_no
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
 msgid "CAS No."
 msgstr "CAS番号"
 
@@ -139,8 +132,8 @@ msgstr "カテゴリ"
 #: model:ir.model.fields,field_description:product_chemical.field_product_product__is_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_template__is_chemical
 #: model:ir.ui.menu,name:product_chemical.menu_product_chemical_root
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_search_view
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
 msgid "Chemical"
 msgstr "化学物質"
 
@@ -150,14 +143,16 @@ msgid "Chemical Aggregation UoM"
 msgstr "化学物質集計単位"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_stock_move__chemical_amount_ids
-msgid "Chemical Amounts"
-msgstr "化学物質量"
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_consumption_action
+#: model:ir.model.fields,field_description:product_chemical.field_stock_move__chemical_consumption_ids
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_consumption
+msgid "Chemical Consumption"
+msgstr "化学物質使用量"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_stock_location__chemical_amount_ids
-msgid "Chemical Components"
-msgstr "化学物質成分"
+#: model:ir.model.fields,field_description:product_chemical.field_stock_location__is_chemical_consumption_location
+msgid "Chemical Consumption Location"
+msgstr "化学物質消費ロケーション"
 
 #. module: product_chemical
 #: model:ir.model,name:product_chemical.model_product_chemical_law
@@ -165,25 +160,19 @@ msgid "Chemical Law"
 msgstr "化学物質法律"
 
 #. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_law_major_category
+msgid "Chemical Law Major Category"
+msgstr "化学物質法律大分類"
+
+#. module: product_chemical
+#: model:ir.model,name:product_chemical.model_product_chemical_law_minor_category
+msgid "Chemical Law Minor Category"
+msgstr "化学物質法律小分類"
+
+#. module: product_chemical
 #: model:ir.actions.act_window,name:product_chemical.product_chemical_law_action
 msgid "Chemical Laws"
 msgstr "化学物質法律"
-
-#. module: product_chemical
-#: model:ir.model,name:product_chemical.model_product_chemical_major_category
-msgid "Chemical Major Category"
-msgstr "化学物質大分類"
-
-#. module: product_chemical
-#: model:ir.model,name:product_chemical.model_product_chemical_minor_category
-msgid "Chemical Minor Category"
-msgstr "化学物質小分類"
-
-#. module: product_chemical
-#: model:ir.actions.act_window,name:product_chemical.product_chemical_move_amount_action
-#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_move_amount
-msgid "Chemical Movements"
-msgstr "化学物質移動"
 
 #. module: product_chemical
 #: model:ir.model,name:product_chemical.model_product_chemical_substance
@@ -195,7 +184,7 @@ msgstr "化学物質"
 #: model:ir.model.fields,field_description:product_chemical.field_product_product__chemical_substance_line_ids
 #: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_substance_line_ids
 #: model:ir.ui.menu,name:product_chemical.menu_product_chemical_substance
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
 msgid "Chemical Substances"
 msgstr "化学物質マスタ"
 
@@ -210,13 +199,8 @@ msgstr ""
 "れます。空欄にすると換算せずに成分量を表示します（個数管理品など）。"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.stock_location_view_form
-msgid "Chemicals"
-msgstr "化学物質"
-
-#. module: product_chemical
-#: model:ir.actions.act_window,name:product_chemical.product_chemical_location_amount_action
-#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_location_amount
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_stock_action
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_stock
 msgid "Chemicals by Location"
 msgstr "ロケーション別化学物質"
 
@@ -231,42 +215,42 @@ msgid "Chloroform (Ethanol Stabilized)"
 msgstr "クロロホルム（エタノール添加）"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_fsa_class1
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_fsa_class1
 msgid "Class 1 Oxidizing Solids"
 msgstr "第1類 酸化性固体"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_isha_class1
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_class1
 msgid "Class 1 Substance"
 msgstr "第1類物質"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_isha_class2
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_class2
 msgid "Class 2 Substance"
 msgstr "第2類物質"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_isha_class3
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_class3
 msgid "Class 3 Substance"
 msgstr "第3類物質"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_fsa_class4
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_fsa_class4
 msgid "Class 4 Flammable Liquids"
 msgstr "第4類 引火性液体"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_fsa_class6
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_fsa_class6
 msgid "Class 6 Oxidizing Liquids"
 msgstr "第6類 酸化性液体"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_prtr_class1
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_prtr_class1
 msgid "Class I Designated Chemical Substance"
 msgstr "第一種指定化学物質"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_prtr_class2
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_prtr_class2
 msgid "Class II Designated Chemical Substance"
 msgstr "第二種指定化学物質"
 
@@ -276,62 +260,71 @@ msgid "Code"
 msgstr "コード"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__company_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__company_id
 msgid "Company"
 msgstr "会社"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__component_amount
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__amount
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__component_amount
 msgid "Component Amount"
 msgstr "成分量"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_product__chemical_location_amount_ids
-#: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_location_amount_ids
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+#: model:ir.model.fields,field_description:product_chemical.field_product_product__chemical_stock_ids
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_stock_ids
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
 msgid "Component Amount by Location"
 msgstr "ロケーション別成分量"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__content_rate
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__content_rate
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__amount
+msgid "Consumed Amount"
+msgstr "使用量"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
+msgid "Consumption"
+msgstr "消費"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__content_rate
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__content_rate
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__content_rate
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__content_rate
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__content_rate
 msgid "Content Rate (%)"
 msgstr "含有率 (%)"
 
 #. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_move_amount_content_rate_range
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_consumption_content_rate_range
 #: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_content_rate_range
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_line_content_rate_range
+#: model:ir.model.constraint,message:product_chemical.constraint_product_template_chemical_substance_line_content_rate_range
 msgid "Content rate must be between 0 and 100."
 msgstr "含有率は0以上100以下である必要があります。"
 
 #. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__create_uid
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__create_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__create_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__create_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__create_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__create_uid
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__create_uid
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__create_uid
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__create_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__create_uid
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__create_uid
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__create_uid
 msgid "Created by"
 msgstr "作成者"
 
 #. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__create_date
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__create_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__create_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__create_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__create_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__create_date
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__create_date
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__create_date
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__create_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__create_date
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__create_date
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__create_date
 msgid "Created on"
 msgstr "作成日"
 
 #. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_move_amount__actual_date
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__actual_date
 msgid "Date the move was processed."
 msgstr "在庫移動が処理された日時。"
 
@@ -342,22 +335,13 @@ msgstr ""
 "この化学物質をプロダクトに追加する際に使用されるデフォルトの含有率(%)。"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_pdsca_deleterious
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_pdsca_deleterious
 msgid "Deleterious Substance"
 msgstr "劇物"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
-msgid "Deliveries"
-msgstr "出荷"
-
-#. module: product_chemical
-#: model:ir.model.fields.selection,name:product_chemical.selection__product_chemical_move_amount__direction__out
-msgid "Delivery"
-msgstr "出荷"
-
-#. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__location_dest_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__location_dest_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 msgid "Destination Location"
 msgstr "移動先ロケーション"
 
@@ -372,20 +356,14 @@ msgid "Dimethyl sulfoxide"
 msgstr "ジメチルスルホキシド"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__direction
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
-msgid "Direction"
-msgstr "入出庫区分"
-
-#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__display_name
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__display_name
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__display_name
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__display_name
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__display_name
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__display_name
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__display_name
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__display_name
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__display_name
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__display_name
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__display_name
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__display_name
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__display_name
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__display_name
 msgid "Display Name"
 msgstr "表示名"
 
@@ -395,17 +373,17 @@ msgid "EDTA disodium salt dihydrate"
 msgstr "エチレンジアミン四酢酸二ナトリウム二水和物"
 
 #. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_law_line_product_law_uniq
+#: model:ir.model.constraint,message:product_chemical.constraint_product_template_chemical_law_line_product_law_uniq
 msgid "Each law can be added only once per product."
 msgstr "1プロダクトに対し各法律は1度のみ追加できます。"
 
 #. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_line_product_substance_uniq
+#: model:ir.model.constraint,message:product_chemical.constraint_product_template_chemical_substance_line_product_substance_uniq
 msgid "Each substance can be added only once per product."
 msgstr "1プロダクトに対し各化学物質は1度のみ追加できます。"
 
 #. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_move_amount_move_substance_uniq
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_consumption_move_substance_uniq
 msgid "Each substance can be recorded only once per stock move."
 msgstr "各化学物質は在庫移動ごとに1回のみ記録できます。"
 
@@ -430,11 +408,6 @@ msgid "Ethyl acetate"
 msgstr "酢酸エチル"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
-msgid "Excluding Internal Transfers"
-msgstr "内部転送を除く"
-
-#. module: product_chemical
 #: model:product.chemical.law,name:product_chemical.chemical_law_fsa
 msgid "Fire Service Act"
 msgstr "消防法"
@@ -450,7 +423,7 @@ msgid "Formalin Solution 37%"
 msgstr "ホルマリン溶液37%"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_prtr_general
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_prtr_general
 msgid "General Class I"
 msgstr "一般第一種"
 
@@ -465,25 +438,25 @@ msgid "Glycerol 50% Solution"
 msgstr "グリセリン50%溶液"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_search
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_search
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_major_category_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_minor_category_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Group By"
 msgstr "グループ化"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_fsa_class6_g1
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_class6_g1
 msgid "Group I Oxidizing Liquid"
 msgstr "第1種酸化性液体"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_fsa_class1_g1
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_class1_g1
 msgid "Group I Oxidizing Solid"
 msgstr "第1種酸化性固体"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_fsa_class1_g2
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_class1_g2
 msgid "Group II Oxidizing Solid"
 msgstr "第2種酸化性固体"
 
@@ -498,14 +471,14 @@ msgid "Hydrogen peroxide"
 msgstr "過酸化水素"
 
 #. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__id
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__id
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__id
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__id
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -515,53 +488,48 @@ msgid "Industrial Safety and Health Act"
 msgstr "労働安全衛生法"
 
 #. module: product_chemical
-#: model:ir.model.fields.selection,name:product_chemical.selection__product_chemical_move_amount__direction__internal
-msgid "Internal Transfer"
-msgstr "内部転送"
-
-#. module: product_chemical
 #: model:ir.model,name:product_chemical.model_stock_location
 msgid "Inventory Locations"
 msgstr "在庫ロケーション"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_isha_notifiable
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_isha_notifiable
 msgid "Labelling / SDS Notifiable Substances"
 msgstr "表示・通知対象物質"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_isha_labelling
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_labelling
 msgid "Labelling Required"
 msgstr "表示対象物"
 
 #. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__write_uid
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__write_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__write_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__write_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__write_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__write_uid
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__write_uid
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__write_uid
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__write_uid
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__write_uid
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__write_uid
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__write_uid
 msgid "Last Updated by"
 msgstr "最終更新者"
 
 #. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__write_date
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__write_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__write_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__write_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__write_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__write_date
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__write_date
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__write_date
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__write_date
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__write_date
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__write_date
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__write_date
 msgid "Last Updated on"
 msgstr "最終更新日"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__law_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__law_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__law_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_search
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__law_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__law_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__law_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_major_category_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_minor_category_view_search
 msgid "Law"
 msgstr "法律"
 
@@ -583,28 +551,28 @@ msgid "Laws"
 msgstr "法律"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__location_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__location_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Location"
 msgstr "ロケーション"
 
 #. module: product_chemical
-#: model:ir.actions.act_window,name:product_chemical.product_chemical_major_category_action
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_law_major_category_action
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__major_category_ids
-#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_major_category
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_law_major_category
 msgid "Major Categories"
 msgstr "大分類"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__major_category_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__major_category_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_form
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__major_category_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__major_category_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_major_category_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_minor_category_view_search
 msgid "Major Category"
 msgstr "大分類"
 
 #. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_major_category_name_law_uniq
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_law_major_category_name_law_uniq
 msgid "Major category name must be unique per law."
 msgstr "大分類名は法律ごとに一意である必要があります。"
 
@@ -619,33 +587,33 @@ msgid "Methanol (Analytical Grade)"
 msgstr "メタノール（分析用）"
 
 #. module: product_chemical
-#: model:ir.actions.act_window,name:product_chemical.product_chemical_minor_category_action
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__minor_category_ids
-#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_minor_category
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_major_category_view_form
+#: model:ir.actions.act_window,name:product_chemical.product_chemical_law_minor_category_action
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__minor_category_ids
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_law_minor_category
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_major_category_view_form
 msgid "Minor Categories"
 msgstr "小分類"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__minor_category_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_minor_category_view_form
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__minor_category_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_minor_category_view_form
 msgid "Minor Category"
 msgstr "小分類"
 
 #. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_minor_category_name_major_uniq
+#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_law_minor_category_name_major_uniq
 msgid "Minor category name must be unique per major category."
 msgstr "小分類名は大分類ごとに一意である必要があります。"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__quantity
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__quantity
 msgid "Moved Qty"
 msgstr "移動数量"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__name
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__name
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__name
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__name
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__name
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__name
 msgid "Name"
 msgstr "名称"
@@ -661,25 +629,19 @@ msgid "Notes"
 msgstr "メモ"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__quantity
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__quantity
 msgid "On Hand Qty"
 msgstr "手持在庫数"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid ""
 "Only amounts converted into a chemical aggregation unit, i.e. excluding "
 "count-managed products."
 msgstr "化学物質集計単位に換算された成分量のみ（個数管理品を除く）。"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__picking_type_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
-msgid "Operation Type"
-msgstr "オペレーションタイプ"
-
-#. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_isha_solvent
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_isha_solvent
 msgid "Organic Solvents"
 msgstr "有機溶剤"
 
@@ -689,17 +651,17 @@ msgid "PRTR Act"
 msgstr "PRTR法"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_fsa_petroleum1
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_petroleum1
 msgid "Petroleum Class 1"
 msgstr "第1石油類"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_fsa_petroleum2
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_petroleum2
 msgid "Petroleum Class 2"
 msgstr "第2石油類"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_fsa_petroleum3
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_petroleum3
 msgid "Petroleum Class 3"
 msgstr "第3石油類"
 
@@ -714,7 +676,7 @@ msgid "Phenol (Crystalline)"
 msgstr "フェノール（結晶）"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_pdsca_poison
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_pdsca_poison
 msgid "Poisonous Substance"
 msgstr "毒物"
 
@@ -725,43 +687,38 @@ msgstr "毒物及び劇物取締法"
 
 #. module: product_chemical
 #: model:ir.model,name:product_chemical.model_product_template
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__product_tmpl_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__product_tmpl_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__product_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__product_tmpl_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__product_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__product_tmpl_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__product_tmpl_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__product_tmpl_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Product"
 msgstr "プロダクト"
 
 #. module: product_chemical
-#: model:ir.model,name:product_chemical.model_product_chemical_location_amount
-msgid "Product Chemical Amount by Location"
-msgstr "ロケーション別プロダクト化学物質成分量"
+#: model:ir.model,name:product_chemical.model_product_chemical_consumption
+msgid "Product Chemical Consumption"
+msgstr "プロダクト化学物質使用量"
 
 #. module: product_chemical
-#: model:ir.model,name:product_chemical.model_product_chemical_move_amount
-msgid "Product Chemical Amount by Stock Move"
-msgstr "在庫移動別プロダクト化学物質量"
+#: model:ir.model,name:product_chemical.model_product_template_chemical_law_line
+msgid "Product Chemical Law Line"
+msgstr "プロダクト化学物質法律明細"
 
 #. module: product_chemical
-#: model:ir.model,name:product_chemical.model_product_chemical_law_line
-msgid "Product Chemical Law"
-msgstr "プロダクト化学物質法律"
+#: model:ir.model,name:product_chemical.model_product_chemical_stock
+msgid "Product Chemical Stock"
+msgstr "プロダクト化学物質在庫"
 
 #. module: product_chemical
-#: model:ir.model,name:product_chemical.model_product_chemical_substance_line
+#: model:ir.model,name:product_chemical.model_product_template_chemical_substance_line
 msgid "Product Chemical Substance Line"
 msgstr "プロダクト化学物質明細"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__product_count
-msgid "Product Count"
-msgstr "プロダクト"
-
-#. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__product_uom_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__product_uom_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__product_uom_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__product_uom_id
 msgid "Product UoM"
 msgstr "プロダクト単位"
 
@@ -771,55 +728,44 @@ msgid "Product UoM Categories"
 msgstr "プロダクト単位カテゴリ"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_list
-msgid "Products"
-msgstr "プロダクト"
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
+msgid "Returns"
+msgstr "返却"
 
 #. module: product_chemical
-#: model:ir.model.fields.selection,name:product_chemical.selection__product_chemical_move_amount__direction__in
-msgid "Receipt"
-msgstr "入荷"
-
-#. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
-msgid "Receipts"
-msgstr "入荷"
-
-#. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_product__risk_assessment_pdf
-#: model:ir.model.fields,field_description:product_chemical.field_product_template__risk_assessment_pdf
+#: model:ir.model.fields,field_description:product_chemical.field_product_product__risk_assessment_file
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__risk_assessment_file
 msgid "Risk Assessment Sheet"
 msgstr "リスクアセスメント表"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_product__risk_assessment_pdf_filename
-#: model:ir.model.fields,field_description:product_chemical.field_product_template__risk_assessment_pdf_filename
+#: model:ir.model.fields,field_description:product_chemical.field_product_product__risk_assessment_filename
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__risk_assessment_filename
 msgid "Risk Assessment Sheet Filename"
 msgstr "リスクアセスメント表ファイル名"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_isha_sds
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_sds
 msgid "SDS Notification Required"
 msgstr "通知対象物"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__sequence
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__sequence
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__sequence
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__sequence
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__sequence
 msgid "Sequence"
 msgstr "シーケンス"
 
 #. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__smart_search
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_line__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_major_category__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_minor_category__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__smart_search
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__smart_search
 #: model:ir.model.fields,field_description:product_chemical.field_product_template__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__smart_search
 #: model:ir.model.fields,field_description:product_chemical.field_stock_location__smart_search
 #: model:ir.model.fields,field_description:product_chemical.field_stock_move__smart_search
 #: model:ir.model.fields,field_description:product_chemical.field_uom_category__smart_search
@@ -857,42 +803,43 @@ msgid "Sodium hydroxide"
 msgstr "水酸化ナトリウム"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__location_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__location_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 msgid "Source Location"
 msgstr "移動元ロケーション"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_fsa_special
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_fsa_special
 msgid "Special Flammable Materials"
 msgstr "特殊引火物"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_isha_specified
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_isha_specified
 msgid "Specified Chemical Substances"
 msgstr "特定化学物質"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_prtr_specified
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_prtr_specified
 msgid "Specified Class I"
 msgstr "特定第一種"
 
 #. module: product_chemical
-#: model:product.chemical.major.category,name:product_chemical.chemical_major_pdsca_specified
+#: model:product.chemical.law.major.category,name:product_chemical.chemical_major_pdsca_specified
 msgid "Specified Poisonous Substance"
 msgstr "特定毒物"
 
 #. module: product_chemical
 #: model:ir.model,name:product_chemical.model_stock_move
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__move_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__move_id
 msgid "Stock Move"
 msgstr "在庫移動"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__substance_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_move_amount__substance_id
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance_line__substance_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__substance_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__substance_id
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__substance_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Substance"
 msgstr "化学物質"
 
@@ -928,14 +875,14 @@ msgstr ""
 "ます。"
 
 #. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_move_amount__location_id
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__location_id
 msgid "The operation takes and suggests products from this location."
 msgstr ""
 "このオペレーションでは、このロケーションからプロダクトを受け取り、提案しま"
 "す。"
 
 #. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_move_amount__location_dest_id
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__location_dest_id
 msgid "The operations brings product to this location"
 msgstr "オペレーションはこのロケーションにプロダクトを移動します"
 
@@ -950,11 +897,22 @@ msgid "Toluene (Reagent Grade)"
 msgstr "トルエン（試薬）"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_list
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_move_amount_view_list
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_list
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_list
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
 msgid "Total"
 msgstr "合計"
+
+#. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_product__track_chemical_consumption
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__track_chemical_consumption
+msgid "Track Chemical Consumption"
+msgstr "化学物質消費追跡"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
+msgid "Tracked Chemical Consumption"
+msgstr "化学物質消費追跡対象"
 
 #. module: product_chemical
 #: model:product.chemical.substance,name:product_chemical.chemical_substance_tris
@@ -962,23 +920,22 @@ msgid "Tris(hydroxymethyl)aminomethane"
 msgstr "トリス(ヒドロキシメチル)アミノメタン"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_isha_solvent1
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_solvent1
 msgid "Type 1 Organic Solvent"
 msgstr "第1種有機溶剤"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_isha_solvent2
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_solvent2
 msgid "Type 2 Organic Solvent"
 msgstr "第2種有機溶剤"
 
 #. module: product_chemical
-#: model:product.chemical.minor.category,name:product_chemical.chemical_minor_isha_solvent3
+#: model:product.chemical.law.minor.category,name:product_chemical.chemical_minor_isha_solvent3
 msgid "Type 3 Organic Solvent"
 msgstr "第3種有機溶剤"
 
 #. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_location_amount__amount_uom_id
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_move_amount__amount_uom_id
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_stock__amount_uom_id
 msgid ""
 "Unit of measure the component amount is expressed in: the chemical "
 "aggregation unit of the UoM category, or the product unit when the category "
@@ -988,28 +945,38 @@ msgstr ""
 "合はプロダクトの単位。"
 
 #. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_move_amount__product_uom_id
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__amount_uom_id
+msgid ""
+"Unit of measure the consumed amount is expressed in: the chemical "
+"aggregation unit of the UoM category, or the product unit when the category "
+"has none."
+msgstr ""
+"使用量を表す単位。単位カテゴリの化学物質集計単位、または集計単位が未設定の場"
+"合はプロダクトの単位。"
+
+#. module: product_chemical
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__product_uom_id
 msgid "Unit of measure the moved quantity is expressed in."
 msgstr "移動数量を表す単位。"
 
 #. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_location_amount__product_uom_id
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_stock__product_uom_id
 msgid "Unit of measure the on-hand quantity is expressed in."
 msgstr "手持在庫数を表す単位。"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_location_amount__uom_category_id
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_location_amount_view_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__uom_category_id
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "UoM Category"
 msgstr "単位カテゴリ"
 
 #. module: product_chemical
-#: model:ir.actions.server,name:product_chemical.stock_move_action_sync_chemical_amounts
-msgid "Update Chemical Amounts"
-msgstr "化学物質量を更新"
+#: model:ir.actions.server,name:product_chemical.stock_move_action_sync_chemical_consumption
+msgid "Update Chemical Consumption"
+msgstr "化学物質使用量を更新"
 
 #. module: product_chemical
-#: model:ir.actions.server,name:product_chemical.product_chemical_move_amount_action_sync
+#: model:ir.actions.server,name:product_chemical.product_chemical_consumption_action_sync
 msgid "Update from Stock Move"
 msgstr "在庫移動から更新"
 
@@ -1017,6 +984,3 @@ msgstr "在庫移動から更新"
 #: model:product.chemical.substance,name:product_chemical.chemical_substance_water
 msgid "Water"
 msgstr "水"
-
-#~ msgid "Product Tmpl"
-#~ msgstr "プロダクトテンプレート"

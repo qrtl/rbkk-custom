@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="product_chemical_location_amount_view_list" model="ir.ui.view">
-        <field name="name">product.chemical.location.amount.list</field>
-        <field name="model">product.chemical.location.amount</field>
+    <record id="product_chemical_stock_view_list" model="ir.ui.view">
+        <field name="name">product.chemical.stock.list</field>
+        <field name="model">product.chemical.stock</field>
         <field name="arch" type="xml">
             <list create="false" edit="false">
                 <field name="location_id" />
@@ -18,9 +18,9 @@
             </list>
         </field>
     </record>
-    <record id="product_chemical_location_amount_view_search" model="ir.ui.view">
-        <field name="name">product.chemical.location.amount.search</field>
-        <field name="model">product.chemical.location.amount</field>
+    <record id="product_chemical_stock_view_search" model="ir.ui.view">
+        <field name="name">product.chemical.stock.search</field>
+        <field name="model">product.chemical.stock</field>
         <field name="arch" type="xml">
             <search>
                 <field name="substance_id" />
@@ -64,9 +64,9 @@
             </search>
         </field>
     </record>
-    <record id="product_chemical_location_amount_action" model="ir.actions.act_window">
+    <record id="product_chemical_stock_action" model="ir.actions.act_window">
         <field name="name">Chemicals by Location</field>
-        <field name="res_model">product.chemical.location.amount</field>
+        <field name="res_model">product.chemical.stock</field>
         <field name="view_mode">list</field>
         <!-- The amount unit has to be the outermost group, otherwise weight and
              volume amounts end up in the same subtotal. -->
