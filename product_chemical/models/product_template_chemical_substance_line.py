@@ -1,7 +1,7 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ProductTemplateChemicalSubstanceLine(models.Model):
@@ -37,8 +37,3 @@ class ProductTemplateChemicalSubstanceLine(models.Model):
             "Content rate must be between 0 and 100.",
         ),
     ]
-
-    @api.onchange("substance_id")
-    def _onchange_substance_id(self):
-        if self.substance_id:
-            self.content_rate = self.substance_id.content_rate

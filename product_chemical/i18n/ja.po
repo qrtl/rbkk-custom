@@ -199,14 +199,12 @@ msgstr "消費"
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__content_rate
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__content_rate
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__content_rate
 #: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__content_rate
 msgid "Content Rate (%)"
 msgstr "含有率 (%)"
 
 #. module: product_chemical
 #: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_consumption_content_rate_range
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_content_rate_range
 #: model:ir.model.constraint,message:product_chemical.constraint_product_template_chemical_substance_line_content_rate_range
 msgid "Content rate must be between 0 and 100."
 msgstr "含有率は0以上100以下である必要があります。"
@@ -237,12 +235,6 @@ msgstr "作成日"
 #: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__actual_date
 msgid "Date the move was processed."
 msgstr "在庫移動が処理された日時。"
-
-#. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_substance__content_rate
-msgid "Default content rate (%) used when adding this substance to a product."
-msgstr ""
-"この化学物質をプロダクトに追加する際に使用されるデフォルトの含有率(%)。"
 
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__location_dest_id
