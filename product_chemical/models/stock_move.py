@@ -66,8 +66,7 @@ class StockMove(models.Model):
 
         The records are replaced rather than recomputed, so that a substance
         added to (or removed from) the product after the move was validated is
-        reflected as well. Manual corrections made on the replaced records are
-        lost, which is the point of the operation.
+        reflected as well.
         """
         self.chemical_consumption_ids.unlink()
         amounts = self._create_chemical_consumption()

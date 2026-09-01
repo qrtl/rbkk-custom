@@ -75,11 +75,14 @@ without using any of it, and the amount held at each location is already
 reported by **Chemicals by Location**. Amounts are converted into the
 aggregation unit in the same way as that report, so the two agree.
 
-Unlike the on-hand report, these records are a snapshot: they keep the content
-rate that applied when the move was validated, so revising the composition of a
-product does not rewrite what was handled in the past. An inventory manager can
-still correct a record from its form view when the composition was wrong at the
-time, and the amount is recalculated from the corrected rate.
+Unlike the on-hand report, these records are a snapshot: every value is frozen
+when the move is validated — the quantity, the units, the locations, the date
+and the content rate — so neither revising the composition of a product nor
+correcting the move afterwards rewrites what was handled in the past. Nothing
+is editable either, which is why the report offers no form view: a composition
+that was registered wrongly at the time is fixed on the product and replayed
+with the action below, so that a reported amount always traces back to a move
+and a composition rather than to a figure someone typed over it.
 
 Two actions rebuild these records, both restricted to inventory managers:
 **Update Chemical Consumption** on the stock move list and form, and **Update
@@ -87,7 +90,7 @@ from Stock Move** on the Chemical Consumption list. They record the consumption
 of moves that were validated before the module was installed, and rebuild it
 when the composition of a product was registered wrongly. The rebuild replaces
 the records of the whole move, so a substance added to or removed from the
-product is reflected too — which also means the manual corrections made on
-those records are lost. Bear in mind that a rebuild applies the composition
+product is reflected too. Bear in mind that it applies the composition
 registered *today*: it cannot restore a rate that was correct at the time of
-the move and has legitimately changed since.
+the move and has legitimately changed since. Put the composition right first,
+then replay the moves that were recorded against the wrong one.

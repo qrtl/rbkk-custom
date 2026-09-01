@@ -1,7 +1,7 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests.common import TransactionCase
 
 
@@ -111,8 +111,6 @@ class TestProductChemicalConsumption(TransactionCase):
         )
 
     def test_internal_to_consumption_is_recorded_as_positive(self):
-        # The amounts measure consumption, not the stock variation, so issuing
-        # the goods into the consumption location is the positive direction.
         move = self._make_move(self.stock_location, self.consumption_location)
         amounts = move.chemical_consumption_ids
         self.assertEqual(len(amounts), 2)
@@ -174,8 +172,8 @@ class TestProductChemicalConsumption(TransactionCase):
 
     def test_amounts_are_snapshots(self):
         # A later revision of the product composition must not rewrite the
-        # amounts of past records, while a correction on the record itself
-        # has to recompute its amount.
+        # amounts of past records; replaying the move is the only way to bring
+        # them in line with a composition that was registered wrongly.
         move = self._make_move(self.stock_location, self.consumption_location)
         amount_a = move.chemical_consumption_ids.filtered(
             lambda a: a.substance_id == self.substance_a
@@ -185,8 +183,23 @@ class TestProductChemicalConsumption(TransactionCase):
         ).content_rate = 30.0
         self.assertAlmostEqual(amount_a.content_rate, 60.0)
         self.assertAlmostEqual(amount_a.amount, 6000.0)
-        amount_a.content_rate = 30.0
+        move.action_sync_chemical_consumption()
+        amount_a = self._amount_a(move)
+        self.assertAlmostEqual(amount_a.content_rate, 30.0)
         self.assertAlmostEqual(amount_a.amount, 3000.0)
+
+    def test_the_record_does_not_follow_a_later_change_on_the_move(self):
+        # Every field is frozen when the record is created, so correcting the
+        # move afterwards does not rewrite what was already reported. This
+        # fails if any of them goes back to being a stored related field on
+        # the move.
+        move = self._make_move(self.stock_location, self.consumption_location)
+        amount_a = self._amount_a(move)
+        move.date = fields.Datetime.to_datetime("2020-01-01 12:00:00")
+        move.quantity = 4.0
+        self.assertNotEqual(amount_a.actual_date, move.date)
+        self.assertAlmostEqual(amount_a.quantity, 10.0)
+        self.assertAlmostEqual(amount_a.amount, 6000.0)
 
     def test_sync_follows_the_composition_of_the_product(self):
         # The rebuild has to replace the records, not recompute them in place:

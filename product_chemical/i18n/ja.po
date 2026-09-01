@@ -34,7 +34,7 @@ msgstr "有効"
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__actual_date
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 msgid "Actual Date"
-msgstr "実施日時"
+msgstr "実績日"
 
 #. module: product_chemical
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
@@ -170,11 +170,6 @@ msgid "Code"
 msgstr "コード"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__company_id
-msgid "Company"
-msgstr "会社"
-
-#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__component_amount
 msgid "Component Amount"
 msgstr "成分量"
@@ -204,7 +199,6 @@ msgid "Content Rate (%)"
 msgstr "含有率 (%)"
 
 #. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_consumption_content_rate_range
 #: model:ir.model.constraint,message:product_chemical.constraint_product_template_chemical_substance_line_content_rate_range
 msgid "Content rate must be between 0 and 100."
 msgstr "含有率は0以上100以下である必要があります。"
@@ -489,22 +483,6 @@ msgid "Sequence"
 msgstr "シーケンス"
 
 #. module: product_chemical
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_template__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_stock_location__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_stock_move__smart_search
-#: model:ir.model.fields,field_description:product_chemical.field_uom_category__smart_search
-msgid "Smart Search"
-msgstr "スマート検索"
-
-#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__location_id
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 msgid "Source Location"
@@ -545,18 +523,6 @@ msgid ""
 msgstr ""
 "カテゴリ%(category)sの化学物質集計単位は、そのカテゴリに属している必要があり"
 "ます。"
-
-#. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__location_id
-msgid "The operation takes and suggests products from this location."
-msgstr ""
-"このオペレーションでは、このロケーションからプロダクトを受け取り、提案しま"
-"す。"
-
-#. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__location_dest_id
-msgid "The operations brings product to this location"
-msgstr "オペレーションはこのロケーションにプロダクトを移動します"
 
 #. module: product_chemical
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_list
