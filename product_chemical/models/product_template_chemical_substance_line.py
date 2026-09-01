@@ -21,7 +21,6 @@ class ProductTemplateChemicalSubstanceLine(models.Model):
     cas_no = fields.Char(related="substance_id.cas_no", store=True, string="CAS No.")
     content_rate = fields.Float(
         string="Content Rate (%)",
-        required=True,
         default=0.0,
     )
 
