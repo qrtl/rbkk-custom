@@ -55,10 +55,6 @@ class ProductTemplate(models.Model):
         return super().create(vals_list)
 
     def write(self, vals):
-        # Consumption is only tracked for a chemical product, so that the
-        # consumption report and the on hand report describe the same set of
-        # products. Clearing the flag here keeps a product that stops being a
-        # chemical from carrying a tracking flag nothing acts on any more.
         if "is_chemical" in vals and not vals["is_chemical"]:
             vals = dict(vals, track_chemical_consumption=False)
         return super().write(vals)

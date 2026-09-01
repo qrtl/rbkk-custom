@@ -14,7 +14,6 @@ class ProductChemicalConsumption(models.Model):
         string="Stock Move",
         required=True,
         ondelete="cascade",
-        index=True,
     )
     substance_id = fields.Many2one(
         "product.chemical.substance", required=True, ondelete="restrict", index=True
@@ -27,7 +26,7 @@ class ProductChemicalConsumption(models.Model):
         index=True,
         help="Date the move was processed.",
     )
-    company_id = fields.Many2one(related="move_id.company_id", store=True, index=True)
+    company_id = fields.Many2one(related="move_id.company_id", store=True)
     location_id = fields.Many2one(related="move_id.location_id", store=True)
     location_dest_id = fields.Many2one(
         related="move_id.location_dest_id", string="Destination Location", store=True
