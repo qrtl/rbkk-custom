@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 {
     "name": "Product Chemical",
-    "version": "18.0.1.7.0",
+    "version": "18.0.1.0.0",
     "category": "Inventory/Inventory",
     "summary": "Manage chemical substance information on products",
     "author": "Quartile",
