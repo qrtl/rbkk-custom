@@ -59,6 +59,11 @@
             <search>
                 <field name="name" />
                 <field name="law_id" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
                 <group expand="0" string="Group By">
                     <filter
                         string="Law"
@@ -130,6 +135,11 @@
                 <field name="name" />
                 <field name="major_category_id" />
                 <field name="law_id" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
                 <group expand="0" string="Group By">
                     <filter
                         string="Law"

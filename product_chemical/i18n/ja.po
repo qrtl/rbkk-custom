@@ -62,7 +62,9 @@ msgstr "適用法律"
 
 #. module: product_chemical
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_major_category_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_major_category_view_search
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_minor_category_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_minor_category_view_search
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_form
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_law_view_search
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_substance_view_form
