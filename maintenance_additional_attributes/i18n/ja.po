@@ -56,6 +56,11 @@ msgid "Archived"
 msgstr "アーカイブ済"
 
 #. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_calibration
+msgid "Calibration"
+msgstr "校正"
+
+#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__create_uid
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_uid
 msgid "Created by"
@@ -66,6 +71,11 @@ msgstr "作成者"
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_date
 msgid "Created on"
 msgstr "作成日"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_daily_inspection
+msgid "Daily Inspection"
+msgstr "日常点検"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_unit__day
@@ -100,9 +110,19 @@ msgid "Fixed Asset Code"
 msgstr "固定資産コード"
 
 #. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_fluorocarbon_inspection
+msgid "Fluorocarbon Inspection Target"
+msgstr "フロン点検対象"
+
+#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_gmp
 msgid "GMP"
 msgstr "GMP"
+
+#. module: maintenance_additional_attributes
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_view_form
+msgid "GMP Information"
+msgstr "GMP情報"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__generic_name_id
@@ -114,6 +134,11 @@ msgstr "一般名称"
 #: model:ir.ui.menu,name:maintenance_additional_attributes.menu_maintenance_equipment_generic_name
 msgid "General Names"
 msgstr "一般名称"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_handled_in_house
+msgid "Handled In-house"
+msgstr "自社対応"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__id
@@ -166,7 +191,7 @@ msgstr "メンテナンス: 保守依頼のアラート送信"
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__management_no
 msgid "Management No"
-msgstr "管理番号"
+msgstr "機器管理番号"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__manufacturer
@@ -202,7 +227,7 @@ msgstr "国家プロジェクト"
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__national_project_name
 msgid "National Project Name"
-msgstr "国家プロジェクト名"
+msgstr "国プロ管理番号"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__purchase_order_id
@@ -239,9 +264,24 @@ msgid "The scheduled maintenance date (%s) is approaching."
 msgstr "メンテナンス予定日（%s）が近づいています。"
 
 #. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__usable_humidity
+msgid "Usable Humidity (%RH, Non-condensing)"
+msgstr "使用可能湿度(%RH,結露なし)"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__usable_temperature
+msgid "Usable Temperature (°C)"
+msgstr "使用可能温度(℃)"
+
+#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__location_id
 msgid "Used in location"
 msgstr "使用場所"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__vendor_product_name
+msgid "Vendor Product Name"
+msgstr "品名"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_unit__week

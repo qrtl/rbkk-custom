@@ -39,6 +39,22 @@
                 <field name="manufacturer_serial_no" />
                 <field name="purchase_order_id" />
             </xpath>
+            <xpath expr="//page[@name='product_information']" position="after">
+                <page string="GMP Information" name="gmp_information">
+                    <group>
+                        <group>
+                            <field name="usable_temperature" />
+                            <field name="usable_humidity" />
+                        </group>
+                        <group>
+                            <field name="is_daily_inspection" />
+                            <field name="is_calibration" />
+                            <field name="is_fluorocarbon_inspection" />
+                            <field name="is_handled_in_house" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
             <xpath expr="//field[@name='effective_date']" position="after">
                 <field name="acquisition_date" />
             </xpath>
@@ -64,6 +80,12 @@
                 <field name="is_fixed_asset" optional="hide" />
                 <field name="is_gmp" optional="hide" />
                 <field name="is_measuring_instrument" optional="hide" />
+                <field name="is_daily_inspection" optional="hide" />
+                <field name="is_calibration" optional="hide" />
+                <field name="is_fluorocarbon_inspection" optional="hide" />
+                <field name="is_handled_in_house" optional="hide" />
+                <field name="usable_temperature" optional="hide" />
+                <field name="usable_humidity" optional="hide" />
             </field>
         </field>
     </record>
@@ -93,6 +115,26 @@
                     name="measuring_instrument"
                     string="Measuring Instrument"
                     domain="[('is_measuring_instrument', '=', True)]"
+                />
+                <filter
+                    name="daily_inspection"
+                    string="Daily Inspection"
+                    domain="[('is_daily_inspection', '=', True)]"
+                />
+                <filter
+                    name="calibration"
+                    string="Calibration"
+                    domain="[('is_calibration', '=', True)]"
+                />
+                <filter
+                    name="fluorocarbon_inspection"
+                    string="Fluorocarbon Inspection Target"
+                    domain="[('is_fluorocarbon_inspection', '=', True)]"
+                />
+                <filter
+                    name="handled_in_house"
+                    string="Handled In-house"
+                    domain="[('is_handled_in_house', '=', True)]"
                 />
             </filter>
             <group position="inside">

@@ -9,6 +9,7 @@ class MaintenanceEquipment(models.Model):
     _inherit = ["maintenance.equipment", "image.mixin"]
 
     set_name = fields.Char()
+    vendor_product_name = fields.Char()
     generic_name_id = fields.Many2one(
         comodel_name="maintenance.equipment.generic.name",
         string="General Name",
@@ -34,3 +35,9 @@ class MaintenanceEquipment(models.Model):
         comodel_name="maintenance.equipment.department",
         string="Equipment Department",
     )
+    usable_temperature = fields.Char(string="Usable Temperature (°C)")
+    usable_humidity = fields.Char(string="Usable Humidity (%RH, Non-condensing)")
+    is_daily_inspection = fields.Boolean(string="Daily Inspection")
+    is_calibration = fields.Boolean(string="Calibration")
+    is_fluorocarbon_inspection = fields.Boolean(string="Fluorocarbon Inspection Target")
+    is_handled_in_house = fields.Boolean(string="Handled In-house")
