@@ -97,7 +97,7 @@ msgstr "表示名"
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__equipment_department_id
 msgid "Equipment Department"
-msgstr "設備部門"
+msgstr "管理部署"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_fixed_asset
