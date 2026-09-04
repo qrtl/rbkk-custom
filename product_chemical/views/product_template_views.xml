@@ -1,25 +1,88 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="product_template_form_view" model="ir.ui.view">
+    <record id="product_template_view_form" model="ir.ui.view">
         <field name="name">product.template.common.form</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='type']" position="after">
                 <field name="is_chemical" />
+                <field name="track_chemical_consumption" invisible="not is_chemical" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Chemical" name="chemical" invisible="not is_chemical">
+                    <group>
+                        <group>
+                            <field
+                                name="risk_assessment_file"
+                                filename="risk_assessment_filename"
+                                widget="binary"
+                            />
+                            <field name="risk_assessment_filename" invisible="1" />
+                        </group>
+                    </group>
+                    <separator string="Applicable Laws" />
+                    <field name="chemical_law_line_ids">
+                        <list editable="bottom">
+                            <field name="law_id" options="{'no_quick_create': True}" />
+                            <field
+                                name="major_category_id"
+                                domain="[('law_id', '=', law_id)]"
+                                context="{'default_law_id': law_id}"
+                                options="{'no_quick_create': True}"
+                            />
+                            <field
+                                name="minor_category_id"
+                                domain="[('major_category_id', '=', major_category_id)]"
+                                context="{'default_major_category_id': major_category_id}"
+                                options="{'no_quick_create': True}"
+                            />
+                        </list>
+                    </field>
+                    <separator string="Chemical Substances" />
+                    <field name="chemical_substance_line_ids">
+                        <list editable="bottom">
+                            <field
+                                name="substance_id"
+                                options="{'no_quick_create': True}"
+                            />
+                            <field name="cas_no" />
+                            <field name="content_rate" />
+                        </list>
+                    </field>
+                    <separator string="Component Amount by Location" />
+                    <field name="chemical_stock_ids" readonly="1">
+                        <list>
+                            <field name="location_id" />
+                            <field name="substance_id" />
+                            <field name="cas_no" />
+                            <field name="quantity" />
+                            <field name="product_uom_id" />
+                            <field name="content_rate" />
+                            <field name="component_amount" sum="Total" />
+                            <field name="amount_uom_id" />
+                        </list>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>
-    <record id="product_template_search_view" model="ir.ui.view">
+    <record id="product_template_view_search" model="ir.ui.view">
         <field name="name">product.template.search</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_search_view" />
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='filter_to_sell']" position="before">
+                <field name="chemical_substance_ids" string="Substance / CAS No." />
                 <filter
                     string="Chemical"
                     name="is_chemical"
                     domain="[('is_chemical', '=', True)]"
+                />
+                <filter
+                    string="Tracked Chemical Consumption"
+                    name="track_chemical_consumption"
+                    domain="[('track_chemical_consumption', '=', True)]"
                 />
                 <separator />
             </xpath>
