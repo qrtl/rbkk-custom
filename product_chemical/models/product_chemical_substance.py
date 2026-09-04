@@ -21,7 +21,7 @@ class ProductChemicalSubstance(models.Model):
     @api.depends("name", "cas_no")
     def _compute_display_name(self):
         for rec in self:
-            if rec.name and rec.cas_no:
+            if rec.cas_no:
                 rec.display_name = f"[{rec.cas_no}] {rec.name}"
             else:
-                rec.display_name = rec.name or rec.cas_no or ""
+                rec.display_name = rec.name
