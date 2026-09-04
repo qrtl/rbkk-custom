@@ -12,6 +12,7 @@
     "depends": ["maintenance", "purchase", "stock"],
     "data": [
         "security/ir.model.access.csv",
+        "security/maintenance_equipment_security.xml",
         "data/mail_activity_type.xml",
         "data/ir_cron.xml",
         "views/maintenance_equipment_department_views.xml",
