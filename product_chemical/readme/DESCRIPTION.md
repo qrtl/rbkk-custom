@@ -75,14 +75,15 @@ without using any of it, and the amount held at each location is already
 reported by **Chemicals by Location**. Amounts are converted into the
 aggregation unit in the same way as that report, so the two agree.
 
-Unlike the on-hand report, these records are a snapshot: every value is frozen
-when the move is validated — the quantity, the units, the locations, the date
-and the content rate — so neither revising the composition of a product nor
-correcting the move afterwards rewrites what was handled in the past. Nothing
-is editable either, which is why the report offers no form view: a composition
-that was registered wrongly at the time is fixed on the product and replayed
-with the action below, so that a reported amount always traces back to a move
-and a composition rather than to a figure someone typed over it.
+Unlike the on-hand report, these records keep the composition that applied
+when the move was validated: revising the content rate of a product afterwards
+does not rewrite what was already reported. What the move itself says — the
+quantity, the units, the locations and the date — is read from the move, so
+correcting a move corrects the amounts booked against it. Nothing is editable
+by hand either, which is why the report offers no form view: a composition that
+was registered wrongly at the time is fixed on the product and replayed with
+the action below, so that a reported amount always traces back to a move and a
+composition rather than to a figure someone typed over it.
 
 Two actions rebuild these records, both restricted to inventory managers:
 **Update Chemical Consumption** on the stock move list and form, and **Update

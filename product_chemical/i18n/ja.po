@@ -531,6 +531,18 @@ msgstr ""
 "ます。"
 
 #. module: product_chemical
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__location_id
+msgid "The operation takes and suggests products from this location."
+msgstr ""
+"このオペレーションでは、このロケーションからプロダクトを受け取り、提案しま"
+"す。"
+
+#. module: product_chemical
+#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__location_dest_id
+msgid "The operations brings product to this location"
+msgstr "オペレーションはこのロケーションにプロダクトを移動します"
+
+#. module: product_chemical
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_list
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_list
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form

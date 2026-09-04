@@ -9,12 +9,13 @@ class ProductChemicalConsumption(models.Model):
     _description = "Product Chemical Consumption"
     _order = "actual_date desc, id desc"
 
-    # The record is a snapshot: every field is precomputed at creation and none
-    # of them follows a later change on the move, so past records keep what was
-    # actually handled. Precomputing matters -- computed on flush instead, they
-    # would pick up whatever the move and the product hold by the end of the
-    # transaction. Nothing is editable either; a wrong composition is fixed on
-    # the product and replayed with the Update Chemical Consumption action.
+    # The move side is read straight off the move, so correcting a move
+    # corrects the amounts booked against it. The composition is not: the
+    # content rate is precomputed at creation -- computed on flush it would
+    # pick up whatever the product holds by the end of the transaction -- and
+    # stays put when the product is revised, so past records keep the rate that
+    # was applied to them. A wrong rate is put right on the product and
+    # replayed with the Update Chemical Consumption action.
     move_id = fields.Many2one(
         "stock.move",
         string="Stock Move",
@@ -29,48 +30,21 @@ class ProductChemicalConsumption(models.Model):
         index=True,
         readonly=True,
     )
-    product_id = fields.Many2one(
-        "product.product",
-        compute="_compute_product_id",
-        store=True,
-        precompute=True,
-        index=True,
-    )
+    product_id = fields.Many2one(related="move_id.product_id")
     actual_date = fields.Datetime(
-        compute="_compute_actual_date",
-        store=True,
-        precompute=True,
-        index=True,
+        related="move_id.date",
+        string="Actual Date",
         help="Date the move was processed.",
     )
-    location_id = fields.Many2one(
-        "stock.location",
-        string="Source Location",
-        compute="_compute_location_id",
-        store=True,
-        precompute=True,
-    )
+    location_id = fields.Many2one(related="move_id.location_id")
     location_dest_id = fields.Many2one(
-        "stock.location",
-        string="Destination Location",
-        compute="_compute_location_dest_id",
-        store=True,
-        precompute=True,
+        related="move_id.location_dest_id", string="Destination Location"
     )
     quantity = fields.Float(
-        string="Moved Qty",
-        compute="_compute_quantity",
-        store=True,
-        precompute=True,
-        digits="Product Unit of Measure",
+        related="move_id.quantity", string="Moved Qty", digits="Product Unit of Measure"
     )
     product_uom_id = fields.Many2one(
-        "uom.uom",
-        string="Product UoM",
-        compute="_compute_product_uom_id",
-        store=True,
-        precompute=True,
-        help="Unit of measure the moved quantity is expressed in.",
+        related="move_id.product_uom", string="Product UoM"
     )
     content_rate = fields.Float(
         string="Content Rate (%)",
@@ -106,36 +80,6 @@ class ProductChemicalConsumption(models.Model):
     ]
 
     @api.depends("move_id")
-    def _compute_product_id(self):
-        for rec in self:
-            rec.product_id = rec.move_id.product_id
-
-    @api.depends("move_id")
-    def _compute_actual_date(self):
-        for rec in self:
-            rec.actual_date = rec.move_id.date
-
-    @api.depends("move_id")
-    def _compute_location_id(self):
-        for rec in self:
-            rec.location_id = rec.move_id.location_id
-
-    @api.depends("move_id")
-    def _compute_location_dest_id(self):
-        for rec in self:
-            rec.location_dest_id = rec.move_id.location_dest_id
-
-    @api.depends("move_id")
-    def _compute_quantity(self):
-        for rec in self:
-            rec.quantity = rec.move_id.quantity
-
-    @api.depends("move_id")
-    def _compute_product_uom_id(self):
-        for rec in self:
-            rec.product_uom_id = rec.move_id.product_uom
-
-    @api.depends("move_id")
     def _compute_amount_uom_id(self):
         for rec in self:
             product_tmpl = rec.move_id.product_id.product_tmpl_id
@@ -158,11 +102,9 @@ class ProductChemicalConsumption(models.Model):
         # product's UoM category, so that amounts of the same kind (weight,
         # volume) add up, the way product.chemical.stock does it.
         for rec in self:
-            quantity = rec.quantity
-            if rec.product_uom_id and rec.amount_uom_id:
-                quantity = rec.product_uom_id._compute_quantity(
-                    quantity, rec.amount_uom_id, round=False
-                )
+            quantity = rec.product_uom_id._compute_quantity(
+                rec.quantity, rec.amount_uom_id, round=False
+            )
             sign = rec.move_id._get_chemical_consumption_sign()
             rec.amount = sign * quantity * rec.content_rate / 100.0
 

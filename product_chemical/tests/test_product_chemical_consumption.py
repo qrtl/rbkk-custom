@@ -188,18 +188,17 @@ class TestProductChemicalConsumption(TransactionCase):
         self.assertAlmostEqual(amount_a.content_rate, 30.0)
         self.assertAlmostEqual(amount_a.amount, 3000.0)
 
-    def test_the_record_does_not_follow_a_later_change_on_the_move(self):
-        # Every field is frozen when the record is created, so correcting the
-        # move afterwards does not rewrite what was already reported. This
-        # fails if any of them goes back to being a stored related field on
-        # the move.
+    def test_the_move_side_follows_the_move(self):
+        # The quantity, the units, the locations and the date are read from the
+        # move, so correcting a move corrects the amounts booked against it --
+        # the content rate being the exception the test above pins.
         move = self._make_move(self.stock_location, self.consumption_location)
         amount_a = self._amount_a(move)
         move.date = fields.Datetime.to_datetime("2020-01-01 12:00:00")
-        move.quantity = 4.0
-        self.assertNotEqual(amount_a.actual_date, move.date)
-        self.assertAlmostEqual(amount_a.quantity, 10.0)
-        self.assertAlmostEqual(amount_a.amount, 6000.0)
+        move.quantity = 5.0
+        self.assertEqual(amount_a.actual_date, move.date)
+        self.assertAlmostEqual(amount_a.quantity, 5.0)
+        self.assertAlmostEqual(amount_a.amount, 3000.0)
 
     def test_sync_follows_the_composition_of_the_product(self):
         # The rebuild has to replace the records, not recompute them in place:
