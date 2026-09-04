@@ -73,11 +73,7 @@
         <field name="inherit_id" ref="product.product_template_search_view" />
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='filter_to_sell']" position="before">
-                <field
-                    name="chemical_substance_ids"
-                    string="CAS No."
-                    filter_domain="[('chemical_substance_line_ids.cas_no', 'ilike', self)]"
-                />
+                <field name="chemical_substance_ids" string="Substance / CAS No." />
                 <filter
                     string="Chemical"
                     name="is_chemical"

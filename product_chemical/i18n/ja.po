@@ -76,7 +76,6 @@ msgstr "アーカイブ済"
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__cas_no
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__cas_no
 #: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__cas_no
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
 msgid "CAS No."
 msgstr "CAS番号"
 
@@ -504,6 +503,11 @@ msgstr "在庫移動"
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_search
 msgid "Substance"
 msgstr "化学物質"
+
+#. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
+msgid "Substance / CAS No."
+msgstr "化学物質 / CAS番号"
 
 #. module: product_chemical
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_substance_view_form
