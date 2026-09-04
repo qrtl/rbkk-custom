@@ -157,6 +157,7 @@ Contributors
 
 - `Quartile <https://www.quartile.co>`__:
 
+  - Yoshi Tashiro
   - Tatsuki Kanda
 
 Maintainers
