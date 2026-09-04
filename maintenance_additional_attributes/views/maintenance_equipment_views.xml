@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="maintenance_equipment_view_form" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="after">
+                <field
+                    name="image_1920"
+                    widget="image"
+                    class="oe_avatar"
+                    options="{'preview_image': 'image_128'}"
+                />
+            </div>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="equipment_department_id" />
+                <field name="generic_name_id" />
+                <field name="set_name" />
+            </xpath>
+            <field name="location" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="location" position="after">
+                <field name="location_id" />
+                <field name="is_national_project" />
+                <field
+                    name="national_project_name"
+                    invisible="not is_national_project"
+                />
+                <field name="is_fixed_asset" />
+                <field name="fixed_asset_code" invisible="not is_fixed_asset" />
+                <field name="is_gmp" />
+                <field name="management_no" invisible="not is_gmp" />
+                <field name="is_measuring_instrument" />
+            </field>
+            <xpath expr="//field[@name='model']" position="after">
+                <field name="manufacturer" />
+                <field name="manufacturer_serial_no" />
+                <field name="purchase_order_id" />
+            </xpath>
+            <xpath expr="//page[@name='product_information']" position="after">
+                <page string="GMP Information" name="gmp_information">
+                    <group>
+                        <group>
+                            <field name="usable_temperature" />
+                            <field name="usable_humidity" />
+                        </group>
+                        <group>
+                            <field name="is_daily_inspection" />
+                            <field name="is_calibration" />
+                            <field name="is_fluorocarbon_inspection" />
+                            <field name="is_handled_in_house" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='effective_date']" position="after">
+                <field name="acquisition_date" />
+            </xpath>
+        </field>
+    </record>
+    <record id="maintenance_equipment_view_list" model="ir.ui.view">
+        <field name="name">maintenance.equipment.list</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_tree" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="equipment_department_id" optional="show" />
+                <field name="generic_name_id" optional="show" />
+                <field name="location_id" optional="show" />
+                <field name="set_name" optional="hide" />
+                <field name="management_no" optional="hide" />
+                <field name="fixed_asset_code" optional="hide" />
+                <field name="manufacturer" optional="hide" />
+                <field name="manufacturer_serial_no" optional="hide" />
+                <field name="national_project_name" optional="hide" />
+                <field name="acquisition_date" optional="hide" />
+                <field name="is_national_project" optional="hide" />
+                <field name="is_fixed_asset" optional="hide" />
+                <field name="is_gmp" optional="hide" />
+                <field name="is_measuring_instrument" optional="hide" />
+                <field name="is_daily_inspection" optional="hide" />
+                <field name="is_calibration" optional="hide" />
+                <field name="is_fluorocarbon_inspection" optional="hide" />
+                <field name="is_handled_in_house" optional="hide" />
+                <field name="usable_temperature" optional="hide" />
+                <field name="usable_humidity" optional="hide" />
+            </field>
+        </field>
+    </record>
+    <record id="maintenance_equipment_view_search" model="ir.ui.view">
+        <field name="name">maintenance.equipment.search</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_search" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="equipment_department_id" />
+                <field name="generic_name_id" />
+                <field name="location_id" />
+                <field name="management_no" />
+                <field name="fixed_asset_code" />
+                <field name="manufacturer" />
+                <field name="manufacturer_serial_no" />
+            </field>
+            <filter name="under_maintenance" position="after">
+                <separator />
+                <filter
+                    name="fixed_asset"
+                    string="Fixed Asset"
+                    domain="[('is_fixed_asset', '=', True)]"
+                />
+                <filter name="gmp" string="GMP" domain="[('is_gmp', '=', True)]" />
+                <filter
+                    name="measuring_instrument"
+                    string="Measuring Instrument"
+                    domain="[('is_measuring_instrument', '=', True)]"
+                />
+                <filter
+                    name="daily_inspection"
+                    string="Daily Inspection"
+                    domain="[('is_daily_inspection', '=', True)]"
+                />
+                <filter
+                    name="calibration"
+                    string="Calibration"
+                    domain="[('is_calibration', '=', True)]"
+                />
+                <filter
+                    name="fluorocarbon_inspection"
+                    string="Fluorocarbon Inspection Target"
+                    domain="[('is_fluorocarbon_inspection', '=', True)]"
+                />
+                <filter
+                    name="handled_in_house"
+                    string="Handled In-house"
+                    domain="[('is_handled_in_house', '=', True)]"
+                />
+            </filter>
+            <group position="inside">
+                <filter
+                    name="equipment_department"
+                    string="Equipment Department"
+                    domain="[]"
+                    context="{'group_by': 'equipment_department_id'}"
+                />
+                <filter
+                    name="generic_name"
+                    string="General Name"
+                    domain="[]"
+                    context="{'group_by': 'generic_name_id'}"
+                />
+                <filter
+                    name="location"
+                    string="Used in location"
+                    domain="[]"
+                    context="{'group_by': 'location_id'}"
+                />
+            </group>
+        </field>
+    </record>
+</odoo>
