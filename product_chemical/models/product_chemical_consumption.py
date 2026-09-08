@@ -9,13 +9,6 @@ class ProductChemicalConsumption(models.Model):
     _description = "Product Chemical Consumption"
     _order = "actual_date desc, id desc"
 
-    # The move side is read straight off the move, so correcting a move
-    # corrects the amounts booked against it. The composition is not: the
-    # content rate is precomputed at creation -- computed on flush it would
-    # pick up whatever the product holds by the end of the transaction -- and
-    # stays put when the product is revised, so past records keep the rate that
-    # was applied to them. A wrong rate is put right on the product and
-    # replayed with the Update Chemical Consumption action.
     move_id = fields.Many2one(
         "stock.move",
         string="Stock Move",
@@ -46,6 +39,11 @@ class ProductChemicalConsumption(models.Model):
     product_uom_id = fields.Many2one(
         related="move_id.product_uom", string="Product UoM"
     )
+    # Frozen at creation by the precompute -- computed on flush it would pick
+    # up whatever the product holds by the end of the transaction -- so that
+    # revising the content rate on a product leaves the rate the amounts
+    # already reported were computed with alone. A rate registered wrongly is
+    # fixed on the product and replayed with Update Chemical Consumption.
     content_rate = fields.Float(
         string="Content Rate (%)",
         compute="_compute_content_rate",
