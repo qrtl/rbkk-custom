@@ -19,6 +19,12 @@ class MaintenanceEquipment(models.Model):
         ],
         default="preparing",
     )
+    maintenance_exempt = fields.Boolean(
+        string="Maintenance Not Required",
+        help="If set, maintenance request results are ignored when computing "
+        "usability: the equipment is usable as long as it is in the Operating "
+        "status.",
+    )
     usability_state = fields.Selection(
         selection=[
             ("unknown", "Unknown"),
@@ -77,6 +83,7 @@ class MaintenanceEquipment(models.Model):
     @api.depends(
         "company_id",
         "status",
+        "maintenance_exempt",
         "latest_maintenance_result_request_id.maintenance_result",
         "latest_maintenance_result_date",
     )
@@ -85,6 +92,10 @@ class MaintenanceEquipment(models.Model):
         for equipment in self:
             if equipment.status != "operating":
                 equipment.usability_state = "unusable"
+                continue
+            if equipment.maintenance_exempt:
+                # Maintenance results are not evaluated for exempt equipment.
+                equipment.usability_state = "usable"
                 continue
             request = equipment.latest_maintenance_result_request_id
             result_date = equipment.latest_maintenance_result_date
@@ -123,24 +134,32 @@ class MaintenanceEquipment(models.Model):
             months=self.env.company.usability_grace_period_months
         )
         domains = {
-            # unknown: operating, but no completed result yet
+            # unknown: operating and not exempt, but no completed result yet
             "unknown": [
                 "&",
                 ("status", "=", "operating"),
+                "&",
+                ("maintenance_exempt", "=", False),
                 ("latest_maintenance_result_request_id", "=", False),
             ],
-            # usable: operating, latest result passed, within the grace period
+            # usable: operating and either exempt, or the latest result passed
+            # within the grace period
             "usable": [
                 "&",
                 ("status", "=", "operating"),
+                "|",
+                ("maintenance_exempt", "=", True),
                 "&",
                 (result, "=", "passed"),
                 ("latest_maintenance_result_date", ">=", threshold),
             ],
-            # unusable: not operating, or result failed, or passed but past grace
+            # unusable: not operating, or not exempt with a failed result or a
+            # passed result past the grace period
             "unusable": [
                 "|",
                 ("status", "!=", "operating"),
+                "&",
+                ("maintenance_exempt", "=", False),
                 "|",
                 (result, "=", "failed"),
                 "&",

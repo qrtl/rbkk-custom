@@ -2,6 +2,11 @@ The equipment Status (Preparing, Operating, Idle, Disposal / Scrapped) gates
 usability: only equipment in the Operating status can be usable. In any other
 status the equipment is unusable regardless of its maintenance result.
 
+Equipment that is not subject to maintenance can be flagged with Maintenance
+Not Required. Its maintenance request results are then excluded from the
+usability evaluation: the equipment is usable while it is in the Operating
+status, and unusable in any other status.
+
 When a maintenance request is completed (it reaches a done stage), set its
 Maintenance Result to Passed or Failed. For equipment in the Operating status,
 usability is then computed from the latest completed request by completion date:

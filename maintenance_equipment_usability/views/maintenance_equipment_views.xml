@@ -9,13 +9,18 @@
         <field name="arch" type="xml">
             <field name="category_id" position="after">
                 <field name="status" />
+                <field name="maintenance_exempt" />
                 <field name="usability_state" readonly="1" />
             </field>
             <xpath
                 expr="//page[@name='maintenance']//group[@name='statistics']"
                 position="after"
             >
-                <group name="usability" string="Usability">
+                <group
+                    name="usability"
+                    string="Usability"
+                    invisible="maintenance_exempt"
+                >
                     <field name="latest_maintenance_result_request_id" readonly="1" />
                     <field name="latest_maintenance_result_date" readonly="1" />
                 </group>
