@@ -68,6 +68,15 @@ msgid "Idle"
 msgstr "遊休"
 
 #. module: maintenance_equipment_usability
+#: model:ir.model.fields,help:maintenance_equipment_usability.field_maintenance_equipment__maintenance_exempt
+msgid ""
+"If set, maintenance request results are ignored when computing usability: "
+"the equipment is usable as long as it is in the Operating status."
+msgstr ""
+"設定すると、使用可否の判定で整備依頼の結果を考慮しません。稼働中ステータスであ"
+"る限り使用可となります。"
+
+#. module: maintenance_equipment_usability
 #: model:ir.model.fields,field_description:maintenance_equipment_usability.field_maintenance_equipment__latest_maintenance_result_date
 msgid "Latest Result Date"
 msgstr "最新結果日"
@@ -86,6 +95,11 @@ msgstr "整備設備"
 #: model:ir.model,name:maintenance_equipment_usability.model_maintenance_request
 msgid "Maintenance Request"
 msgstr "整備依頼"
+
+#. module: maintenance_equipment_usability
+#: model:ir.model.fields,field_description:maintenance_equipment_usability.field_maintenance_equipment__maintenance_exempt
+msgid "Maintenance Not Required"
+msgstr "整備対象外"
 
 #. module: maintenance_equipment_usability
 #: model:ir.model.fields,field_description:maintenance_equipment_usability.field_maintenance_request__maintenance_result

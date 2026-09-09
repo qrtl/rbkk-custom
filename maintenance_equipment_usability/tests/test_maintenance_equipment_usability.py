@@ -70,6 +70,53 @@ class TestMaintenanceEquipmentUsability(BaseCommon):
         self.equipment.status = "preparing"
         self.assertEqual(self.equipment.usability_state, "unusable")
 
+    def test_maintenance_exempt_ignores_maintenance_result(self):
+        self._create_request(self.done_stage, result="failed", close_date=self.today)
+        self.assertEqual(self.equipment.usability_state, "unusable")
+        # The maintenance result is not evaluated for exempt equipment.
+        self.equipment.maintenance_exempt = True
+        self.assertEqual(self.equipment.usability_state, "usable")
+        # The status still gates usability.
+        self.equipment.status = "idle"
+        self.assertEqual(self.equipment.usability_state, "unusable")
+
+    def test_maintenance_exempt_without_result_is_usable(self):
+        # Without the flag the equipment usability is unknown.
+        self.assertEqual(self.equipment.usability_state, "unknown")
+        self.equipment.maintenance_exempt = True
+        self.assertEqual(self.equipment.usability_state, "usable")
+
+    def test_search_usability_state_with_maintenance_exempt(self):
+        exempt_equipment = self.env["maintenance.equipment"].create(
+            {
+                "name": "Exempt Equipment",
+                "status": "operating",
+                "maintenance_exempt": True,
+            }
+        )
+        self.env["maintenance.request"].create(
+            {
+                "name": "Exempt Request",
+                "equipment_id": exempt_equipment.id,
+                "stage_id": self.done_stage.id,
+                "request_date": self.today,
+                "close_date": self.today,
+                "maintenance_result": "failed",
+            }
+        )
+        usable = self.env["maintenance.equipment"].search(
+            [("usability_state", "=", "usable")]
+        )
+        unusable = self.env["maintenance.equipment"].search(
+            [("usability_state", "=", "unusable")]
+        )
+        unknown = self.env["maintenance.equipment"].search(
+            [("usability_state", "=", "unknown")]
+        )
+        self.assertIn(exempt_equipment, usable)
+        self.assertNotIn(exempt_equipment, unusable)
+        self.assertNotIn(exempt_equipment, unknown)
+
     def test_usability_uses_latest_result_by_close_date(self):
         self._create_request(
             self.done_stage,
