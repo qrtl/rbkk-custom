@@ -4,13 +4,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-28 06:42+0000\n"
-"PO-Revision-Date: 2026-05-26 00:00+0000\n"
+"POT-Creation-Date: 2026-09-11 06:24+0000\n"
+"PO-Revision-Date: 2026-09-11 06:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -56,7 +55,7 @@ msgid ""
 msgstr "使用された化学物質の量。在庫へ戻した場合はマイナスになります。"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
 msgid "Applicable Laws"
 msgstr "適用法律"
 
@@ -93,8 +92,8 @@ msgstr "カテゴリ"
 #: model:ir.model.fields,field_description:product_chemical.field_product_product__is_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_template__is_chemical
 #: model:ir.ui.menu,name:product_chemical.menu_product_chemical_root
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_search_view
 msgid "Chemical"
 msgstr "化学物質"
 
@@ -145,7 +144,7 @@ msgstr "化学物質"
 #: model:ir.model.fields,field_description:product_chemical.field_product_product__chemical_substance_line_ids
 #: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_substance_line_ids
 #: model:ir.ui.menu,name:product_chemical.menu_product_chemical_substance
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
 msgid "Chemical Substances"
 msgstr "化学物質マスタ"
 
@@ -153,11 +152,10 @@ msgstr "化学物質マスタ"
 #: model:ir.model.fields,help:product_chemical.field_uom_category__chemical_uom_id
 msgid ""
 "Chemical component amounts of products measured in this category are "
-"converted to this unit before being aggregated. Leave it empty to report the "
-"amounts without conversion, e.g. for count-managed products."
+"converted to this unit before being aggregated. Leave it empty to report the"
+" amounts without conversion, e.g. for count-managed products."
 msgstr ""
-"このカテゴリの単位で管理されるプロダクトの成分量は、集計前にこの単位に換算さ"
-"れます。空欄にすると換算せずに成分量を表示します（個数管理品など）。"
+"このカテゴリの単位で管理されるプロダクトの成分量は、集計前にこの単位に換算されます。空欄にすると換算せずに成分量を表示します（個数管理品など）。"
 
 #. module: product_chemical
 #: model:ir.actions.act_window,name:product_chemical.product_chemical_stock_action
@@ -178,7 +176,7 @@ msgstr "成分量"
 #. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_product__chemical_stock_ids
 #: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_stock_ids
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
 msgid "Component Amount by Location"
 msgstr "ロケーション別成分量"
 
@@ -484,6 +482,22 @@ msgid "Sequence"
 msgstr "シーケンス"
 
 #. module: product_chemical
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_major_category__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_law_minor_category__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_stock__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_chemical_substance__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_template__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_law_line__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_substance_line__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_stock_location__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_stock_move__smart_search
+#: model:ir.model.fields,field_description:product_chemical.field_uom_category__smart_search
+msgid "Smart Search"
+msgstr "スマート検索"
+
+#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_chemical_consumption__location_id
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_search
 msgid "Source Location"
@@ -505,7 +519,7 @@ msgid "Substance"
 msgstr "化学物質"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_search_view
 msgid "Substance / CAS No."
 msgstr "化学物質 / CAS番号"
 
@@ -526,16 +540,12 @@ msgstr "化学物質"
 msgid ""
 "The chemical aggregation unit of measure of category %(category)s must "
 "belong to that category."
-msgstr ""
-"カテゴリ%(category)sの化学物質集計単位は、そのカテゴリに属している必要があり"
-"ます。"
+msgstr "カテゴリ%(category)sの化学物質集計単位は、そのカテゴリに属している必要があります。"
 
 #. module: product_chemical
 #: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__location_id
 msgid "The operation takes and suggests products from this location."
-msgstr ""
-"このオペレーションでは、このロケーションからプロダクトを受け取り、提案しま"
-"す。"
+msgstr "このオペレーションでは、このロケーションからプロダクトを受け取り、提案します。"
 
 #. module: product_chemical
 #: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__location_dest_id
@@ -545,7 +555,7 @@ msgstr "オペレーションはこのロケーションにプロダクトを移
 #. module: product_chemical
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_consumption_view_list
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_chemical_stock_view_list
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_form
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
 msgid "Total"
 msgstr "合計"
 
@@ -556,7 +566,7 @@ msgid "Track Chemical Consumption"
 msgstr "化学物質消費追跡"
 
 #. module: product_chemical
-#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_view_search
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_search_view
 msgid "Tracked Chemical Consumption"
 msgstr "化学物質消費追跡対象"
 
@@ -566,9 +576,7 @@ msgid ""
 "Unit of measure the component amount is expressed in: the chemical "
 "aggregation unit of the UoM category, or the product unit when the category "
 "has none."
-msgstr ""
-"成分量を表す単位。単位カテゴリの化学物質集計単位、または集計単位が未設定の場"
-"合はプロダクトの単位。"
+msgstr "成分量を表す単位。単位カテゴリの化学物質集計単位、または集計単位が未設定の場合はプロダクトの単位。"
 
 #. module: product_chemical
 #: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__amount_uom_id
@@ -576,14 +584,7 @@ msgid ""
 "Unit of measure the consumed amount is expressed in: the chemical "
 "aggregation unit of the UoM category, or the product unit when the category "
 "has none."
-msgstr ""
-"使用量を表す単位。単位カテゴリの化学物質集計単位、または集計単位が未設定の場"
-"合はプロダクトの単位。"
-
-#. module: product_chemical
-#: model:ir.model.fields,help:product_chemical.field_product_chemical_consumption__product_uom_id
-msgid "Unit of measure the moved quantity is expressed in."
-msgstr "移動数量を表す単位。"
+msgstr "使用量を表す単位。単位カテゴリの化学物質集計単位、または集計単位が未設定の場合はプロダクトの単位。"
 
 #. module: product_chemical
 #: model:ir.model.fields,help:product_chemical.field_product_chemical_stock__product_uom_id
