@@ -27,14 +27,6 @@ class ProductTemplateChemicalLawLine(models.Model):
         ondelete="restrict",
     )
 
-    _sql_constraints = [
-        (
-            "product_law_uniq",
-            "unique(product_tmpl_id, law_id)",
-            "Each law can be added only once per product.",
-        ),
-    ]
-
     @api.onchange("law_id")
     def _onchange_law_id(self):
         self.major_category_id = False
