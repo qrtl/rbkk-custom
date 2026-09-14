@@ -17,10 +17,3 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.acceptance_label_status_html",
         readonly=False,
     )
-
-    @api.onchange("company_id")
-    def _onchange_company_id_acceptance_label(self):
-        if self.company_id and is_html_empty(self.acceptance_label_status_html):
-            self.acceptance_label_status_html = (
-                self.company_id._get_acceptance_status_html()
-            )
