@@ -4,10 +4,6 @@
 from odoo import fields, models
 from odoo.tools import format_date
 
-# The label is a form to be filled in by hand on the shop floor, so its dates
-# are printed in a fixed format instead of the format of the language.
-LABEL_DATE_FORMAT = "yyyy/MM/dd"
-
 
 class StockMove(models.Model):
     _inherit = "stock.move"
@@ -17,7 +13,9 @@ class StockMove(models.Model):
     def get_acceptance_arrival_date(self):
         """Return the configured arrival date, in the user time zone."""
         self.ensure_one()
-        field = self.company_id._get_acceptance_arrival_date_field()
+        field = self.company_id.acceptance_label_arrival_date_field_id or self.env[
+            "ir.model.fields"
+        ]._get("stock.picking", "date_done")
         if field.model == "stock.move":
             record = self
         elif field.model == "stock.picking":
@@ -41,17 +39,12 @@ class StockMove(models.Model):
         return ", ".join(self._get_acceptance_lots().mapped("name"))
 
     def get_acceptance_expiration_dates(self):
-        """Return the expiration dates of the lots, as a single string.
-
-        The dates come from the lots, so that nothing is printed as long as the
-        lot of the line is unknown. Keep one entry per lot, in the same order as
-        the lot numbers, including duplicate dates and empty entries.
-        """
+        """Keep one date per lot, in lot order, including duplicates and blanks."""
         return ", ".join(
             format_date(
                 self.env,
                 fields.Datetime.context_timestamp(self, lot.expiration_date).date(),
-                date_format=LABEL_DATE_FORMAT,
+                date_format="yyyy/MM/dd",
             )
             if lot.expiration_date
             else ""

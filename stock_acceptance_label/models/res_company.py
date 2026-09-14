@@ -18,7 +18,6 @@ class ResCompany(models.Model):
         default=lambda self: self.env["ir.model.fields"]._get(
             "stock.picking", "date_done"
         ),
-        ondelete="set null",
         help="Field printed as the arrival date on the acceptance label. Date "
         "fields of the transfer and of its lines can be selected, and datetime "
         "fields are converted to the user time zone. The effective date of the "
@@ -31,12 +30,6 @@ class ResCompany(models.Model):
         "a few lines: the label has a fixed height, and anything that does not "
         "fit is cut off. Empty it to restore the built-in status area.",
     )
-
-    def _get_acceptance_arrival_date_field(self):
-        self.ensure_one()
-        return self.acceptance_label_arrival_date_field_id or self.env[
-            "ir.model.fields"
-        ]._get("stock.picking", "date_done")
 
     def _get_acceptance_status_html(self):
         self.ensure_one()

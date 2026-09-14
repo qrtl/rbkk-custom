@@ -13,14 +13,10 @@ class StockPicking(models.Model):
         The moves are kept in the order of the transfers they belong to, so that
         the labels of a transfer stay together.
         """
-        labels_per_page = 3
         moves = [
             move
             for picking in self
             for move in picking.move_ids
             if move.state != "cancel"
         ]
-        return [
-            moves[index : index + labels_per_page]
-            for index in range(0, len(moves), labels_per_page)
-        ]
+        return [moves[index : index + 3] for index in range(0, len(moves), 3)]
