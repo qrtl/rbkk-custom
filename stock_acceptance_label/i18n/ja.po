@@ -39,6 +39,7 @@ msgid "Arrival Date"
 msgstr "入荷日"
 
 #. module: stock_acceptance_label
+#: model:ir.model.fields,field_description:stock_acceptance_label.field_res_company__acceptance_label_arrival_date_field_id
 #: model:ir.model.fields,field_description:stock_acceptance_label.field_res_config_settings__acceptance_label_arrival_date_field_id
 msgid "Arrival Date Field"
 msgstr "入荷日フィールド"
@@ -47,6 +48,11 @@ msgstr "入荷日フィールド"
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
 msgid "Barcode"
 msgstr "バーコード"
+
+#. module: stock_acceptance_label
+#: model:ir.model,name:stock_acceptance_label.model_res_company
+msgid "Companies"
+msgstr "会社"
 
 #. module: stock_acceptance_label
 #: model:ir.model,name:stock_acceptance_label.model_res_config_settings
@@ -64,6 +70,7 @@ msgid "Field printed as the arrival date on the acceptance label"
 msgstr "受入ラベルに入荷日として印字するフィールド"
 
 #. module: stock_acceptance_label
+#: model:ir.model.fields,help:stock_acceptance_label.field_res_company__acceptance_label_arrival_date_field_id
 #: model:ir.model.fields,help:stock_acceptance_label.field_res_config_settings__acceptance_label_arrival_date_field_id
 msgid ""
 "Field printed as the arrival date on the acceptance label. Date fields of "
@@ -96,6 +103,7 @@ msgid "Status"
 msgstr "ステータス"
 
 #. module: stock_acceptance_label
+#: model:ir.model.fields,field_description:stock_acceptance_label.field_res_company__acceptance_label_status_html
 #: model:ir.model.fields,field_description:stock_acceptance_label.field_res_config_settings__acceptance_label_status_html
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.res_config_settings_view_form
 msgid "Status Area"
@@ -107,6 +115,7 @@ msgid "Status area printed on the acceptance label, to be filled in by hand"
 msgstr "受入ラベルに印字する、手書きで記入するためのステータス欄"
 
 #. module: stock_acceptance_label
+#: model:ir.model.fields,help:stock_acceptance_label.field_res_company__acceptance_label_status_html
 #: model:ir.model.fields,help:stock_acceptance_label.field_res_config_settings__acceptance_label_status_html
 msgid ""
 "Status area printed on the acceptance label. It is meant to be filled in by "

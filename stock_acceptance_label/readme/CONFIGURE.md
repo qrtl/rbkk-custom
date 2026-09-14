@@ -1,6 +1,10 @@
 The settings of the label are in *Inventory > Configuration > Settings >
 Acceptance Label*.
 
+Both settings are specific to the company selected in the settings. Each label
+uses the settings of its transfer's company, including when transfers from
+several companies are printed together.
+
 **Arrival Date** selects the date printed as the arrival date. Any date or
 datetime field of the transfer or of its lines can be selected, including the
 fields added by other modules, and datetime fields are converted to the user

@@ -12,3 +12,5 @@ with the default setting.
 The lot number and the expiration date are taken from the lots of the line, so
 they stay blank until the lots are assigned in the *Detailed Operations* of the
 transfer. A line received in several lots prints them all, separated by commas.
+The expiration dates follow the same order as the lot numbers, including repeated
+dates. A lot without an expiration date keeps an empty entry in the date list.

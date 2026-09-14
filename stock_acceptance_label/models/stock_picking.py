@@ -7,15 +7,13 @@ from odoo import models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    # An A4 portrait sheet is split into three horizontal bands.
-    LABELS_PER_PAGE = 3
-
     def get_acceptance_label_pages(self):
         """Return the moves to print a label for, grouped per sheet.
 
         The moves are kept in the order of the transfers they belong to, so that
         the labels of a transfer stay together.
         """
+        labels_per_page = 3
         moves = [
             move
             for picking in self
@@ -23,6 +21,6 @@ class StockPicking(models.Model):
             if move.state != "cancel"
         ]
         return [
-            moves[index : index + self.LABELS_PER_PAGE]
-            for index in range(0, len(moves), self.LABELS_PER_PAGE)
+            moves[index : index + labels_per_page]
+            for index in range(0, len(moves), labels_per_page)
         ]
