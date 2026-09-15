@@ -1,0 +1,29 @@
+The settings of the label are in *Inventory > Configuration > Settings >
+Acceptance Label*.
+
+Both settings are specific to the company selected in the settings. Each label
+uses the settings of its transfer's company, including when transfers from
+several companies are printed together.
+
+**Arrival Date** selects the date printed as the arrival date. Any date or
+datetime field of the transfer or of its lines can be selected, including the
+fields added by other modules, and datetime fields are converted to the user
+time zone.
+
+The effective date of the transfer (*Date of Transfer*) is used by default, and
+also when the selected field is emptied or points to a field that does not exist
+anymore.
+
+**Status Area** holds the content of the status row, and can be edited freely.
+It is empty by default, in which case the label prints the built-in area:
+
+```
+□ Under Inspection
+↓
+□ Conforming or □ Rejected
+```
+
+Keep the area within a few lines: the label has a fixed height, and anything
+that does not fit in its band is cut off. Emptying the setting restores the
+built-in area, which follows the language of the printing user, while an area
+entered here is printed as such in every language.
