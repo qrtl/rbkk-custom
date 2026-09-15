@@ -15,7 +15,7 @@ also when the selected field is emptied or points to a field that does not exist
 anymore.
 
 **Status Area** holds the content of the status row, and can be edited freely.
-It comes filled in with the default area, so that it only has to be adjusted:
+It is empty by default, in which case the label prints the built-in area:
 
 ```
 □ Under Inspection
@@ -25,5 +25,5 @@ It comes filled in with the default area, so that it only has to be adjusted:
 
 Keep the area within a few lines: the label has a fixed height, and anything
 that does not fit in its band is cut off. Emptying the setting restores the
-default area, which follows the language of the printing user, while an area
+built-in area, which follows the language of the printing user, while an area
 entered here is printed as such in every language.

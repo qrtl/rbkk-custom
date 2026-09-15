@@ -8,6 +8,9 @@ from odoo.tools import html_sanitize, is_html_empty
 class ResCompany(models.Model):
     _inherit = "res.company"
 
+    def _default_acceptance_label_arrival_date_field(self):
+        return self.env["ir.model.fields"]._get("stock.picking", "date_done")
+
     acceptance_label_arrival_date_field_id = fields.Many2one(
         "ir.model.fields",
         string="Arrival Date Field",
@@ -15,9 +18,7 @@ class ResCompany(models.Model):
             ("model", "in", ["stock.move", "stock.picking"]),
             ("ttype", "in", ["date", "datetime"]),
         ],
-        default=lambda self: self.env["ir.model.fields"]._get(
-            "stock.picking", "date_done"
-        ),
+        default=lambda self: self._default_acceptance_label_arrival_date_field(),
         help="Field printed as the arrival date on the acceptance label. Date "
         "fields of the transfer and of its lines can be selected, and datetime "
         "fields are converted to the user time zone. The effective date of the "
@@ -30,6 +31,14 @@ class ResCompany(models.Model):
         "a few lines: the label has a fixed height, and anything that does not "
         "fit is cut off. Empty it to restore the built-in status area.",
     )
+
+    def _get_acceptance_arrival_date_field(self):
+        """Return the field to read the arrival date from."""
+        self.ensure_one()
+        return (
+            self.acceptance_label_arrival_date_field_id
+            or self._default_acceptance_label_arrival_date_field()
+        )
 
     def _get_acceptance_status_html(self):
         self.ensure_one()

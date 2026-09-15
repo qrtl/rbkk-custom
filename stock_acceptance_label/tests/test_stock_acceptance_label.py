@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command, fields
-from odoo.tests import Form, tagged
+from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 from odoo.tools import is_html_empty
 
@@ -92,6 +92,18 @@ class TestStockAcceptanceLabel(TransactionCase):
     def test_acceptance_number_is_not_copied(self):
         self.picking.move_ids[0].acceptance_number = "R016-20251017-01"
         self.assertFalse(self.picking.copy().move_ids[0].acceptance_number)
+
+    def test_numbered_lines_are_not_merged(self):
+        picking = self._create_picking(self.product_a, self.product_a)
+        # Identical lines are merged on confirmation, so one label is printed.
+        unnumbered = picking.copy()
+        unnumbered.action_confirm()
+        self.assertEqual(len(unnumbered.move_ids), 1)
+        # Lines that carry their own acceptance number keep their own label.
+        picking.move_ids[0].acceptance_number = "R016-20251017-01"
+        picking.move_ids[1].acceptance_number = "R016-20251017-02"
+        picking.action_confirm()
+        self.assertEqual(len(picking.move_ids), 2)
 
     def test_label_pages_layout(self):
         other_picking = self._create_picking(*([self.product_a] * 5))
@@ -203,17 +215,15 @@ class TestStockAcceptanceLabel(TransactionCase):
                 self.assertEqual(move.get_acceptance_expiration_dates(), expected)
 
     def test_status_area_setting(self):
-        with Form(self.env["res.config.settings"]) as settings_form:
-            # The setting comes filled in with the default status area.
-            self.assertIn(
-                "Under Inspection", settings_form.acceptance_label_status_html
-            )
-            settings_form.acceptance_label_status_html = "<div>Accepted</div>"
-        settings = settings_form.record
-        settings.execute()
         move = self.picking.move_ids[0]
+        # The built-in status area is printed as long as the setting is empty.
+        self.assertIn("Under Inspection", move.get_acceptance_status_html())
+        settings = self.env["res.config.settings"].create(
+            {"acceptance_label_status_html": "<div>Accepted</div>"}
+        )
+        settings.execute()
         self.assertIn("Accepted", move.get_acceptance_status_html())
-        # Emptying the setting restores the default status area.
+        # Emptying the setting restores the built-in status area.
         settings.acceptance_label_status_html = "<p><br></p>"
         settings.execute()
         self.assertTrue(is_html_empty(self.company.acceptance_label_status_html))

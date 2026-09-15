@@ -10,12 +10,14 @@ class StockMove(models.Model):
 
     acceptance_number = fields.Char(copy=False)
 
+    def _prepare_merge_moves_distinct_fields(self):
+        # Keep one label, and one acceptance number, per numbered line.
+        return super()._prepare_merge_moves_distinct_fields() + ["acceptance_number"]
+
     def get_acceptance_arrival_date(self):
         """Return the configured arrival date, in the user time zone."""
         self.ensure_one()
-        field = self.company_id.acceptance_label_arrival_date_field_id or self.env[
-            "ir.model.fields"
-        ]._get("stock.picking", "date_done")
+        field = self.company_id._get_acceptance_arrival_date_field()
         if field.model == "stock.move":
             record = self
         elif field.model == "stock.picking":
@@ -32,7 +34,7 @@ class StockMove(models.Model):
     def _get_acceptance_lots(self):
         """Return the lots the transfer line is received in, if any."""
         self.ensure_one()
-        return self.move_line_ids.lot_id
+        return self.lot_ids
 
     def get_acceptance_lot_names(self):
         """Return the lot numbers of the transfer line, as a single string."""

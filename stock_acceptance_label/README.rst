@@ -56,6 +56,10 @@ Configuration
 The settings of the label are in *Inventory > Configuration > Settings >
 Acceptance Label*.
 
+Both settings are specific to the company selected in the settings. Each
+label uses the settings of its transfer's company, including when
+transfers from several companies are printed together.
+
 **Arrival Date** selects the date printed as the arrival date. Any date
 or datetime field of the transfer or of its lines can be selected,
 including the fields added by other modules, and datetime fields are
@@ -66,8 +70,8 @@ default, and also when the selected field is emptied or points to a
 field that does not exist anymore.
 
 **Status Area** holds the content of the status row, and can be edited
-freely. It comes filled in with the default area, so that it only has to
-be adjusted:
+freely. It is empty by default, in which case the label prints the
+built-in area:
 
 ::
 
@@ -77,7 +81,7 @@ be adjusted:
 
 Keep the area within a few lines: the label has a fixed height, and
 anything that does not fit in its band is cut off. Emptying the setting
-restores the default area, which follows the language of the printing
+restores the built-in area, which follows the language of the printing
 user, while an area entered here is printed as such in every language.
 
 Usage
@@ -99,7 +103,9 @@ is done with the default setting.
 The lot number and the expiration date are taken from the lots of the
 line, so they stay blank until the lots are assigned in the *Detailed
 Operations* of the transfer. A line received in several lots prints them
-all, separated by commas.
+all, separated by commas. The expiration dates follow the same order as
+the lot numbers, including repeated dates. A lot without an expiration
+date keeps an empty entry in the date list.
 
 Bug Tracker
 ===========
