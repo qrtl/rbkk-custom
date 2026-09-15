@@ -11,7 +11,6 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.acceptance_label_arrival_date_field_id",
         readonly=False,
     )
-
     acceptance_label_status_html = fields.Html(
         related="company_id.acceptance_label_status_html",
         readonly=False,
