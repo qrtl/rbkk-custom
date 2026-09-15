@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_chemical_consumption_view_list" model="ir.ui.view">
+        <field name="name">product.chemical.consumption.list</field>
+        <field name="model">product.chemical.consumption</field>
+        <field name="arch" type="xml">
+            <!-- The records are a read-only trace of what the stock moves
+                 handled. A wrong figure is fixed on the product and replayed
+                 with the Update Chemical Consumption action, never edited
+                 here, so there is no form view either. -->
+            <list create="false" edit="false" delete="false">
+                <field name="actual_date" />
+                <field name="product_id" />
+                <field name="substance_id" />
+                <field name="quantity" />
+                <field name="product_uom_id" />
+                <field name="content_rate" />
+                <field name="amount" sum="Total" />
+                <field name="amount_uom_id" />
+                <field name="location_id" optional="hide" />
+                <field name="location_dest_id" optional="hide" />
+                <field name="move_id" optional="hide" />
+            </list>
+        </field>
+    </record>
+    <record id="product_chemical_consumption_view_pivot" model="ir.ui.view">
+        <field name="name">product.chemical.consumption.pivot</field>
+        <field name="model">product.chemical.consumption</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="amount_uom_id" type="row" />
+                <field name="substance_id" type="row" />
+                <field name="amount" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="product_chemical_consumption_view_search" model="ir.ui.view">
+        <field name="name">product.chemical.consumption.search</field>
+        <field name="model">product.chemical.consumption</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="substance_id" />
+                <field name="product_id" />
+                <field name="move_id" />
+                <field name="location_id" />
+                <field name="location_dest_id" />
+                <filter
+                    string="Consumption"
+                    name="consumption"
+                    domain="[('amount', '&gt;', 0)]"
+                />
+                <filter
+                    string="Returns"
+                    name="returns"
+                    domain="[('amount', '&lt;', 0)]"
+                />
+                <separator />
+                <filter
+                    string="Actual Date"
+                    name="filter_actual_date"
+                    date="actual_date"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Amount UoM"
+                        name="group_amount_uom"
+                        context="{'group_by': 'amount_uom_id'}"
+                    />
+                    <filter
+                        string="Substance"
+                        name="group_substance"
+                        context="{'group_by': 'substance_id'}"
+                    />
+                    <filter
+                        string="Product"
+                        name="group_product"
+                        context="{'group_by': 'product_id'}"
+                    />
+                    <filter
+                        string="Source Location"
+                        name="group_location"
+                        context="{'group_by': 'location_id'}"
+                    />
+                    <filter
+                        string="Destination Location"
+                        name="group_location_dest"
+                        context="{'group_by': 'location_dest_id'}"
+                    />
+                    <filter
+                        string="Actual Date"
+                        name="group_actual_date"
+                        context="{'group_by': 'actual_date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="product_chemical_consumption_action_sync" model="ir.actions.server">
+        <field name="name">Update from Stock Move</field>
+        <field name="model_id" ref="model_product_chemical_consumption" />
+        <field name="binding_model_id" ref="model_product_chemical_consumption" />
+        <field name="binding_view_types">list</field>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('stock.group_stock_manager'))]"
+        />
+        <field name="state">code</field>
+        <field name="code">action = records.action_sync_from_move()</field>
+    </record>
+    <record id="product_chemical_consumption_action" model="ir.actions.act_window">
+        <field name="name">Chemical Consumption</field>
+        <field name="res_model">product.chemical.consumption</field>
+        <field name="view_mode">list,pivot</field>
+        <!-- The amount unit has to be the outermost group, otherwise weight and
+             volume amounts end up in the same subtotal. -->
+        <field
+            name="context"
+        >{'search_default_group_amount_uom': 1, 'search_default_group_substance': 1}</field>
+    </record>
+</odoo>
