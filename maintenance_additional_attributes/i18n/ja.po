@@ -56,11 +56,6 @@ msgid "Archived"
 msgstr "アーカイブ済"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_calibration
-msgid "Calibration"
-msgstr "校正"
-
-#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__create_uid
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_uid
 msgid "Created by"
@@ -71,11 +66,6 @@ msgstr "作成者"
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_date
 msgid "Created on"
 msgstr "作成日"
-
-#. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_daily_inspection
-msgid "Daily Inspection"
-msgstr "日常点検"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_unit__day
@@ -120,11 +110,6 @@ msgid "GMP"
 msgstr "GMP"
 
 #. module: maintenance_additional_attributes
-#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_view_form
-msgid "GMP Information"
-msgstr "GMP情報"
-
-#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__generic_name_id
 msgid "General Name"
 msgstr "一般名称"
@@ -136,15 +121,26 @@ msgid "General Names"
 msgstr "一般名称"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_handled_in_house
-msgid "Handled In-house"
-msgstr "自社対応"
-
-#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__id
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__id
 msgid "ID"
 msgstr "ID"
+
+#. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_in_house_calibration
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_view_search
+msgid "In-house Calibration"
+msgstr "自社校正"
+
+#. module: maintenance_additional_attributes
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_view_form
+msgid "Inspection"
+msgstr "点検"
+
+#. module: maintenance_additional_attributes
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_view_form
+msgid "Inspection Exempt"
+msgstr "点検対象外"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__write_uid
@@ -199,14 +195,15 @@ msgid "Manufacturer"
 msgstr "メーカー"
 
 #. module: maintenance_additional_attributes
+#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_manufacturer_calibration
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_view_search
+msgid "Manufacturer Calibration"
+msgstr "メーカー校正"
+
+#. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__manufacturer_serial_no
 msgid "Manufacturer Serial No"
 msgstr "シリアル番号"
-
-#. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_measuring_instrument
-msgid "Measuring Instrument"
-msgstr "測定器"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields.selection,name:maintenance_additional_attributes.selection__maintenance_request__alert_period_unit__month
