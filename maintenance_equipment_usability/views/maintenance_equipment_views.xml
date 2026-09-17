@@ -7,12 +7,10 @@
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
         <field name="arch" type="xml">
-            <field name="category_id" position="before">
-                <field name="usability_state" readonly="1" />
-                <field name="status" />
-            </field>
             <field name="category_id" position="after">
+                <field name="status" />
                 <field name="maintenance_exempt" />
+                <field name="usability_state" readonly="1" />
             </field>
             <xpath
                 expr="//page[@name='maintenance']//group[@name='statistics']"
