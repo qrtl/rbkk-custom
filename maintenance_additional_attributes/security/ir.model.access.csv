@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_maintenance_equipment_generic_name_user,maintenance.equipment.generic.name user,model_maintenance_equipment_generic_name,base.group_user,1,0,0,0
+access_maintenance_equipment_generic_name_manager,maintenance.equipment.generic.name manager,model_maintenance_equipment_generic_name,maintenance.group_equipment_manager,1,1,1,1
+access_maintenance_equipment_department_user,maintenance.equipment.department user,model_maintenance_equipment_department,base.group_user,1,0,0,0
+access_maintenance_equipment_department_manager,maintenance.equipment.department manager,model_maintenance_equipment_department,maintenance.group_equipment_manager,1,1,1,1
