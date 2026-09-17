@@ -18,6 +18,7 @@ class MaintenanceEquipment(models.Model):
     fixed_asset_code = fields.Char()
     is_gmp = fields.Boolean(string="GMP")
     management_no = fields.Char()
+    is_measuring_instrument = fields.Boolean(string="Measuring Instrument")
     is_national_project = fields.Boolean(string="National Project")
     national_project_name = fields.Char()
     location_id = fields.Many2one(
@@ -36,6 +37,7 @@ class MaintenanceEquipment(models.Model):
     )
     usable_temperature = fields.Char(string="Usable Temperature (°C)")
     usable_humidity = fields.Char(string="Usable Humidity (%RH, Non-condensing)")
-    is_manufacturer_calibration = fields.Boolean(string="Manufacturer Calibration")
-    is_in_house_calibration = fields.Boolean(string="In-house Calibration")
+    is_daily_inspection = fields.Boolean(string="Daily Inspection")
+    is_calibration = fields.Boolean(string="Calibration")
     is_fluorocarbon_inspection = fields.Boolean(string="Fluorocarbon Inspection Target")
+    is_handled_in_house = fields.Boolean(string="Handled In-house")
