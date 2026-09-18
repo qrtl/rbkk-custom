@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_picking_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='move_ids_without_package']/list/field[@name='quantity']"
+                position="after"
+            >
+                <!-- A tracked product is numbered per lot in the detailed
+                     operations, and the line only summarizes them. -->
+                <field name="acceptance_number" readonly="has_tracking != 'none'" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_move_line_view_list" model="ir.ui.view">
+        <field name="name">stock.move.line.operations.list</field>
+        <field name="model">stock.move.line</field>
+        <field
+            name="inherit_id"
+            ref="stock.view_stock_move_line_detailed_operation_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="lot_id" position="after">
+                <field name="acceptance_number" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_picking_view_list" model="ir.ui.view">
+        <field name="name">stock.picking.list</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="acceptance_number" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_picking_view_search" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="acceptance_number" />
+            </field>
+        </field>
+    </record>
+</odoo>
