@@ -1,6 +1,11 @@
 Enter the **Acceptance Number** of each line in the *Operations* tab of the
 transfer. It may be left empty, in which case the field is printed blank.
 
+For a product with tracking the field is read-only there, and is entered per lot
+in the *Detailed Operations* of the transfer instead; the line then shows the
+summary of the numbers of its lots. For a product without tracking, a number
+entered on the line is applied to its detailed operations.
+
 Then go to *Inventory > Transfers*, select one or more transfers, and use *Print >
 Acceptance Label*. Three labels are printed per sheet, and the labels of a
 transfer stay together in the order of the selected transfers.
@@ -14,3 +19,6 @@ they stay blank until the lots are assigned in the *Detailed Operations* of the
 transfer. A line received in several lots prints them all, separated by commas.
 The expiration dates follow the same order as the lot numbers, including repeated
 dates. A lot without an expiration date keeps an empty entry in the date list.
+
+Transfers can be searched by acceptance number from the search bar of the
+transfer list, and the numbers received under a lot are shown on the lot itself.

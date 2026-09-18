@@ -17,5 +17,13 @@ Each label shows the following rows, in the same layout:
 One label is printed per transfer line, and several transfers can be selected at
 once so that all their lines are printed in a single PDF.
 
-It also adds an **Acceptance Number** field on the transfer lines, which is where
-the printed acceptance number comes from.
+It also adds an **Acceptance Number** field, which is where the printed
+acceptance number comes from. The number is held by the detailed operations of
+the transfer, so that a line received in several lots can be numbered per lot,
+and the transfer line shows the summary of the numbers of its operations.
+
+Each lot keeps the acceptance numbers it was received under, and a lot received
+several times shows them all. They follow the receipts: a number corrected, or a
+receipt cancelled after the fact, drops out of the lot.
+
+Transfers can be searched by acceptance number.

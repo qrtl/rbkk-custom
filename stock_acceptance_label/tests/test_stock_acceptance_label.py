@@ -277,3 +277,109 @@ class TestStockAcceptanceLabel(TransactionCase):
         # The barcode is a row of the label, printed for the product that has one.
         self.assertEqual(html.count('class="o_pal_value o_pal_barcode"'), 2)
         self.assertEqual(html.count("<img"), 1)
+
+    def test_number_is_carried_to_the_detailed_operation(self):
+        picking = self._create_picking(self.product_a)
+        move = picking.move_ids
+        move.acceptance_number = "R016-20251017-01"
+        # The detailed operations only exist once the line is reserved, and
+        # take the number entered on the line, which keeps printing the same.
+        self.assertFalse(move.move_line_ids)
+        picking.action_confirm()
+        self.assertEqual(move.move_line_ids.acceptance_number, "R016-20251017-01")
+        self.assertEqual(move.acceptance_number, "R016-20251017-01")
+
+    def test_number_entered_on_the_line_reaches_its_operations(self):
+        picking = self._create_picking(self.product_a)
+        picking.action_confirm()
+        move = picking.move_ids
+        move.acceptance_number = "R016-20251017-01"
+        self.assertEqual(move.move_line_ids.acceptance_number, "R016-20251017-01")
+        # Clearing the line clears its operations as well.
+        move.acceptance_number = False
+        self.assertFalse(move.move_line_ids.acceptance_number)
+
+    def _receive_lot(self, lot, acceptance_number):
+        picking = self._create_picking(self.product_lot)
+        picking.action_confirm()
+        picking.move_ids.move_line_ids.write(
+            {"lot_id": lot.id, "acceptance_number": acceptance_number}
+        )
+        return picking
+
+    def test_line_summarizes_the_numbers_of_its_lots(self):
+        picking = self._create_picking(self.product_lot)
+        picking.move_ids.product_uom_qty = 2.0
+        picking.action_confirm()
+        move = picking.move_ids
+        move.move_line_ids.quantity = 1.0
+        lot_a = self._create_lot("LOT-A", False)
+        lot_b = self._create_lot("LOT-B", False)
+        move.move_line_ids.write(
+            {"lot_id": lot_a.id, "acceptance_number": "R016-20251017-01"}
+        )
+        move.move_line_ids.create(
+            {
+                "move_id": move.id,
+                "product_id": self.product_lot.id,
+                "quantity": 1.0,
+                "location_id": move.location_id.id,
+                "location_dest_id": move.location_dest_id.id,
+                "lot_id": lot_b.id,
+                "acceptance_number": "R016-20251017-02",
+            }
+        )
+        self.assertEqual(move.acceptance_number, "R016-20251017-01, R016-20251017-02")
+        self.assertEqual(lot_a.acceptance_number, "R016-20251017-01")
+        self.assertEqual(lot_b.acceptance_number, "R016-20251017-02")
+        # A number shared by both lots is only summarized once.
+        move.move_line_ids.acceptance_number = "R016-20251017-01"
+        self.assertEqual(move.acceptance_number, "R016-20251017-01")
+
+    def test_lot_received_several_times(self):
+        lot = self._create_lot("LOT-0001", False)
+        self._receive_lot(lot, "R016-20251017-01")
+        picking = self._receive_lot(lot, "R016-20251018-01")
+        self.assertEqual(lot.acceptance_number, "R016-20251017-01, R016-20251018-01")
+        # A receipt cancelled after the fact drops out of the lot, instead of
+        # staying on it for good.
+        picking.action_cancel()
+        self.assertEqual(lot.acceptance_number, "R016-20251017-01")
+
+    def test_transfer_summary_and_search(self):
+        self.picking.move_ids[0].acceptance_number = "R016-20251017-01"
+        self.picking.move_ids[1].acceptance_number = "R016-20251017-02"
+        self.assertEqual(
+            self.picking.acceptance_number, "R016-20251017-01, R016-20251017-02"
+        )
+        found = self.env["stock.picking"].search(
+            [("acceptance_number", "ilike", "20251017-02")]
+        )
+        self.assertIn(self.picking, found)
+        self.assertNotIn(
+            self.picking,
+            self.env["stock.picking"].search(
+                [("acceptance_number", "ilike", "20251019")]
+            ),
+        )
+        # A cancelled line is not summarized, as it is not printed either.
+        self.picking.move_ids[1]._action_cancel()
+        self.assertEqual(self.picking.acceptance_number, "R016-20251017-01")
+
+    def test_label_prints_the_number_of_the_lot(self):
+        picking = self._create_picking(self.product_lot)
+        picking.action_confirm()
+        lot = self._create_lot("LOT-0001", False)
+        picking.move_ids.move_line_ids.write(
+            {"lot_id": lot.id, "acceptance_number": "R016-20251017-01"}
+        )
+        html = (
+            self.env["ir.actions.report"]
+            ._render_qweb_html(
+                "stock_acceptance_label.report_stock_acceptance_label",
+                picking.ids,
+            )[0]
+            .decode()
+        )
+        self.assertIn("R016-20251017-01", html)
+        self.assertIn("LOT-0001", html)

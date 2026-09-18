@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-04 09:31+0000\n"
-"PO-Revision-Date: 2026-08-04 09:31+0000\n"
+"POT-Creation-Date: 2026-09-18 05:16+0000\n"
+"PO-Revision-Date: 2026-09-18 05:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,10 +27,36 @@ msgid "Acceptance Label"
 msgstr "受入ラベル"
 
 #. module: stock_acceptance_label
+#: model:ir.model.fields,field_description:stock_acceptance_label.field_stock_lot__acceptance_number
 #: model:ir.model.fields,field_description:stock_acceptance_label.field_stock_move__acceptance_number
+#: model:ir.model.fields,field_description:stock_acceptance_label.field_stock_move_line__acceptance_number
+#: model:ir.model.fields,field_description:stock_acceptance_label.field_stock_picking__acceptance_number
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
 msgid "Acceptance Number"
 msgstr "受入番号"
+
+#. module: stock_acceptance_label
+#: model:ir.model.fields,field_description:stock_acceptance_label.field_stock_lot__acceptance_move_line_ids
+msgid "Acceptance Operations"
+msgstr "受入オペレーション"
+
+#. module: stock_acceptance_label
+#: model:ir.model.fields,help:stock_acceptance_label.field_stock_move_line__acceptance_number
+msgid ""
+"Acceptance number of this detailed operation. It is the number printed on "
+"the label, and the one kept on the lot it is received in."
+msgstr ""
+"この詳細オペレーションの受入番号。ラベルに印字される番号であり、入荷先のロッ"
+"トにも保持されます。"
+
+#. module: stock_acceptance_label
+#: model:ir.model.fields,help:stock_acceptance_label.field_stock_lot__acceptance_number
+msgid ""
+"Acceptance numbers the lot was received under. A lot received several times "
+"carries them all, separated by commas."
+msgstr ""
+"このロットが入荷した際の受入番号。複数回入荷したロットはそのすべてをカンマ区"
+"切りで保持します。"
 
 #. module: stock_acceptance_label
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
@@ -60,6 +86,15 @@ msgid "Config Settings"
 msgstr "コンフィグ設定"
 
 #. module: stock_acceptance_label
+#: model:ir.model.fields,help:stock_acceptance_label.field_stock_lot__acceptance_move_line_ids
+msgid ""
+"Detailed operations the lot appears in, which the acceptance numbers of the "
+"lot are read from."
+msgstr ""
+"このロットが含まれる詳細オペレーション。ロットの受入番号はここから取得されま"
+"す。"
+
+#. module: stock_acceptance_label
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
 msgid "Expiration Date"
 msgstr "使用期限"
@@ -78,9 +113,7 @@ msgid ""
 "converted to the user time zone. The effective date of the transfer is used "
 "when this is left empty."
 msgstr ""
-"受入ラベルに入荷日として印字するフィールド。転送およびその明細の日付・日時"
-"フィールドを選択でき、日時フィールドはユーザのタイムゾーンに変換されます。空欄"
-"の場合は転送の実施日が使用されます。"
+"受入ラベルに入荷日として印字するフィールド。転送およびその明細の日付・日時フィールドを選択でき、日時フィールドはユーザのタイムゾーンに変換されます。空欄の場合は転送の実施日が使用されます。"
 
 #. module: stock_acceptance_label
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
@@ -88,9 +121,19 @@ msgid "Lot No."
 msgstr "ロットNo."
 
 #. module: stock_acceptance_label
+#: model:ir.model,name:stock_acceptance_label.model_stock_lot
+msgid "Lot/Serial"
+msgstr "ロット/シリアル"
+
+#. module: stock_acceptance_label
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
 msgid "Model Number"
 msgstr "型番"
+
+#. module: stock_acceptance_label
+#: model:ir.model,name:stock_acceptance_label.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "プロダクトの移動(在庫移動ライン)"
 
 #. module: stock_acceptance_label
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label
@@ -123,14 +166,28 @@ msgid ""
 "label has a fixed height, and anything that does not fit is cut off. Empty "
 "it to restore the built-in status area."
 msgstr ""
-"受入ラベルに印字するステータス欄。手書きで記入するための欄で、数行に収まる範囲"
-"であれば自由に編集できます。ラベルの高さは固定されているため、収まらない部分は"
-"切り捨てられます。空欄にすると既定のステータス欄に戻ります。"
+"受入ラベルに印字するステータス欄。手書きで記入するための欄で、数行に収まる範囲であれば自由に編集できます。ラベルの高さは固定されているため、収まらない部分は切り捨てられます。空欄にすると既定のステータス欄に戻ります。"
 
 #. module: stock_acceptance_label
 #: model:ir.model,name:stock_acceptance_label.model_stock_move
 msgid "Stock Move"
 msgstr "在庫移動"
+
+#. module: stock_acceptance_label
+#: model:ir.model.fields,help:stock_acceptance_label.field_stock_move__acceptance_number
+msgid ""
+"Summary of the acceptance numbers of the detailed operations of the line. A "
+"line of a product without tracking can be numbered here directly; a tracked "
+"one is numbered per lot in its detailed operations."
+msgstr ""
+"この明細の詳細オペレーションの受入番号のまとめ。追跡のないプロダクトの明細は"
+"ここで直接入力でき、追跡のあるプロダクトは詳細オペレーションでロットごとに入"
+"力します。"
+
+#. module: stock_acceptance_label
+#: model:ir.model.fields,help:stock_acceptance_label.field_stock_picking__acceptance_number
+msgid "Summary of the acceptance numbers of the lines of the transfer."
+msgstr "転送の明細の受入番号のまとめ。"
 
 #. module: stock_acceptance_label
 #: model:ir.model,name:stock_acceptance_label.model_stock_picking
