@@ -4,6 +4,11 @@
         <field name="name">maintenance.equipment.form</field>
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+        <!-- Applied after maintenance_equipment_usability's form view (priority 16),
+             whose maintenance_exempt field this view relocates. Sibling views are
+             applied in (priority, id) order, so without this the order would depend
+             on which module happened to be installed first. -->
+        <field name="priority">20</field>
         <field name="arch" type="xml">
             <div name="button_box" position="after">
                 <field
