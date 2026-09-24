@@ -22,7 +22,7 @@ class TestMaintenanceRequest(TransactionCase):
             {"name": "Test Technician", "login": "test_technician"}
         )
         cls.activity_type = cls.env.ref(
-            "maintenance_additional_attributes.mail_act_maintenance_alert"
+            "maintenance_additional_attribute.mail_act_maintenance_alert"
         )
         cls.close_date = fields.Date.to_date("2026-07-20")
 

@@ -56,7 +56,7 @@ class MaintenanceRequest(models.Model):
         ):
             vals["alert_sent"] = False
             self.activity_unlink(
-                ["maintenance_additional_attributes.mail_act_maintenance_alert"]
+                ["maintenance_additional_attribute.mail_act_maintenance_alert"]
             )
         res = super(
             MaintenanceRequest, self.with_context(maintenance_keep_close_date=True)
@@ -64,7 +64,7 @@ class MaintenanceRequest(models.Model):
         if "stage_id" in vals:
             # Mark the alert as handled once the request is completed.
             self.filtered("done").activity_feedback(
-                ["maintenance_additional_attributes.mail_act_maintenance_alert"]
+                ["maintenance_additional_attribute.mail_act_maintenance_alert"]
             )
         return res
 
@@ -91,7 +91,7 @@ class MaintenanceRequest(models.Model):
                 continue
             env = self.env(context={**self.env.context, "lang": user.lang})
             activity = request.activity_schedule(
-                "maintenance_additional_attributes.mail_act_maintenance_alert",
+                "maintenance_additional_attribute.mail_act_maintenance_alert",
                 date_deadline=fields.Datetime.context_timestamp(
                     request.with_context(tz=user.tz), alert_date
                 ).date(),

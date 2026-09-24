@@ -1,7 +1,7 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 {
-    "name": "Maintenance Additional Attributes",
+    "name": "Maintenance Additional Attribute",
     "version": "18.0.1.0.0",
     "category": "Maintenance",
     "summary": "Add specific attributes to maintenance equipment and requests",
@@ -9,7 +9,7 @@
     "website": "https://www.quartile.co",
     "maintainers": ["smorita7749"],
     "license": "LGPL-3",
-    "depends": ["maintenance", "maintenance_equipment_usability", "purchase", "stock"],
+    "depends": ["maintenance", "maintenance_equipment_usability", "purchase_stock"],
     "data": [
         "security/ir.model.access.csv",
         "security/maintenance_equipment_security.xml",
