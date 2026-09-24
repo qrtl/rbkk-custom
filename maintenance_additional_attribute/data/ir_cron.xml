@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="maintenance_request_alert_cron" model="ir.cron">
+        <field name="name">Maintenance: Send Maintenance Request Alerts</field>
+        <field name="model_id" ref="maintenance.model_maintenance_request" />
+        <field name="state">code</field>
+        <field name="code">model._cron_send_maintenance_alerts()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+</odoo>
