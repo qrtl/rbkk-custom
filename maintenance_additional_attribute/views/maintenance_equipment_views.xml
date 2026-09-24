@@ -18,6 +18,16 @@
                     options="{'preview_image': 'image_128'}"
                 />
             </div>
+            <xpath expr="//div[hasclass('oe_title')]/*[1]" position="before">
+                <label for="serial_no" />
+                <h3 />
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]/h3" position="inside">
+                <xpath
+                    expr="//page[@name='product_information']//field[@name='serial_no']"
+                    position="move"
+                />
+            </xpath>
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="generic_name_id" />
                 <field name="set_name" />
