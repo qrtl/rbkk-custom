@@ -18,7 +18,7 @@
                     options="{'preview_image': 'image_128'}"
                 />
             </div>
-            <xpath expr="//div[hasclass('oe_title')]/*[1]" position="before">
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
                 <label for="serial_no" />
                 <h3 />
             </xpath>
