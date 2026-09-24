@@ -22,7 +22,6 @@ msgid "Acquisition Date"
 msgstr "取得年月日"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__active
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__active
 msgid "Active"
 msgstr "有効"
@@ -50,19 +49,16 @@ msgid ""
 msgstr "予定日より前に担当者へアラートを通知する期間。"
 
 #. module: maintenance_additional_attributes
-#: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_department_view_search
 #: model_terms:ir.ui.view,arch_db:maintenance_additional_attributes.maintenance_equipment_generic_name_view_search
 msgid "Archived"
 msgstr "アーカイブ済"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__create_uid
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_uid
 msgid "Created by"
 msgstr "作成者"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__create_date
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__create_date
 msgid "Created on"
 msgstr "作成日"
@@ -73,21 +69,9 @@ msgid "Days"
 msgstr "日"
 
 #. module: maintenance_additional_attributes
-#: model:ir.actions.act_window,name:maintenance_additional_attributes.maintenance_equipment_department_action
-#: model:ir.ui.menu,name:maintenance_additional_attributes.menu_maintenance_equipment_department
-msgid "Departments"
-msgstr "部門"
-
-#. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__display_name
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__display_name
 msgid "Display Name"
 msgstr "表示名"
-
-#. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__equipment_department_id
-msgid "Equipment Department"
-msgstr "管理部署"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__is_fixed_asset
@@ -121,7 +105,6 @@ msgid "General Names"
 msgstr "一般名称"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__id
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__id
 msgid "ID"
 msgstr "ID"
@@ -143,13 +126,11 @@ msgid "Inspection Exempt"
 msgstr "点検対象外"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__write_uid
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__write_uid
 msgid "Last Updated by"
 msgstr "最終更新者"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__write_date
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__write_date
 msgid "Last Updated on"
 msgstr "最終更新日"
@@ -163,11 +144,6 @@ msgstr "メンテナンスアラート"
 #: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment
 msgid "Maintenance Equipment"
 msgstr "整備設備"
-
-#. module: maintenance_additional_attributes
-#: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment_department
-msgid "Maintenance Equipment Department"
-msgstr "整備設備部門"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model,name:maintenance_additional_attributes.model_maintenance_equipment_generic_name
@@ -211,7 +187,6 @@ msgid "Months"
 msgstr "月"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__name
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__name
 msgid "Name"
 msgstr "名称"
@@ -243,14 +218,12 @@ msgstr "セット名称"
 
 #. module: maintenance_additional_attributes
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment__smart_search
-#: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_department__smart_search
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_equipment_generic_name__smart_search
 #: model:ir.model.fields,field_description:maintenance_additional_attributes.field_maintenance_request__smart_search
 msgid "Smart Search"
 msgstr "スマート検索"
 
 #. module: maintenance_additional_attributes
-#: model:ir.model.constraint,message:maintenance_additional_attributes.constraint_maintenance_equipment_department_name_uniq
 #: model:ir.model.constraint,message:maintenance_additional_attributes.constraint_maintenance_equipment_generic_name_name_uniq
 msgid "The name must be unique."
 msgstr "名称は一意である必要があります。"

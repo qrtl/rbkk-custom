@@ -21,7 +21,6 @@
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="generic_name_id" />
                 <field name="set_name" />
-                <field name="equipment_department_id" />
             </xpath>
             <field name="location" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -78,7 +77,6 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_view_tree" />
         <field name="arch" type="xml">
             <field name="category_id" position="after">
-                <field name="equipment_department_id" optional="show" />
                 <field name="generic_name_id" optional="show" />
                 <field name="location_id" optional="show" />
                 <field name="set_name" optional="hide" />
@@ -105,7 +103,6 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_view_search" />
         <field name="arch" type="xml">
             <field name="category_id" position="after">
-                <field name="equipment_department_id" />
                 <field name="generic_name_id" />
                 <field name="location_id" />
                 <field name="management_no" />
@@ -138,12 +135,6 @@
                 />
             </filter>
             <group position="inside">
-                <filter
-                    name="equipment_department"
-                    string="Equipment Department"
-                    domain="[]"
-                    context="{'group_by': 'equipment_department_id'}"
-                />
                 <filter
                     name="generic_name"
                     string="General Name"

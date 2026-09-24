@@ -30,10 +30,6 @@ class MaintenanceEquipment(models.Model):
     manufacturer_serial_no = fields.Char()
     purchase_order_id = fields.Many2one(comodel_name="purchase.order")
     acquisition_date = fields.Date()
-    equipment_department_id = fields.Many2one(
-        comodel_name="maintenance.equipment.department",
-        string="Equipment Department",
-    )
     usable_temperature = fields.Char(string="Usable Temperature (°C)")
     usable_humidity = fields.Char(string="Usable Humidity (%RH, Non-condensing)")
     is_manufacturer_calibration = fields.Boolean(string="Manufacturer Calibration")
