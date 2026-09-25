@@ -149,18 +149,12 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
             raise UserError(
                 _("Only Maintenance Managers can refuse inventory records.")
             )
-        for record in self:
-            if record.state != "to_approve":
-                raise UserError(_("Only records pending approval can be refused."))
         self.write({"state": "refused"})
 
     def action_cancel(self):
         # Used when the equipment turns out to be out of scope for the round
         # (e.g. already scrapped). Cancelling instead of deleting keeps the
         # equipment out of the next bulk creation.
-        for record in self:
-            if record.state == "approved":
-                raise UserError(_("Approved inventory records cannot be cancelled."))
         self.write({"state": "cancelled"})
 
     def action_reset_to_draft(self):

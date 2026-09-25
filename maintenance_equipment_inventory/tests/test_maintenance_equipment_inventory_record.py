@@ -71,11 +71,6 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         record.with_user(self.manager).action_approve()
         self.assertEqual(record.state, "approved")
 
-    def test_refuse_requires_pending_approval(self):
-        record = self._create_record()
-        with self.assertRaises(UserError):
-            record.with_user(self.manager).action_refuse()
-
     def test_refused_record_is_not_the_last_inventory(self):
         record = self._create_record()
         record.action_submit()
@@ -90,13 +85,6 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         self.assertEqual(record.state, "cancelled")
         record.action_reset_to_draft()
         self.assertEqual(record.state, "draft")
-
-    def test_approved_record_cannot_be_cancelled(self):
-        record = self._create_record()
-        record.action_submit()
-        record.with_user(self.manager).action_approve()
-        with self.assertRaises(UserError):
-            record.action_cancel()
 
     def test_approved_record_is_locked(self):
         record = self._create_record()

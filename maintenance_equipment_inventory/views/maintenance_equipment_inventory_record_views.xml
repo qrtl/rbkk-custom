@@ -94,7 +94,7 @@
         <field name="name">maintenance.equipment.inventory.record.list</field>
         <field name="model">maintenance.equipment.inventory.record</field>
         <field name="arch" type="xml">
-            <list editable="bottom">
+            <list editable="bottom" open_form_view="True">
                 <header>
                     <button
                         name="action_submit"
@@ -106,18 +106,6 @@
                         type="object"
                         string="Approve"
                         groups="maintenance.group_equipment_manager"
-                    />
-                    <button
-                        name="action_refuse"
-                        type="object"
-                        string="Refuse"
-                        groups="maintenance.group_equipment_manager"
-                    />
-                    <button name="action_cancel" type="object" string="Cancel" />
-                    <button
-                        name="action_reset_to_draft"
-                        type="object"
-                        string="Reset to Draft"
                     />
                 </header>
                 <field name="name" />

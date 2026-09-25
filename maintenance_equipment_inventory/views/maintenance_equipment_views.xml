@@ -32,7 +32,7 @@
                         name="inventory_record_ids"
                         context="{'default_equipment_id': id}"
                     >
-                        <list editable="bottom">
+                        <list editable="bottom" open_form_view="True">
                             <field name="name" />
                             <field
                                 name="inventory_date"
