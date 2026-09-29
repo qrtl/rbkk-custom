@@ -19,11 +19,7 @@ class StockMoveLine(models.Model):
             if vals.get("acceptance_number") or not vals.get("move_id"):
                 continue
             move = self.env["stock.move"].browse(vals["move_id"])
-            # Carry the number entered on the transfer line over to its first
-            # detailed operation: the operations are where the number is read
-            # back from, and they are only created once the line is reserved.
-            # Once one of them carries a number, the number of the transfer
-            # line is their summary and must not be pushed back down.
+            # Carry the number entered on the move over to its first operation.
             if (
                 move.acceptance_number
                 and not move.move_line_ids._get_acceptance_numbers()
@@ -32,11 +28,6 @@ class StockMoveLine(models.Model):
         return super().create(vals_list)
 
     def _get_acceptance_numbers(self):
-        """Return the acceptance numbers of the operations.
-
-        Blanks are dropped and repeats are kept once, in the order of the
-        operations, so that the result reads as a summary.
-        """
         numbers = []
         for line in self:
             if line.acceptance_number and line.acceptance_number not in numbers:
@@ -44,7 +35,6 @@ class StockMoveLine(models.Model):
         return numbers
 
     def get_acceptance_arrival_date(self):
-        """Return the configured arrival date, in the user time zone."""
         self.ensure_one()
         field = self.company_id._get_acceptance_arrival_date_field()
         if field.model == "stock.move":
@@ -61,7 +51,6 @@ class StockMoveLine(models.Model):
         return value
 
     def get_acceptance_expiration_date(self):
-        """Return the expiration date of the lot, in the user time zone."""
         self.ensure_one()
         if not self.lot_id.expiration_date:
             return False
@@ -70,6 +59,5 @@ class StockMoveLine(models.Model):
         ).date()
 
     def get_acceptance_status_html(self):
-        """Return the status area configured for the transfer's company."""
         self.ensure_one()
         return self.company_id._get_acceptance_status_html()

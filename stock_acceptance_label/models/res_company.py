@@ -33,7 +33,6 @@ class ResCompany(models.Model):
     )
 
     def _get_acceptance_arrival_date_field(self):
-        """Return the field to read the arrival date from."""
         self.ensure_one()
         return (
             self.acceptance_label_arrival_date_field_id

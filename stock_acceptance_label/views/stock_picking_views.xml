@@ -9,9 +9,6 @@
                 expr="//field[@name='move_ids_without_package']/list/field[@name='quantity']"
                 position="after"
             >
-                <!-- A tracked product is numbered per lot in the detailed
-                     operations, and the line only summarizes them. The number
-                     is given on receipt, so it is of no use elsewhere. -->
                 <field
                     name="acceptance_number"
                     readonly="has_tracking != 'none'"

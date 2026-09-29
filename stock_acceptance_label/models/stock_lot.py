@@ -27,9 +27,6 @@ class StockLot(models.Model):
         "acceptance_move_line_ids.state",
     )
     def _compute_acceptance_number(self):
-        # Kept computed rather than appended to on receipt, so that a number
-        # corrected or a receipt cancelled after the fact drops out instead of
-        # staying on the lot for good.
         for lot in self:
             lines = lot.acceptance_move_line_ids.filtered(
                 lambda line: line.state != "cancel"

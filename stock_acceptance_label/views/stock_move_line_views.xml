@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- The detailed operations of a transfer, in the Operations tab. -->
     <record id="stock_move_line_view_list" model="ir.ui.view">
         <field name="name">stock.move.line.operations.list</field>
         <field name="model">stock.move.line</field>
@@ -9,11 +8,7 @@
             ref="stock.view_stock_move_line_detailed_operation_tree"
         />
         <field name="arch" type="xml">
-            <!-- Anchored on the last of the two lot columns, only one of which
-                 is shown at a time, so that the number always follows the lot. -->
             <field name="lot_name" position="after">
-                <!-- Opened by action_detailed_operations, which passes the
-                     operation type in the context, as the lot columns read. -->
                 <field
                     name="acceptance_number"
                     optional="show"
@@ -23,7 +18,6 @@
         </field>
     </record>
 
-    <!-- The detailed operations of a single line, in the Move Detail dialog. -->
     <record id="stock_move_line_view_operation_list" model="ir.ui.view">
         <field name="name">stock.move.line.operations.list</field>
         <field name="model">stock.move.line</field>

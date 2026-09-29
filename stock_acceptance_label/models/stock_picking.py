@@ -20,18 +20,9 @@ class StockPicking(models.Model):
             picking.acceptance_number = ", ".join(moves._get_acceptance_numbers())
 
     def _search_acceptance_number(self, operator, value):
-        # Searched on the lines, whose own number is stored and indexed, rather
-        # than on the summary, which is not.
         return [("move_ids.acceptance_number", operator, value)]
 
     def get_acceptance_label_pages(self):
-        """Return the detailed operations to print a label for, per sheet.
-
-        One label is printed per detailed operation, as that is what carries
-        the acceptance number and the lot the goods are received in. The
-        operations are kept in the order of the transfers they belong to, so
-        that the labels of a transfer stay together.
-        """
         lines = [
             line
             for picking in self

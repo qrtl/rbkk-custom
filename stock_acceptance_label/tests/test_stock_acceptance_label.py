@@ -9,7 +9,6 @@ from odoo.tests.common import TransactionCase
 from odoo.tools import is_html_empty
 
 
-# Run after all modules have initialized their required product fields.
 @tagged("post_install", "-at_install")
 class TestStockAcceptanceLabel(TransactionCase):
     @classmethod
@@ -40,7 +39,6 @@ class TestStockAcceptanceLabel(TransactionCase):
                 "use_expiration_date": True,
             }
         )
-        # Fixed time zone, as the label prints dates and not datetimes.
         cls.env.user.tz = "Asia/Tokyo"
         cls.picking_type = cls.env["stock.picking.type"].search(
             [("code", "=", "incoming"), ("company_id", "=", cls.env.company.id)],
@@ -78,16 +76,13 @@ class TestStockAcceptanceLabel(TransactionCase):
         for move in picking.move_ids:
             move.write({"quantity": move.product_uom_qty, "picked": True})
         if "check_ids" in picking._fields:
-            # Optional quality modules require checks to pass before validation.
             for check in picking.check_ids.filtered(
                 lambda check: check.quality_state == "none"
             ):
                 check.quality_state = "pass"
-        # Finish directly to avoid optional validation wizards.
         picking._action_done()
 
     def _label_line(self, picking):
-        """Return the operation the first label of the transfer comes from."""
         return picking.get_acceptance_label_pages()[0][0]
 
     def _set_arrival_date_field(self, model, name):
@@ -101,11 +96,9 @@ class TestStockAcceptanceLabel(TransactionCase):
 
     def test_numbered_lines_are_not_merged(self):
         picking = self._create_picking(self.product_a, self.product_a)
-        # Identical lines are merged on confirmation, so one label is printed.
         unnumbered = picking.copy()
         unnumbered.action_confirm()
         self.assertEqual(len(unnumbered.move_ids), 1)
-        # Lines that carry their own acceptance number keep their own label.
         picking.move_ids[0].acceptance_number = "R016-20251017-01"
         picking.move_ids[1].acceptance_number = "R016-20251017-02"
         picking.action_confirm()
@@ -113,15 +106,11 @@ class TestStockAcceptanceLabel(TransactionCase):
 
     def test_label_pages_layout(self):
         other_picking = self._create_picking(*([self.product_a] * 5))
-        # Identical lines would be merged on confirmation, and numbering them
-        # keeps the five apart. The operations a label is printed from only
-        # exist once the transfer is confirmed.
         for index, move in enumerate(other_picking.move_ids):
             move.acceptance_number = f"R016-20251017-{index:02d}"
         (self.picking | other_picking).action_confirm()
         pages = (self.picking | other_picking).get_acceptance_label_pages()
         self.assertEqual([len(page) for page in pages], [3, 3, 1])
-        # The labels of a transfer stay together, in the order of the transfers.
         self.assertEqual(pages[0][0].picking_id, self.picking)
         self.assertEqual(pages[0][2].picking_id, other_picking)
 
@@ -151,8 +140,6 @@ class TestStockAcceptanceLabel(TransactionCase):
             self.picking, self.picking.scheduled_date
         ).date()
         self.assertEqual(line.get_acceptance_arrival_date(), expected)
-        # A field of the transfer line can be selected as well, and is read
-        # through the operation the label is printed from.
         self._set_arrival_date_field("stock.move", "date_deadline")
         move = line.move_id
         move.date_deadline = "2026-08-03 00:30:00"
@@ -161,7 +148,6 @@ class TestStockAcceptanceLabel(TransactionCase):
 
     def test_arrival_date_setting(self):
         settings = self.env["res.config.settings"].create({})
-        # The setting reflects the effective date of the transfer by default.
         self.assertEqual(
             settings.acceptance_label_arrival_date_field_id,
             self.env["ir.model.fields"]._get("stock.picking", "date_done"),
@@ -188,10 +174,8 @@ class TestStockAcceptanceLabel(TransactionCase):
         picking = self._create_picking(self.product_lot)
         picking.action_confirm()
         line = self._label_line(picking)
-        # Nothing is printed as long as the lot of the operation is unknown.
         self.assertFalse(line.lot_id)
         self.assertFalse(line.get_acceptance_expiration_date())
-        # 2027-03-31 00:30 in Asia/Tokyo, to cover the time zone conversion.
         lot = self._create_lot("LOT-0001", "2027-03-30 15:30:00")
         line.lot_id = lot
         self.assertEqual(line.lot_id.name, "LOT-0001")
@@ -220,8 +204,6 @@ class TestStockAcceptanceLabel(TransactionCase):
                 "lot_id": lot_b.id,
             }
         )
-        # One transfer line received in two lots prints a label per lot, each
-        # carrying its own lot number and expiration date.
         page = picking.get_acceptance_label_pages()[0]
         self.assertEqual([label.lot_id.name for label in page], ["LOT-A", "LOT-B"])
         self.assertEqual(page[0].get_acceptance_expiration_date(), date(2027, 12, 31))
@@ -230,14 +212,12 @@ class TestStockAcceptanceLabel(TransactionCase):
     def test_status_area_setting(self):
         self.picking.action_confirm()
         line = self._label_line(self.picking)
-        # The built-in status area is printed as long as the setting is empty.
         self.assertIn("Under Inspection", line.get_acceptance_status_html())
         settings = self.env["res.config.settings"].create(
             {"acceptance_label_status_html": "<div>Accepted</div>"}
         )
         settings.execute()
         self.assertIn("Accepted", line.get_acceptance_status_html())
-        # Emptying the setting restores the built-in status area.
         settings.acceptance_label_status_html = "<p><br></p>"
         settings.execute()
         self.assertTrue(is_html_empty(self.company.acceptance_label_status_html))
@@ -268,7 +248,6 @@ class TestStockAcceptanceLabel(TransactionCase):
             other_company.acceptance_label_arrival_date_field_id.name, "scheduled_date"
         )
         self.assertIn("Other company", other_company.acceptance_label_status_html)
-        # Printing follows the transfer's company even when another is active.
         self.picking.action_confirm()
         line = self._label_line(self.picking).with_company(other_company)
         self.assertFalse(line.get_acceptance_arrival_date())
@@ -288,10 +267,7 @@ class TestStockAcceptanceLabel(TransactionCase):
         self.assertIn("R016-20251017-01", html)
         self.assertIn("SH30221.26", html)
         self.assertIn("Under Inspection", html)
-        # Counted on the class attributes, as the class names also appear in the
-        # selectors of the stylesheet of the report.
         self.assertEqual(html.count('class="o_pal_cell"'), 2)
-        # The barcode is a row of the label, printed for the product that has one.
         self.assertEqual(html.count('class="o_pal_value o_pal_barcode"'), 2)
         self.assertEqual(html.count("<img"), 1)
 
@@ -299,8 +275,6 @@ class TestStockAcceptanceLabel(TransactionCase):
         picking = self._create_picking(self.product_a)
         move = picking.move_ids
         move.acceptance_number = "R016-20251017-01"
-        # The detailed operations only exist once the line is reserved, and
-        # take the number entered on the line, which keeps printing the same.
         self.assertFalse(move.move_line_ids)
         picking.action_confirm()
         self.assertEqual(move.move_line_ids.acceptance_number, "R016-20251017-01")
@@ -312,7 +286,6 @@ class TestStockAcceptanceLabel(TransactionCase):
         move = picking.move_ids
         move.acceptance_number = "R016-20251017-01"
         self.assertEqual(move.move_line_ids.acceptance_number, "R016-20251017-01")
-        # Clearing the line clears its operations as well.
         move.acceptance_number = False
         self.assertFalse(move.move_line_ids.acceptance_number)
 
@@ -349,7 +322,6 @@ class TestStockAcceptanceLabel(TransactionCase):
         self.assertEqual(move.acceptance_number, "R016-20251017-01, R016-20251017-02")
         self.assertEqual(lot_a.acceptance_number, "R016-20251017-01")
         self.assertEqual(lot_b.acceptance_number, "R016-20251017-02")
-        # A number shared by both lots is only summarized once.
         move.move_line_ids.acceptance_number = "R016-20251017-01"
         self.assertEqual(move.acceptance_number, "R016-20251017-01")
 
@@ -358,8 +330,6 @@ class TestStockAcceptanceLabel(TransactionCase):
         self._receive_lot(lot, "R016-20251017-01")
         picking = self._receive_lot(lot, "R016-20251018-01")
         self.assertEqual(lot.acceptance_number, "R016-20251017-01, R016-20251018-01")
-        # A receipt cancelled after the fact drops out of the lot, instead of
-        # staying on it for good.
         picking.action_cancel()
         self.assertEqual(lot.acceptance_number, "R016-20251017-01")
 
@@ -379,7 +349,6 @@ class TestStockAcceptanceLabel(TransactionCase):
                 [("acceptance_number", "ilike", "20251019")]
             ),
         )
-        # A cancelled line is not summarized, as it is not printed either.
         self.picking.move_ids[1]._action_cancel()
         self.assertEqual(self.picking.acceptance_number, "R016-20251017-01")
 
