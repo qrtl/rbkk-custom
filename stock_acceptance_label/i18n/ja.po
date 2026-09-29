@@ -88,11 +88,11 @@ msgstr "コンフィグ設定"
 #. module: stock_acceptance_label
 #: model:ir.model.fields,help:stock_acceptance_label.field_stock_lot__acceptance_move_line_ids
 msgid ""
-"Detailed operations the lot appears in, which the acceptance numbers of the "
+"Receipt operations the lot appears in, which the acceptance numbers of the "
 "lot are read from."
 msgstr ""
-"このロットが含まれる詳細オペレーション。ロットの受入番号はここから取得されま"
-"す。"
+"このロットが含まれる入荷の詳細オペレーション。ロットの受入番号はここから取得"
+"されます。"
 
 #. module: stock_acceptance_label
 #: model_terms:ir.ui.view,arch_db:stock_acceptance_label.acceptance_label

@@ -11,7 +11,8 @@ class StockLot(models.Model):
         "stock.move.line",
         "lot_id",
         string="Acceptance Operations",
-        help="Detailed operations the lot appears in, which the acceptance "
+        domain=[("move_id.picking_type_id.code", "=", "incoming")],
+        help="Receipt operations the lot appears in, which the acceptance "
         "numbers of the lot are read from.",
     )
     acceptance_number = fields.Char(
