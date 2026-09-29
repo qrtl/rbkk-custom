@@ -34,6 +34,7 @@ class ResCompany(models.Model):
 
     def _get_acceptance_arrival_date_field(self):
         self.ensure_one()
+        # sudo() so that users without access to ir.model.fields can print.
         return (
             self.acceptance_label_arrival_date_field_id
             or self._default_acceptance_label_arrival_date_field()
