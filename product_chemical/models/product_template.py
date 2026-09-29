@@ -29,8 +29,11 @@ class ProductTemplate(models.Model):
         search="_search_chemical_substance_ids",
         string="Substances",
     )
-    risk_assessment_file = fields.Binary(string="Risk Assessment Sheet")
-    risk_assessment_filename = fields.Char(string="Risk Assessment Sheet Filename")
+    chemical_document_ids = fields.One2many(
+        "product.template.chemical.document",
+        "product_tmpl_id",
+        string="Documents",
+    )
     chemical_stock_ids = fields.One2many(
         "product.chemical.stock",
         "product_tmpl_id",

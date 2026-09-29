@@ -1,6 +1,8 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
+import base64
+
 from odoo import Command
 from odoo.tests.common import TransactionCase
 
@@ -52,3 +54,20 @@ class TestProductTemplate(TransactionCase):
             {"name": "Plain", "track_chemical_consumption": True}
         )
         self.assertFalse(product_tmpl.track_chemical_consumption)
+
+    def _create_document(self, filename, content):
+        return self.env["product.template.chemical.document"].create(
+            {
+                "product_tmpl_id": self.product_tmpl.id,
+                "file": base64.b64encode(content),
+                "filename": filename,
+            }
+        )
+
+    def test_only_a_pdf_can_be_opened(self):
+        # The file type is read off the stored attachment, not the filename,
+        # so a Word file renamed to .pdf is still not offered for opening.
+        pdf = self._create_document("sds.pdf", b"%PDF-1.4\n%%EOF")
+        renamed = self._create_document("word.pdf", b"plain text")
+        self.assertTrue(pdf.is_pdf)
+        self.assertFalse(renamed.is_pdf)

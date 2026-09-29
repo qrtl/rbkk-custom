@@ -3,7 +3,10 @@ flag on a product is enabled, a "Chemical" tab is shown that allows users to:
 
 * Attach one or more applicable laws to the product (with optional major /
   minor category per law).
-* Upload a risk assessment sheet.
+* Upload documents, each classified as an SDS or a risk assessment sheet
+  (several of each per product). A PDF file can be shown in a new browser tab
+  with the "Open" button; any other file, such as a Word document, is
+  downloaded from its filename.
 * Register the chemical substances contained in the product together with
   their content rate (%).
 * Review the component amount per stock location, calculated from on-hand
@@ -14,7 +17,8 @@ Master data managed by this module:
 * **Laws** — referenced by products.
 * **Major / Minor categories** — organised under their parent law.
 * **Chemical Substances** — a CAS Number together with the substance name,
-  reusable across products.
+  reusable across products. The CAS Number must be unique. Managed from
+  Inventory > Products > Chemical Substances.
 
 Products can be searched by CAS Number from the product search view.
 

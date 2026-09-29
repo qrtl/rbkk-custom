@@ -3,8 +3,8 @@
     <menuitem
         id="menu_product_chemical_root"
         name="Chemical"
-        parent="stock.menu_stock_config_settings"
-        sequence="50"
+        parent="stock.menu_stock_inventory_control"
+        sequence="200"
     />
     <menuitem
         id="menu_product_chemical_law"
@@ -30,9 +30,9 @@
     <menuitem
         id="menu_product_chemical_substance"
         name="Chemical Substances"
-        parent="menu_product_chemical_root"
+        parent="stock.menu_stock_inventory_control"
         action="product_chemical_substance_action"
-        sequence="40"
+        sequence="10"
     />
     <menuitem
         id="menu_product_chemical_stock"

@@ -11,16 +11,6 @@
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Chemical" name="chemical" invisible="not is_chemical">
-                    <group>
-                        <group>
-                            <field
-                                name="risk_assessment_file"
-                                filename="risk_assessment_filename"
-                                widget="binary"
-                            />
-                            <field name="risk_assessment_filename" invisible="1" />
-                        </group>
-                    </group>
                     <separator string="Applicable Laws" />
                     <field name="chemical_law_line_ids">
                         <list editable="bottom">
@@ -48,6 +38,24 @@
                             />
                             <field name="cas_no" />
                             <field name="content_rate" />
+                        </list>
+                    </field>
+                    <separator string="Documents" />
+                    <field name="chemical_document_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle" />
+                            <field name="document_type" />
+                            <!-- Without widget, rows not being edited show the file size -->
+                            <field name="file" filename="filename" widget="binary" />
+                            <field name="filename" column_invisible="True" />
+                            <field name="is_pdf" column_invisible="True" />
+                            <button
+                                name="action_open"
+                                type="object"
+                                string="Open"
+                                icon="fa-external-link"
+                                invisible="not is_pdf"
+                            />
                         </list>
                     </field>
                     <separator string="Component Amount by Location" />

@@ -4,6 +4,7 @@ from . import product_chemical_law_minor_category
 from . import product_chemical_substance
 from . import product_template_chemical_law_line
 from . import product_template_chemical_substance_line
+from . import product_template_chemical_document
 from . import product_chemical_stock
 from . import product_chemical_consumption
 from . import product_template
