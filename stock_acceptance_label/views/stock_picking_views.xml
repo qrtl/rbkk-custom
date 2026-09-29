@@ -10,8 +10,13 @@
                 position="after"
             >
                 <!-- A tracked product is numbered per lot in the detailed
-                     operations, and the line only summarizes them. -->
-                <field name="acceptance_number" readonly="has_tracking != 'none'" />
+                     operations, and the line only summarizes them. The number
+                     is given on receipt, so it is of no use elsewhere. -->
+                <field
+                    name="acceptance_number"
+                    readonly="has_tracking != 'none'"
+                    column_invisible="parent.picking_type_code != 'incoming'"
+                />
             </xpath>
         </field>
     </record>
