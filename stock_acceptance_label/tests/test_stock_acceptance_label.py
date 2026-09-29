@@ -271,6 +271,26 @@ class TestStockAcceptanceLabel(TransactionCase):
         self.assertEqual(html.count('class="o_pal_value o_pal_barcode"'), 2)
         self.assertEqual(html.count("<img"), 1)
 
+    def test_report_html_as_stock_user(self):
+        user = self.env["res.users"].create(
+            {
+                "name": "Stock User",
+                "login": "stock_acceptance_label_user",
+                "groups_id": [Command.set(self.env.ref("stock.group_stock_user").ids)],
+            }
+        )
+        self.picking.action_confirm()
+        html = (
+            self.env["ir.actions.report"]
+            .with_user(user)
+            ._render_qweb_html(
+                "stock_acceptance_label.report_stock_acceptance_label",
+                self.picking.ids,
+            )[0]
+            .decode()
+        )
+        self.assertIn("SH30221.26", html)
+
     def test_number_is_carried_to_the_detailed_operation(self):
         picking = self._create_picking(self.product_a)
         move = picking.move_ids

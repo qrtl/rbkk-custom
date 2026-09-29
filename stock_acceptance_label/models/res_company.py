@@ -37,7 +37,7 @@ class ResCompany(models.Model):
         return (
             self.acceptance_label_arrival_date_field_id
             or self._default_acceptance_label_arrival_date_field()
-        )
+        ).sudo()
 
     def _get_acceptance_status_html(self):
         self.ensure_one()
