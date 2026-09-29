@@ -42,3 +42,34 @@ class StockMoveLine(models.Model):
             if line.acceptance_number and line.acceptance_number not in numbers:
                 numbers.append(line.acceptance_number)
         return numbers
+
+    def get_acceptance_arrival_date(self):
+        """Return the configured arrival date, in the user time zone."""
+        self.ensure_one()
+        field = self.company_id._get_acceptance_arrival_date_field()
+        if field.model == "stock.move":
+            record = self.move_id
+        elif field.model == "stock.picking":
+            record = self.picking_id
+        else:
+            return False
+        value = record[field.name] if record else False
+        if not value:
+            return False
+        if field.ttype == "datetime":
+            return fields.Datetime.context_timestamp(self, value).date()
+        return value
+
+    def get_acceptance_expiration_date(self):
+        """Return the expiration date of the lot, in the user time zone."""
+        self.ensure_one()
+        if not self.lot_id.expiration_date:
+            return False
+        return fields.Datetime.context_timestamp(
+            self, self.lot_id.expiration_date
+        ).date()
+
+    def get_acceptance_status_html(self):
+        """Return the status area configured for the transfer's company."""
+        self.ensure_one()
+        return self.company_id._get_acceptance_status_html()

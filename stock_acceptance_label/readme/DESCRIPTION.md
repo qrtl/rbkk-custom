@@ -6,7 +6,8 @@ Each label shows the following rows, in the same layout:
 - the product name;
 - the acceptance number;
 - the model number (product internal reference);
-- the lot number of the line, blank as long as no lot is assigned;
+- the lot number the goods are received in, blank as long as no lot is
+  assigned;
 - the expiration date of that lot, blank when it has none;
 - the arrival date (the effective date of the transfer, or any other date field
   selected in the settings);
@@ -14,8 +15,13 @@ Each label shows the following rows, in the same layout:
   settings;
 - the product barcode (Code128).
 
-One label is printed per transfer line, and several transfers can be selected at
-once so that all their lines are printed in a single PDF.
+One label is printed per detailed operation of the transfer, so a line received
+in several lots prints a label per lot, each with its own acceptance number and
+lot number. Several transfers can be selected at once so that all their labels
+are printed in a single PDF.
+
+The detailed operations are created when the transfer is confirmed, so a
+transfer still in draft has nothing to print.
 
 It also adds an **Acceptance Number** field, which is where the printed
 acceptance number comes from. The number is held by the detailed operations of

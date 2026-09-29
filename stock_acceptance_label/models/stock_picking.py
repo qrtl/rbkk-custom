@@ -25,15 +25,18 @@ class StockPicking(models.Model):
         return [("move_ids.acceptance_number", operator, value)]
 
     def get_acceptance_label_pages(self):
-        """Return the moves to print a label for, grouped per sheet.
+        """Return the detailed operations to print a label for, per sheet.
 
-        The moves are kept in the order of the transfers they belong to, so that
-        the labels of a transfer stay together.
+        One label is printed per detailed operation, as that is what carries
+        the acceptance number and the lot the goods are received in. The
+        operations are kept in the order of the transfers they belong to, so
+        that the labels of a transfer stay together.
         """
-        moves = [
-            move
+        lines = [
+            line
             for picking in self
             for move in picking.move_ids
-            if move.state != "cancel"
+            for line in move.move_line_ids
+            if line.state != "cancel"
         ]
-        return [moves[index : index + 3] for index in range(0, len(moves), 3)]
+        return [lines[index : index + 3] for index in range(0, len(lines), 3)]

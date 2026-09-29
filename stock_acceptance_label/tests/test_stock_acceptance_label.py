@@ -1,6 +1,8 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from datetime import date
+
 from odoo import Command, fields
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
@@ -84,6 +86,10 @@ class TestStockAcceptanceLabel(TransactionCase):
         # Finish directly to avoid optional validation wizards.
         picking._action_done()
 
+    def _label_line(self, picking):
+        """Return the operation the first label of the transfer comes from."""
+        return picking.get_acceptance_label_pages()[0][0]
+
     def _set_arrival_date_field(self, model, name):
         self.company.acceptance_label_arrival_date_field_id = self.env[
             "ir.model.fields"
@@ -107,6 +113,12 @@ class TestStockAcceptanceLabel(TransactionCase):
 
     def test_label_pages_layout(self):
         other_picking = self._create_picking(*([self.product_a] * 5))
+        # Identical lines would be merged on confirmation, and numbering them
+        # keeps the five apart. The operations a label is printed from only
+        # exist once the transfer is confirmed.
+        for index, move in enumerate(other_picking.move_ids):
+            move.acceptance_number = f"R016-20251017-{index:02d}"
+        (self.picking | other_picking).action_confirm()
         pages = (self.picking | other_picking).get_acceptance_label_pages()
         self.assertEqual([len(page) for page in pages], [3, 3, 1])
         # The labels of a transfer stay together, in the order of the transfers.
@@ -114,33 +126,38 @@ class TestStockAcceptanceLabel(TransactionCase):
         self.assertEqual(pages[0][2].picking_id, other_picking)
 
     def test_cancelled_move_is_skipped(self):
+        self.picking.action_confirm()
         self.picking.move_ids[0]._action_cancel()
         pages = self.picking.get_acceptance_label_pages()
-        self.assertEqual([move.product_id for move in pages[0]], [self.product_b])
+        self.assertEqual([line.product_id for line in pages[0]], [self.product_b])
 
     def test_arrival_date(self):
-        move = self.picking.move_ids[0]
-        self.assertFalse(move.get_acceptance_arrival_date())
+        self.picking.action_confirm()
+        self.assertFalse(self._label_line(self.picking).get_acceptance_arrival_date())
         self._validate(self.picking)
         expected = fields.Datetime.context_timestamp(
             self.picking, self.picking.date_done
         ).date()
-        self.assertEqual(move.get_acceptance_arrival_date(), expected)
+        line = self._label_line(self.picking)
+        self.assertEqual(line.get_acceptance_arrival_date(), expected)
         self.company.acceptance_label_arrival_date_field_id = False
-        self.assertEqual(move.get_acceptance_arrival_date(), expected)
+        self.assertEqual(line.get_acceptance_arrival_date(), expected)
 
     def test_arrival_date_from_configured_field(self):
+        self.picking.action_confirm()
         self._set_arrival_date_field("stock.picking", "scheduled_date")
-        move = self.picking.move_ids[0]
+        line = self._label_line(self.picking)
         expected = fields.Datetime.context_timestamp(
             self.picking, self.picking.scheduled_date
         ).date()
-        self.assertEqual(move.get_acceptance_arrival_date(), expected)
-        # A field of the line itself can be selected as well.
+        self.assertEqual(line.get_acceptance_arrival_date(), expected)
+        # A field of the transfer line can be selected as well, and is read
+        # through the operation the label is printed from.
         self._set_arrival_date_field("stock.move", "date_deadline")
+        move = line.move_id
         move.date_deadline = "2026-08-03 00:30:00"
         expected = fields.Datetime.context_timestamp(move, move.date_deadline).date()
-        self.assertEqual(move.get_acceptance_arrival_date(), expected)
+        self.assertEqual(line.get_acceptance_arrival_date(), expected)
 
     def test_arrival_date_setting(self):
         settings = self.env["res.config.settings"].create({})
@@ -170,21 +187,21 @@ class TestStockAcceptanceLabel(TransactionCase):
     def test_lot_and_expiration_date(self):
         picking = self._create_picking(self.product_lot)
         picking.action_confirm()
-        move = picking.move_ids[0]
-        # Nothing is printed as long as the lot of the line is unknown.
-        self.assertFalse(move.get_acceptance_lot_names())
-        self.assertFalse(move.get_acceptance_expiration_dates())
+        line = self._label_line(picking)
+        # Nothing is printed as long as the lot of the operation is unknown.
+        self.assertFalse(line.lot_id)
+        self.assertFalse(line.get_acceptance_expiration_date())
         # 2027-03-31 00:30 in Asia/Tokyo, to cover the time zone conversion.
         lot = self._create_lot("LOT-0001", "2027-03-30 15:30:00")
-        move.move_line_ids.lot_id = lot
-        self.assertEqual(move.get_acceptance_lot_names(), "LOT-0001")
-        self.assertEqual(move.get_acceptance_expiration_dates(), "2027/03/31")
+        line.lot_id = lot
+        self.assertEqual(line.lot_id.name, "LOT-0001")
+        self.assertEqual(line.get_acceptance_expiration_date(), date(2027, 3, 31))
 
         lot.expiration_date = False
-        self.assertEqual(move.get_acceptance_lot_names(), "LOT-0001")
-        self.assertFalse(move.get_acceptance_expiration_dates())
+        self.assertEqual(line.lot_id.name, "LOT-0001")
+        self.assertFalse(line.get_acceptance_expiration_date())
 
-    def test_several_lots_on_one_line(self):
+    def test_several_lots_print_one_label_each(self):
         picking = self._create_picking(self.product_lot)
         picking.move_ids.product_uom_qty = 2.0
         picking.action_confirm()
@@ -203,37 +220,35 @@ class TestStockAcceptanceLabel(TransactionCase):
                 "lot_id": lot_b.id,
             }
         )
-        # A later first date catches sorting; equal and empty dates catch filtering.
-        for expiration_date, expected in [
-            ("2027-03-30 15:30:00", "2027/12/31, 2027/03/31"),
-            ("2027-12-30 15:30:00", "2027/12/31, 2027/12/31"),
-            (False, "2027/12/31, "),
-        ]:
-            with self.subTest(expiration_date=expiration_date):
-                lot_b.expiration_date = expiration_date
-                self.assertEqual(move.get_acceptance_lot_names(), "LOT-A, LOT-B")
-                self.assertEqual(move.get_acceptance_expiration_dates(), expected)
+        # One transfer line received in two lots prints a label per lot, each
+        # carrying its own lot number and expiration date.
+        page = picking.get_acceptance_label_pages()[0]
+        self.assertEqual([label.lot_id.name for label in page], ["LOT-A", "LOT-B"])
+        self.assertEqual(page[0].get_acceptance_expiration_date(), date(2027, 12, 31))
+        self.assertFalse(page[1].get_acceptance_expiration_date())
 
     def test_status_area_setting(self):
-        move = self.picking.move_ids[0]
+        self.picking.action_confirm()
+        line = self._label_line(self.picking)
         # The built-in status area is printed as long as the setting is empty.
-        self.assertIn("Under Inspection", move.get_acceptance_status_html())
+        self.assertIn("Under Inspection", line.get_acceptance_status_html())
         settings = self.env["res.config.settings"].create(
             {"acceptance_label_status_html": "<div>Accepted</div>"}
         )
         settings.execute()
-        self.assertIn("Accepted", move.get_acceptance_status_html())
+        self.assertIn("Accepted", line.get_acceptance_status_html())
         # Emptying the setting restores the built-in status area.
         settings.acceptance_label_status_html = "<p><br></p>"
         settings.execute()
         self.assertTrue(is_html_empty(self.company.acceptance_label_status_html))
-        self.assertIn("Under Inspection", move.get_acceptance_status_html())
+        self.assertIn("Under Inspection", line.get_acceptance_status_html())
 
     def test_status_area_is_sanitized(self):
         self.company.acceptance_label_status_html = (
             "<div>Accepted</div><script>alert(1)</script>"
         )
-        status_html = self.picking.move_ids[0].get_acceptance_status_html()
+        self.picking.action_confirm()
+        status_html = self._label_line(self.picking).get_acceptance_status_html()
         self.assertIn("Accepted", status_html)
         self.assertNotIn("script", status_html)
 
@@ -253,13 +268,15 @@ class TestStockAcceptanceLabel(TransactionCase):
             other_company.acceptance_label_arrival_date_field_id.name, "scheduled_date"
         )
         self.assertIn("Other company", other_company.acceptance_label_status_html)
-        # Printing follows the move's company even when another company is active.
-        move = self.picking.move_ids[0].with_company(other_company)
-        self.assertFalse(move.get_acceptance_arrival_date())
-        self.assertIn("Under Inspection", move.get_acceptance_status_html())
+        # Printing follows the transfer's company even when another is active.
+        self.picking.action_confirm()
+        line = self._label_line(self.picking).with_company(other_company)
+        self.assertFalse(line.get_acceptance_arrival_date())
+        self.assertIn("Under Inspection", line.get_acceptance_status_html())
 
     def test_report_html(self):
         self.picking.move_ids[0].acceptance_number = "R016-20251017-01"
+        self.picking.action_confirm()
         html = (
             self.env["ir.actions.report"]
             ._render_qweb_html(
