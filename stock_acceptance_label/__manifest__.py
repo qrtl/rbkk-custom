@@ -15,6 +15,7 @@
         "report/stock_acceptance_label_templates.xml",
         "views/res_config_settings_views.xml",
         "views/stock_lot_views.xml",
+        "views/stock_move_line_views.xml",
         "views/stock_picking_views.xml",
     ],
     "installable": True,
