@@ -53,7 +53,7 @@
             <tr>
                 <td class="o_pal_key">Status</td>
                 <td class="o_pal_value">
-                    <t t-out="line.get_acceptance_status_html()" />
+                    <t t-out="line.company_id._get_acceptance_status_html()" />
                 </td>
             </tr>
             <tr>

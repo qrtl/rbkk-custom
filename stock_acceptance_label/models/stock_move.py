@@ -33,15 +33,24 @@ class StockMove(models.Model):
             move.move_line_ids.acceptance_number = move.acceptance_number
 
     def _get_acceptance_numbers(self):
-        numbers = []
-        for move in self:
-            own = move.move_line_ids._get_acceptance_numbers() or [
-                move.acceptance_number
-            ]
-            for number in own:
-                if number and number not in numbers:
-                    numbers.append(number)
-        return numbers
+        return list(
+            dict.fromkeys(
+                number
+                for move in self
+                for number in (
+                    move.move_line_ids._get_acceptance_numbers()
+                    or [move.acceptance_number]
+                )
+                if number
+            )
+        )
+
+    def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
+        vals = super()._prepare_move_line_vals(quantity, reserved_quant)
+        # Carry the number entered on the move over to its first operation.
+        if self.acceptance_number and not self.move_line_ids._get_acceptance_numbers():
+            vals["acceptance_number"] = self.acceptance_number
+        return vals
 
     def _prepare_merge_moves_distinct_fields(self):
         return super()._prepare_merge_moves_distinct_fields() + ["acceptance_number"]

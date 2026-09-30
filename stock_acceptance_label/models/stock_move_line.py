@@ -1,7 +1,7 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class StockMoveLine(models.Model):
@@ -13,26 +13,12 @@ class StockMoveLine(models.Model):
         "printed on the label, and the one kept on the lot it is received in.",
     )
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get("acceptance_number") or not vals.get("move_id"):
-                continue
-            move = self.env["stock.move"].browse(vals["move_id"])
-            # Carry the number entered on the move over to its first operation.
-            if (
-                move.acceptance_number
-                and not move.move_line_ids._get_acceptance_numbers()
-            ):
-                vals["acceptance_number"] = move.acceptance_number
-        return super().create(vals_list)
-
     def _get_acceptance_numbers(self):
-        numbers = []
-        for line in self:
-            if line.acceptance_number and line.acceptance_number not in numbers:
-                numbers.append(line.acceptance_number)
-        return numbers
+        return list(
+            dict.fromkeys(
+                line.acceptance_number for line in self if line.acceptance_number
+            )
+        )
 
     def get_acceptance_arrival_date(self):
         self.ensure_one()
@@ -57,7 +43,3 @@ class StockMoveLine(models.Model):
         return fields.Datetime.context_timestamp(
             self, self.lot_id.expiration_date
         ).date()
-
-    def get_acceptance_status_html(self):
-        self.ensure_one()
-        return self.company_id._get_acceptance_status_html()

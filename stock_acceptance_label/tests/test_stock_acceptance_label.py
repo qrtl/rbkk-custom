@@ -212,23 +212,25 @@ class TestStockAcceptanceLabel(TransactionCase):
     def test_status_area_setting(self):
         self.picking.action_confirm()
         line = self._label_line(self.picking)
-        self.assertIn("Under Inspection", line.get_acceptance_status_html())
+        self.assertIn("Under Inspection", line.company_id._get_acceptance_status_html())
         settings = self.env["res.config.settings"].create(
             {"acceptance_label_status_html": "<div>Accepted</div>"}
         )
         settings.execute()
-        self.assertIn("Accepted", line.get_acceptance_status_html())
+        self.assertIn("Accepted", line.company_id._get_acceptance_status_html())
         settings.acceptance_label_status_html = "<p><br></p>"
         settings.execute()
         self.assertTrue(is_html_empty(self.company.acceptance_label_status_html))
-        self.assertIn("Under Inspection", line.get_acceptance_status_html())
+        self.assertIn("Under Inspection", line.company_id._get_acceptance_status_html())
 
     def test_status_area_is_sanitized(self):
         self.company.acceptance_label_status_html = (
             "<div>Accepted</div><script>alert(1)</script>"
         )
         self.picking.action_confirm()
-        status_html = self._label_line(self.picking).get_acceptance_status_html()
+        status_html = self._label_line(
+            self.picking
+        ).company_id._get_acceptance_status_html()
         self.assertIn("Accepted", status_html)
         self.assertNotIn("script", status_html)
 
@@ -251,7 +253,7 @@ class TestStockAcceptanceLabel(TransactionCase):
         self.picking.action_confirm()
         line = self._label_line(self.picking).with_company(other_company)
         self.assertFalse(line.get_acceptance_arrival_date())
-        self.assertIn("Under Inspection", line.get_acceptance_status_html())
+        self.assertIn("Under Inspection", line.company_id._get_acceptance_status_html())
 
     def test_report_html(self):
         self.picking.move_ids[0].acceptance_number = "R016-20251017-01"
