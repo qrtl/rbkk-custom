@@ -135,6 +135,7 @@ Contributors
 - `Quartile <https://www.quartile.co>`__:
 
   - Tatsuki Kanda
+  - Toshikimi Shigenobu
 
 Maintainers
 -----------

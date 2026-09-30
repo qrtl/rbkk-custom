@@ -8,3 +8,6 @@ entered on the line is applied to its detailed operations.
 
 Receipts can be searched by acceptance number from the search bar of the
 transfer list, and the numbers received under a lot are shown on the lot itself.
+
+When picking the components of a manufacturing order, the number is shown
+next to the lot in the list of quantities on hand, and can be searched there.
