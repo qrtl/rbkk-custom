@@ -4,12 +4,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
-RESULT_SELECTION = [
-    ("normal", "Normal"),
-    ("abnormal", "Abnormal"),
-    ("lost", "Lost"),
-]
-
 # Business fields that are frozen once the record is approved. Workflow fields
 # are deliberately left out so that the action methods can still move the
 # record through its states; they are protected by being readonly on the model
@@ -17,7 +11,10 @@ RESULT_SELECTION = [
 LOCKED_FIELDS = {
     "equipment_id",
     "inventory_date",
-    "result",
+    "equipment_found",
+    "seal_attached",
+    "in_use",
+    "user_id",
     "checked_by_id",
     "note",
 }
@@ -54,17 +51,24 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         default=fields.Date.context_today,
         tracking=True,
     )
-    result = fields.Selection(
-        RESULT_SELECTION,
-        string="Inventory Result",
-        required=True,
-        default="normal",
+    equipment_found = fields.Boolean(tracking=True)
+    seal_attached = fields.Boolean(tracking=True)
+    in_use = fields.Boolean(
+        tracking=True,
+        help="Leave unticked when the equipment is idle.",
+    )
+    user_id = fields.Many2one(
+        "res.users",
+        string="Assigned To",
+        compute="_compute_user_id",
+        store=True,
+        readonly=False,
+        index=True,
         tracking=True,
     )
     checked_by_id = fields.Many2one(
         "res.users",
         string="Checked By",
-        default=lambda self: self.env.user,
         tracking=True,
     )
     note = fields.Html(string="Remarks")
@@ -96,6 +100,11 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         copy=False,
     )
 
+    @api.depends("equipment_id")
+    def _compute_user_id(self):
+        for record in self:
+            record.user_id = record.equipment_id.technician_user_id
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
@@ -125,6 +134,14 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
             if record.state not in ("draft", "refused"):
                 raise UserError(
                     _("Only draft or refused records can be submitted for approval.")
+                )
+            if not record.checked_by_id:
+                raise UserError(
+                    _(
+                        "Set who checked the equipment of %(record)s before "
+                        "submitting it.",
+                        record=record.name,
+                    )
                 )
         self.write({"state": "to_approve"})
 

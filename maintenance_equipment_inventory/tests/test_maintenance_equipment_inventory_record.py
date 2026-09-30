@@ -13,9 +13,6 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.equipment = cls.env["maintenance.equipment"].create(
-            {"name": "Test Equipment"}
-        )
         cls.manager = new_test_user(
             cls.env,
             login="inv_manager",
@@ -26,6 +23,9 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
             login="inv_user",
             groups="base.group_user",
         )
+        cls.equipment = cls.env["maintenance.equipment"].create(
+            {"name": "Test Equipment", "technician_user_id": cls.user.id}
+        )
         cls.Record = cls.env["maintenance.equipment.inventory.record"]
 
     def _create_record(self):
@@ -33,7 +33,10 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
             {
                 "equipment_id": self.equipment.id,
                 "inventory_date": "2026-06-01",
-                "result": "normal",
+                "checked_by_id": self.user.id,
+                "equipment_found": True,
+                "seal_attached": True,
+                "in_use": True,
             }
         )
 
@@ -65,7 +68,7 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         self.assertEqual(record.state, "refused")
         # A refused record stays editable so that it can be corrected, and the
         # reason for the refusal lives in the chatter.
-        record.write({"result": "abnormal"})
+        record.write({"seal_attached": False})
         record.action_submit()
         self.assertEqual(record.state, "to_approve")
         record.with_user(self.manager).action_approve()
@@ -77,6 +80,7 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         record.with_user(self.manager).action_refuse()
         self.equipment.invalidate_recordset()
         self.assertFalse(self.equipment.last_inventory_date)
+        self.assertFalse(self.equipment.last_inventory_result)
 
     def test_cancel_and_reset(self):
         record = self._create_record()
@@ -91,7 +95,8 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         record.action_submit()
         record.with_user(self.manager).action_approve()
         for vals in (
-            {"result": "abnormal"},
+            {"seal_attached": False},
+            {"user_id": self.manager.id},
             {"inventory_date": "2026-06-02"},
             {"checked_by_id": self.user.id},
             {"note": "<p>Late edit</p>"},
@@ -118,8 +123,8 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         self.assertEqual(record.state, "draft")
         self.assertFalse(record.approved_by_id)
         # Editing is allowed again once back in draft.
-        record.write({"result": "abnormal"})
-        self.assertEqual(record.result, "abnormal")
+        record.write({"seal_attached": False})
+        self.assertFalse(record.seal_attached)
 
     def test_reset_to_draft_requires_manager(self):
         record = self._create_record()
@@ -145,7 +150,9 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
             {
                 "equipment_id": self.equipment.id,
                 "inventory_date": "2026-06-10",
-                "result": "abnormal",
+                "checked_by_id": self.user.id,
+                "equipment_found": True,
+                "seal_attached": True,
             }
         )
         second.action_submit()
@@ -155,12 +162,20 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
             {
                 "equipment_id": self.equipment.id,
                 "inventory_date": "2026-06-20",
-                "result": "lost",
+                "checked_by_id": self.user.id,
             }
         )
         self.equipment.invalidate_recordset()
         self.assertEqual(str(self.equipment.last_inventory_date), "2026-06-10")
-        self.assertEqual(self.equipment.last_inventory_result, "abnormal")
+        # The second record found the equipment idle.
+        self.assertEqual(self.equipment.last_inventory_result, "fail")
+
+    def test_equipment_last_inventory_passes_when_all_checked(self):
+        record = self._create_record()
+        record.action_submit()
+        record.with_user(self.manager).action_approve()
+        self.equipment.invalidate_recordset()
+        self.assertEqual(self.equipment.last_inventory_result, "pass")
 
     def test_bulk_create_inventory_records(self):
         equipment2 = self.env["maintenance.equipment"].create(
@@ -171,9 +186,11 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         records = self.Record.search(action["domain"])
         self.assertEqual(len(records), 2)
         self.assertEqual(records.equipment_id, equipments)
-        # Records are created with just the equipment; defaults fill the rest.
+        # Records are created with just the equipment; the checker is left
+        # empty until the check is done.
         self.assertTrue(all(r.state == "draft" for r in records))
         self.assertTrue(all(r.name.startswith("INV/") for r in records))
+        self.assertFalse(records.checked_by_id)
 
     def test_bulk_create_skips_open_records(self):
         # An existing open (draft) record makes the equipment be skipped.
@@ -226,3 +243,19 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         records = self.Record.search(action["domain"])
         self.assertEqual(len(records), 1)
         self.assertEqual(records.equipment_id, self.equipment)
+
+    def test_assigned_to_defaults_to_technician(self):
+        record = self.Record.create({"equipment_id": self.equipment.id})
+        self.assertEqual(record.user_id, self.user)
+        # It can be changed per record.
+        record.user_id = self.manager
+        self.assertEqual(record.user_id, self.manager)
+
+    def test_submit_requires_checked_by(self):
+        record = self.Record.create({"equipment_id": self.equipment.id})
+        with self.assertRaises(UserError):
+            record.action_submit()
+        # Unticked checks are a valid result once the checker is set.
+        record.checked_by_id = self.user
+        record.action_submit()
+        self.assertEqual(record.state, "to_approve")

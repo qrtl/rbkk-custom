@@ -22,26 +22,35 @@ Maintenance Equipment Inventory
 
 |badge1| |badge2| |badge3|
 
-This module lets you record and manage the stocktaking (inventory)
-history of maintenance equipment.
+This module lets you record the stocktaking (inventory) history of
+maintenance equipment. Each inventory record goes through a **Draft → To
+Approve → Approved** workflow and can no longer be edited once approved.
 
-Each inventory check is stored as a
-``maintenance.equipment.inventory.record``, linked to its equipment
-through a One2many relation. Records follow a **Draft → To Approve →
-Approved** workflow, keep their history in the chatter (mail.thread),
-and become read-only once approved.
+Each record has three checks. Tick each one when it is fine, so an
+unticked check means the equipment needs attention:
 
-A Maintenance Manager can also refuse a record pending approval. A
-refused record stays editable so that it can be corrected and submitted
-again; the reason for the refusal is logged in the chatter.
+- **Equipment Found**: the equipment was found.
+- **Seal Attached**: the seal is attached to the equipment.
+- **In Use**: the equipment is in use. Leave it unticked when it is
+  idle.
 
-A record can be cancelled when the equipment turns out to be out of
-scope for the round (for instance because it has been scrapped).
-Cancelling rather than deleting keeps the equipment out of the next bulk
-creation.
+Inventory records can be created in bulk from the equipment list:
 
-The latest approved inventory date and result are shown directly on the
-equipment form through stored computed fields.
+- **Assigned To** is set to the technician of the equipment, and can be
+  changed.
+- **Inventory Date** is set to the creation date, and can be changed.
+- **Checked By** is left empty until the check is done, and must be set
+  before the record is submitted.
+
+A Maintenance Manager approves or refuses submitted records. A refused
+record can be corrected and submitted again. A record can be cancelled
+when the equipment is out of scope for the round (for instance, it has
+been scrapped).
+
+The **Inventory** tab of the equipment form shows the **Last Inventory
+Date** and the **Last Inventory Result** of the latest approved record.
+The result is **Pass** when all three checks are ticked, and **Fail**
+otherwise.
 
 **Table of contents**
 

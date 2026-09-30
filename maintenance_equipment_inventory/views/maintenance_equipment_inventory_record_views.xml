@@ -66,19 +66,33 @@
                                 name="inventory_date"
                                 readonly="state == 'approved'"
                             />
-                            <field name="result" readonly="state == 'approved'" />
-                        </group>
-                        <group>
+                            <field name="user_id" readonly="state == 'approved'" />
                             <field
                                 name="checked_by_id"
                                 readonly="state == 'approved'"
                             />
+                        </group>
+                        <group>
+                            <field name="create_date" />
                             <field name="approved_by_id" />
                             <field name="approved_date" />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
+                        </group>
+                    </group>
+                    <group string="Inventory Results">
+                        <group>
+                            <field
+                                name="equipment_found"
+                                readonly="state == 'approved'"
+                            />
+                            <field
+                                name="seal_attached"
+                                readonly="state == 'approved'"
+                            />
+                            <field name="in_use" readonly="state == 'approved'" />
                         </group>
                     </group>
                     <group string="Remarks">
@@ -110,9 +124,13 @@
                 </header>
                 <field name="name" />
                 <field name="equipment_id" readonly="state == 'approved'" />
+                <field name="create_date" optional="show" />
                 <field name="inventory_date" readonly="state == 'approved'" />
-                <field name="result" readonly="state == 'approved'" />
+                <field name="user_id" readonly="state == 'approved'" />
                 <field name="checked_by_id" readonly="state == 'approved'" />
+                <field name="equipment_found" readonly="state == 'approved'" />
+                <field name="seal_attached" readonly="state == 'approved'" />
+                <field name="in_use" readonly="state == 'approved'" />
                 <field name="approved_by_id" />
                 <field
                     name="state"
@@ -138,7 +156,20 @@
             <search>
                 <field name="name" />
                 <field name="equipment_id" />
+                <field name="user_id" />
                 <field name="checked_by_id" />
+                <filter
+                    name="my_records"
+                    string="Assigned to Me"
+                    domain="[('user_id', '=', uid)]"
+                />
+                <separator />
+                <filter
+                    name="needs_attention"
+                    string="Needs Attention"
+                    domain="[('checked_by_id', '!=', False), '|', '|', ('equipment_found', '=', False), ('seal_attached', '=', False), ('in_use', '=', False)]"
+                />
+                <separator />
                 <filter
                     name="draft"
                     string="Draft"
@@ -176,9 +207,9 @@
                         context="{'group_by': 'state'}"
                     />
                     <filter
-                        name="group_result"
-                        string="Result"
-                        context="{'group_by': 'result'}"
+                        name="group_user"
+                        string="Assigned To"
+                        context="{'group_by': 'user_id'}"
                     />
                 </group>
             </search>

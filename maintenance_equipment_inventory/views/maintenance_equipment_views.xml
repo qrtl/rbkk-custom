@@ -38,11 +38,20 @@
                                 name="inventory_date"
                                 readonly="state == 'approved'"
                             />
-                            <field name="result" readonly="state == 'approved'" />
+                            <field name="user_id" readonly="state == 'approved'" />
                             <field
                                 name="checked_by_id"
                                 readonly="state == 'approved'"
                             />
+                            <field
+                                name="equipment_found"
+                                readonly="state == 'approved'"
+                            />
+                            <field
+                                name="seal_attached"
+                                readonly="state == 'approved'"
+                            />
+                            <field name="in_use" readonly="state == 'approved'" />
                             <field name="approved_by_id" />
                             <field
                                 name="state"

@@ -4,8 +4,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
-from .maintenance_equipment_inventory_record import RESULT_SELECTION
-
 
 class MaintenanceEquipment(models.Model):
     _inherit = "maintenance.equipment"
@@ -23,9 +21,10 @@ class MaintenanceEquipment(models.Model):
         store=True,
     )
     last_inventory_result = fields.Selection(
-        RESULT_SELECTION,
+        [("pass", "Pass"), ("fail", "Fail")],
         compute="_compute_last_inventory",
         store=True,
+        help="Pass when every check of the last approved inventory is ticked.",
     )
 
     @api.depends("inventory_record_ids")
@@ -36,7 +35,9 @@ class MaintenanceEquipment(models.Model):
     @api.depends(
         "inventory_record_ids.state",
         "inventory_record_ids.inventory_date",
-        "inventory_record_ids.result",
+        "inventory_record_ids.equipment_found",
+        "inventory_record_ids.seal_attached",
+        "inventory_record_ids.in_use",
     )
     def _compute_last_inventory(self):
         for equipment in self:
@@ -47,7 +48,12 @@ class MaintenanceEquipment(models.Model):
                 key=lambda r: (r.inventory_date, r.id), reverse=True
             )[:1]
             equipment.last_inventory_date = last.inventory_date
-            equipment.last_inventory_result = last.result
+            if not last:
+                equipment.last_inventory_result = False
+            elif last.equipment_found and last.seal_attached and last.in_use:
+                equipment.last_inventory_result = "pass"
+            else:
+                equipment.last_inventory_result = "fail"
 
     def action_create_inventory_records(self):
         """Bulk-create a draft inventory record per selected equipment.
