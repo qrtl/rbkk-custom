@@ -23,13 +23,4 @@ are printed in a single PDF.
 The detailed operations are created when the transfer is confirmed, so a
 transfer still in draft has nothing to print.
 
-It also adds an **Acceptance Number** field, which is where the printed
-acceptance number comes from. The number is held by the detailed operations of
-the transfer, so that a line received in several lots can be numbered per lot,
-and the transfer line shows the summary of the numbers of its operations.
-
-Each lot keeps the acceptance numbers it was received under, and a lot received
-several times shows them all. They follow the receipts: a number corrected, or a
-receipt cancelled after the fact, drops out of the lot.
-
-Transfers can be searched by acceptance number.
+The printed acceptance number comes from `stock_acceptance_number`.

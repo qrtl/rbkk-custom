@@ -7,19 +7,6 @@ from odoo import fields, models
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
-    acceptance_number = fields.Char(
-        copy=False,
-        help="Acceptance number of this detailed operation. It is the number "
-        "printed on the label, and the one kept on the lot it is received in.",
-    )
-
-    def _get_acceptance_numbers(self):
-        return list(
-            dict.fromkeys(
-                line.acceptance_number for line in self if line.acceptance_number
-            )
-        )
-
     def get_acceptance_arrival_date(self):
         self.ensure_one()
         field = self.company_id._get_acceptance_arrival_date_field()
