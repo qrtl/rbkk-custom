@@ -39,13 +39,11 @@ class MaintenanceEquipment(models.Model):
         comodel_name="maintenance.request",
         compute="_compute_latest_maintenance_result",
         store=True,
-        readonly=True,
         string="Latest Result Request",
     )
     latest_maintenance_result_date = fields.Date(
         compute="_compute_latest_maintenance_result",
         store=True,
-        readonly=True,
         string="Latest Result Date",
     )
 
