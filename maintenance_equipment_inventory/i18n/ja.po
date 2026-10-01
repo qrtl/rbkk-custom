@@ -1,0 +1,494 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* maintenance_equipment_inventory
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-30 08:51+0000\n"
+"PO-Revision-Date: 2026-09-30 08:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_needaction
+msgid "Action Needed"
+msgstr "要アクション"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_ids
+msgid "Activities"
+msgstr "活動"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "例外の活動を示す装飾"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_state
+msgid "Activity State"
+msgstr "活動状態"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "活動タイプアイコン"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment.py:0
+msgid "All the selected equipment already have an open inventory record."
+msgstr "選択されたすべての設備に、未完了の棚卸記録がすでに存在します。"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_tree
+msgid "Approve"
+msgstr "承認"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields.selection,name:maintenance_equipment_inventory.selection__maintenance_equipment_inventory_record__state__approved
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Approved"
+msgstr "承認済"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__approved_by_id
+msgid "Approved By"
+msgstr "承認者"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__approved_date
+msgid "Approved On"
+msgstr "承認日時"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid ""
+"Approved inventory records cannot be modified. Reset the record to draft "
+"first."
+msgstr "承認済の棚卸記録は変更できません。先にドラフトに戻してください。"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__user_id
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Assigned To"
+msgstr "担当者"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Assigned to Me"
+msgstr "自分の担当"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_attachment_count
+msgid "Attachment Count"
+msgstr "添付数"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_form
+msgid "Cancel"
+msgstr "キャンセル"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields.selection,name:maintenance_equipment_inventory.selection__maintenance_equipment_inventory_record__state__cancelled
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Cancelled"
+msgstr "キャンセル済"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__checked_by_id
+msgid "Checked By"
+msgstr "確認者"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__company_id
+msgid "Company"
+msgstr "会社"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.actions.server,name:maintenance_equipment_inventory.maintenance_equipment_create_inventory_record_action
+msgid "Create Inventory Records"
+msgstr "棚卸記録を作成"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__create_uid
+msgid "Created by"
+msgstr "作成者"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__create_date
+msgid "Created on"
+msgstr "作成日"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields.selection,name:maintenance_equipment_inventory.selection__maintenance_equipment_inventory_record__state__draft
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Draft"
+msgstr "ドラフト"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__equipment_id
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Equipment"
+msgstr "設備"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__equipment_found
+msgid "Equipment Found"
+msgstr "機器あり"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields.selection,name:maintenance_equipment_inventory.selection__maintenance_equipment__last_inventory_result__fail
+msgid "Fail"
+msgstr "不合格"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_follower_ids
+msgid "Followers"
+msgstr "フォロワー"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "フォロワー (取引先)"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Font awesomeのアイコン 例. fa-tasks"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Group By"
+msgstr "グループ化"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__has_message
+msgid "Has Message"
+msgstr "メッセージあり"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__id
+msgid "ID"
+msgstr "ID"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_exception_icon
+msgid "Icon"
+msgstr "アイコン"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "例外活動を示すアイコン"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "チェックした場合は、新しいメッセージに注意が必要です。"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "チェックした場合は、一部のメッセージに配信エラーが発生されました。"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__in_use
+msgid "In Use"
+msgstr "使用中"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.hr_equipment_view_form_inventory
+msgid "Inventory"
+msgstr "棚卸"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__inventory_date
+msgid "Inventory Date"
+msgstr "棚卸日"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment__inventory_record_count
+msgid "Inventory Record Count"
+msgstr "棚卸記録数"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment.py:0
+#: model:ir.actions.act_window,name:maintenance_equipment_inventory.maintenance_equipment_inventory_record_action
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment__inventory_record_ids
+#: model:ir.ui.menu,name:maintenance_equipment_inventory.maintenance_equipment_inventory_record_menu
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.hr_equipment_view_form_inventory
+msgid "Inventory Records"
+msgstr "棚卸記録"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_form
+msgid "Inventory Results"
+msgstr "棚卸結果"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_is_follower
+msgid "Is Follower"
+msgstr "フォロー中　"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment__last_inventory_date
+msgid "Last Inventory Date"
+msgstr "最終棚卸日"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment__last_inventory_result
+msgid "Last Inventory Result"
+msgstr "最終棚卸結果"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__write_uid
+msgid "Last Updated by"
+msgstr "最終更新者"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__write_date
+msgid "Last Updated on"
+msgstr "最終更新日"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__in_use
+msgid "Leave unticked when the equipment is idle."
+msgstr "遊休の場合はチェックを外してください。"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model,name:maintenance_equipment_inventory.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr "整備設備"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model,name:maintenance_equipment_inventory.model_maintenance_equipment_inventory_record
+msgid "Maintenance Equipment Inventory Record"
+msgstr "設備棚卸記録"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_has_error
+msgid "Message Delivery error"
+msgstr "メッセージ配信エラー"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_search
+msgid "Message Search"
+msgstr "メッセージ検索"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_search
+msgid "Message search, to be used only in searches"
+msgstr "メッセージ検索（検索専用）"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_ids
+msgid "Messages"
+msgstr "メッセージ"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "活動期限"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Needs Attention"
+msgstr "要対応"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "New"
+msgstr "新規"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "次の活動カレンダーイベント"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "次の活動期限"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_summary
+msgid "Next Activity Summary"
+msgstr "次の活動概要"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_type_id
+msgid "Next Activity Type"
+msgstr "次の活動タイプ"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_needaction_counter
+msgid "Number of Actions"
+msgstr "アクション数"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_has_error_counter
+msgid "Number of errors"
+msgstr "エラー数"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "アクションを必要とするメッセージの数"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "配信エラーが発生されたメッセージ数"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "Only Maintenance Managers can approve inventory records."
+msgstr "棚卸記録を承認できるのは保守管理者のみです。"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "Only Maintenance Managers can refuse inventory records."
+msgstr "棚卸記録を却下できるのは保守管理者のみです。"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid ""
+"Only Maintenance Managers can reset approved inventory records to draft."
+msgstr "承認済の棚卸記録をドラフトに戻せるのは保守管理者のみです。"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "Only draft or refused records can be submitted for approval."
+msgstr "承認申請できるのはドラフトまたは却下済の記録のみです。"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "Only records pending approval can be approved."
+msgstr "承認できるのは承認待ちの記録のみです。"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields.selection,name:maintenance_equipment_inventory.selection__maintenance_equipment__last_inventory_result__pass
+msgid "Pass"
+msgstr "合格"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment__last_inventory_result
+msgid "Pass when every check of the last approved inventory is ticked."
+msgstr "最後に承認された棚卸のすべての項目にチェックがある場合に合格となります。"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__rating_ids
+msgid "Ratings"
+msgstr "評価"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__name
+msgid "Reference"
+msgstr "参照"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_form
+msgid "Refuse"
+msgstr "却下"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields.selection,name:maintenance_equipment_inventory.selection__maintenance_equipment_inventory_record__state__refused
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Refused"
+msgstr "却下済"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__note
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_form
+msgid "Remarks"
+msgstr "備考"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_form
+msgid "Reset to Draft"
+msgstr "ドラフトに戻す"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_user_id
+msgid "Responsible User"
+msgstr "担当ユーザ"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__seal_attached
+msgid "Seal Attached"
+msgstr "シール貼付あり"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "Set who checked the equipment of %(record)s before submitting it."
+msgstr "%(record)s を承認申請する前に確認者を設定してください。"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment__smart_search
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__smart_search
+msgid "Smart Search"
+msgstr "スマート検索"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__state
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "Status"
+msgstr "状態"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"活動に基づくステータス\n"
+"期限超過：期限日がすでに過ぎています\n"
+"今日: 活動日は今日です\n"
+"予定: 将来の活動。"
+
+#. module: maintenance_equipment_inventory
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_tree
+msgid "Submit for Approval"
+msgstr "承認申請"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields.selection,name:maintenance_equipment_inventory.selection__maintenance_equipment_inventory_record__state__to_approve
+#: model_terms:ir.ui.view,arch_db:maintenance_equipment_inventory.maintenance_equipment_inventory_record_view_search
+msgid "To Approve"
+msgstr "承認待ち"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,help:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "レコード上の例外の活動タイプ。"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "You cannot delete an approved inventory record."
+msgstr "承認済の棚卸記録は削除できません。"
