@@ -73,7 +73,7 @@
                             />
                         </group>
                         <group>
-                            <field name="create_date" />
+                            <field name="create_date" options="{'show_time': false}" />
                             <field name="approved_by_id" />
                             <field name="approved_date" />
                             <field
@@ -124,7 +124,11 @@
                 </header>
                 <field name="name" />
                 <field name="equipment_id" readonly="state == 'approved'" />
-                <field name="create_date" optional="show" />
+                <field
+                    name="create_date"
+                    options="{'show_time': false}"
+                    optional="show"
+                />
                 <field name="inventory_date" readonly="state == 'approved'" />
                 <field name="user_id" readonly="state == 'approved'" />
                 <field name="checked_by_id" readonly="state == 'approved'" />
