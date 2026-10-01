@@ -31,7 +31,7 @@ class TestProductChemicalStock(TransactionCase):
         # count is not a meaningful quantity, so it must not be converted.
         cls.uom_unit.category_id.chemical_uom_id = False
         cls.substance = cls.env["product.chemical.substance"].create(
-            {"name": "Substance A", "cas_no": "TEST-20-1"}
+            {"name": "Substance A", "cas_no": "9999920-20-1"}
         )
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")

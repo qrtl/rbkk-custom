@@ -25,23 +25,24 @@ class ProductTemplateChemicalDocument(models.Model):
     sequence = fields.Integer(default=10)
     file = fields.Binary(required=True, attachment=True)
     filename = fields.Char()
-    is_pdf = fields.Boolean(string="PDF", compute="_compute_is_pdf")
+    is_pdf = fields.Boolean(string="PDF", readonly=True)
 
-    @api.depends("file")
-    def _compute_is_pdf(self):
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records._update_is_pdf()
+        return records
+
+    def _update_is_pdf(self):
         attachments = self.env["ir.attachment"].search(
             [
                 ("res_model", "=", self._name),
-                ("res_id", "in", self._origin.ids),
+                ("res_id", "in", self.ids),
                 ("res_field", "=", "file"),
                 ("mimetype", "=", "application/pdf"),
             ]
         )
-        pdf_ids = set(attachments.mapped("res_id"))
-        for rec in self:
-            # An unsaved upload has no attachment yet, so it is not offered
-            # for opening until the product is saved.
-            rec.is_pdf = isinstance(rec.id, int) and rec.id in pdf_ids
+        self.browse(attachments.mapped("res_id")).is_pdf = True
 
     def action_open(self):
         """Show the PDF file in a new browser tab.
