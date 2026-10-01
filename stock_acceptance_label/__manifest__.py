@@ -9,6 +9,8 @@
     "website": "https://www.quartile.co",
     "license": "AGPL-3",
     "maintainers": ["kanda999"],
+    # product_expiry for the expiration date of the lot, and
+    # stock_acceptance_number for the number the label prints.
     "depends": ["product_expiry", "stock_acceptance_number"],
     "data": [
         "report/stock_acceptance_label_report.xml",

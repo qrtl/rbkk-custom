@@ -48,8 +48,6 @@ once so that all their labels are printed in a single PDF.
 The detailed operations are created when the transfer is confirmed, so a
 transfer still in draft has nothing to print.
 
-The printed acceptance number comes from ``stock_acceptance_number``.
-
 **Table of contents**
 
 .. contents::
