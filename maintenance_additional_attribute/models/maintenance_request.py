@@ -23,6 +23,9 @@ class MaintenanceRequest(models.Model):
         default="month",
     )
     alert_sent = fields.Boolean(copy=False)
+    # create() keeps the given close date, so a copied one (e.g. the next
+    # occurrence of a recurring request) would stay on the new request.
+    close_date = fields.Date(copy=False)
 
     @api.model_create_multi
     def create(self, vals_list):
