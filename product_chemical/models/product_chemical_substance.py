@@ -1,7 +1,10 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
+import re
+
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ProductChemicalSubstance(models.Model):
@@ -25,3 +28,16 @@ class ProductChemicalSubstance(models.Model):
                 rec.display_name = f"[{rec.cas_no}] {rec.name}"
             else:
                 rec.display_name = rec.name
+
+    @api.constrains("cas_no")
+    def _check_cas_no(self):
+        for rec in self:
+            # [0-9] rather than \d, which also matches full-width digits.
+            if not re.fullmatch(r"[0-9]+-[0-9]+-[0-9]+", rec.cas_no):
+                raise ValidationError(
+                    self.env._(
+                        "CAS No. %(cas_no)s must be numbers separated by hyphens, "
+                        "e.g. 64-17-5.",
+                        cas_no=rec.cas_no,
+                    )
+                )

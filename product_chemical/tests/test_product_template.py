@@ -4,6 +4,7 @@
 import base64
 
 from odoo import Command
+from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase
 
 
@@ -13,7 +14,7 @@ class TestProductTemplate(TransactionCase):
         super().setUpClass()
         cls.law = cls.env["product.chemical.law"].create({"name": "Test Law"})
         cls.substance = cls.env["product.chemical.substance"].create(
-            {"name": "Substance A", "cas_no": "TEST-10-1"}
+            {"name": "Substance A", "cas_no": "9999910-10-1"}
         )
         cls.product_tmpl = cls.env["product.template"].create(
             {
@@ -71,3 +72,9 @@ class TestProductTemplate(TransactionCase):
         renamed = self._create_document("word.pdf", b"plain text")
         self.assertTrue(pdf.is_pdf)
         self.assertFalse(renamed.is_pdf)
+
+    def test_cas_no_must_be_half_width_numbers_and_hyphens(self):
+        Substance = self.env["product.chemical.substance"]
+        for cas_no in ["６４-１７-５", "64-17", "64_17_5", "CAS-17-5"]:
+            with self.subTest(cas_no=cas_no), self.assertRaises(ValidationError):
+                Substance.create({"name": "Invalid", "cas_no": cas_no})

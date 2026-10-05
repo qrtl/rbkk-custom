@@ -21,10 +21,10 @@ class TestProductChemicalConsumption(TransactionCase):
         )
         cls.uom_l.category_id.chemical_uom_id = cls.uom_ml
         cls.substance_a = cls.env["product.chemical.substance"].create(
-            {"name": "Substance A", "cas_no": "TEST-00-1"}
+            {"name": "Substance A", "cas_no": "9999900-00-1"}
         )
         cls.substance_b = cls.env["product.chemical.substance"].create(
-            {"name": "Substance B", "cas_no": "TEST-00-2"}
+            {"name": "Substance B", "cas_no": "9999900-00-2"}
         )
         cls.product = cls.env["product.product"].create(
             {
@@ -209,7 +209,7 @@ class TestProductChemicalConsumption(TransactionCase):
             lambda line: line.substance_id == self.substance_b
         ).unlink()
         substance_c = self.env["product.chemical.substance"].create(
-            {"name": "Substance C", "cas_no": "TEST-00-3"}
+            {"name": "Substance C", "cas_no": "9999900-00-3"}
         )
         self.tracked_product.chemical_substance_line_ids = [
             Command.create({"substance_id": substance_c.id, "content_rate": 25.0})

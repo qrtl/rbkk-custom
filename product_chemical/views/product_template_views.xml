@@ -47,7 +47,14 @@
                             <field name="document_type" />
                             <!-- Without widget, rows not being edited show the file size -->
                             <field name="file" filename="filename" widget="binary" />
-                            <field name="filename" column_invisible="True" />
+                            <!-- The file widget shows no name until the line is saved -->
+                            <field
+                                name="filename"
+                                readonly="1"
+                                force_save="1"
+                                invisible="id"
+                                nolabel="1"
+                            />
                             <field name="is_pdf" column_invisible="True" />
                             <button
                                 name="action_open"

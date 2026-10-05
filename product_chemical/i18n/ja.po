@@ -79,6 +79,12 @@ msgid "CAS No."
 msgstr "CAS番号"
 
 #. module: product_chemical
+#. odoo-python
+#: code:addons/product_chemical/models/product_chemical_substance.py:0
+msgid "CAS No. %(cas_no)s must be numbers separated by hyphens, e.g. 64-17-5."
+msgstr "CAS番号 %(cas_no)s は「数字-数字-数字」の形式（半角）で入力してください。例: 64-17-5"
+
+#. module: product_chemical
 #: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_substance_cas_no_uniq
 msgid "CAS No. must be unique."
 msgstr "CAS番号は一意である必要があります。"
@@ -149,9 +155,10 @@ msgstr "化学物質"
 #: model:ir.model.fields,field_description:product_chemical.field_product_product__chemical_substance_line_ids
 #: model:ir.model.fields,field_description:product_chemical.field_product_template__chemical_substance_line_ids
 #: model:ir.ui.menu,name:product_chemical.menu_product_chemical_substance
+#: model:ir.ui.menu,name:product_chemical.menu_product_chemical_substance_purchase
 #: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
 msgid "Chemical Substances"
-msgstr "化学物質マスタ"
+msgstr "化学物質"
 
 #. module: product_chemical
 #: model:ir.model.fields,help:product_chemical.field_uom_category__chemical_uom_id

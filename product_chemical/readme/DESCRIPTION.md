@@ -17,8 +17,12 @@ Master data managed by this module:
 * **Laws** — referenced by products.
 * **Major / Minor categories** — organised under their parent law.
 * **Chemical Substances** — a CAS Number together with the substance name,
-  reusable across products. The CAS Number must be unique. Managed from
-  Inventory > Products > Chemical Substances.
+  reusable across products. The CAS Number must be unique, and consist of
+  half-width numbers separated by hyphens (e.g. 64-17-5).
+
+Chemical Substances are managed from Inventory > Products and Purchase >
+Products, and the laws with
+their categories from Inventory > Configuration > Chemical.
 
 Products can be searched by CAS Number from the product search view.
 

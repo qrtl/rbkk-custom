@@ -8,7 +8,7 @@
     "author": "Quartile",
     "website": "https://www.quartile.co",
     "license": "LGPL-3",
-    "depends": ["stock"],
+    "depends": ["purchase", "stock"],
     "data": [
         "security/ir.model.access.csv",
         "views/uom_category_views.xml",
