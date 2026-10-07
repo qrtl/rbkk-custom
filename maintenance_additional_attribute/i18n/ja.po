@@ -75,26 +75,31 @@ msgstr "表示名"
 
 #. module: maintenance_additional_attribute
 #: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_equipment__is_fixed_asset
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attribute.maintenance_equipment_view_search
 msgid "Fixed Asset"
 msgstr "固定資産"
 
 #. module: maintenance_additional_attribute
 #: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_equipment__fixed_asset_code
+#: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_request__fixed_asset_code
 msgid "Fixed Asset Code"
 msgstr "固定資産コード"
 
 #. module: maintenance_additional_attribute
 #: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_equipment__is_fluorocarbon_inspection
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attribute.maintenance_equipment_view_search
 msgid "Fluorocarbon Inspection Target"
 msgstr "フロン点検対象"
 
 #. module: maintenance_additional_attribute
 #: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_equipment__is_gmp
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attribute.maintenance_equipment_view_search
 msgid "GMP"
 msgstr "GMP"
 
 #. module: maintenance_additional_attribute
 #: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_equipment__generic_name_id
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attribute.maintenance_equipment_view_search
 msgid "General Name"
 msgstr "一般名称"
 
@@ -122,6 +127,7 @@ msgstr "点検"
 
 #. module: maintenance_additional_attribute
 #: model_terms:ir.ui.view,arch_db:maintenance_additional_attribute.maintenance_equipment_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attribute.maintenance_equipment_view_list
 msgid "Inspection Exempt"
 msgstr "点検対象外"
 
@@ -212,6 +218,11 @@ msgid "Scheduled Maintenance"
 msgstr "メンテナンス予定"
 
 #. module: maintenance_additional_attribute
+#: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_request__serial_no
+msgid "Serial Number"
+msgstr "設備ID"
+
+#. module: maintenance_additional_attribute
 #: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_equipment__set_name
 msgid "Set Name"
 msgstr "セット名称"
@@ -245,6 +256,7 @@ msgstr "使用可能温度(℃)"
 
 #. module: maintenance_additional_attribute
 #: model:ir.model.fields,field_description:maintenance_additional_attribute.field_maintenance_equipment__location_id
+#: model_terms:ir.ui.view,arch_db:maintenance_additional_attribute.maintenance_equipment_view_search
 msgid "Used in location"
 msgstr "使用場所"
 

@@ -7,6 +7,7 @@ from odoo import fields, models
 class MaintenanceEquipment(models.Model):
     _name = "maintenance.equipment"
     _inherit = ["maintenance.equipment", "image.mixin"]
+    _rec_names_search = ["name", "serial_no", "fixed_asset_code"]
 
     set_name = fields.Char()
     vendor_product_name = fields.Char()

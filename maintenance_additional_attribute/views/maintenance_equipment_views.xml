@@ -81,23 +81,54 @@
         <field name="name">maintenance.equipment.list</field>
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_tree" />
+        <!-- Applied after the other extensions so that the columns they add can
+             be moved, and so that the State and Validation Status columns that
+             maintenance_equipment_tier_validation (if installed) adds right
+             after the name end up between the two blocks below. -->
+        <field name="priority">99</field>
         <field name="arch" type="xml">
-            <field name="category_id" position="after">
-                <field name="generic_name_id" optional="show" />
+            <field name="name" position="before">
+                <xpath expr="//field[@name='serial_no']" position="move" />
+            </field>
+            <field name="name" position="after">
+                <xpath expr="//field[@name='usability_state']" position="move" />
+                <field name="status" optional="show" />
+                <field name="maintenance_team_id" optional="show" />
+                <xpath expr="//field[@name='technician_user_id']" position="move" />
                 <field name="location_id" optional="show" />
-                <field name="set_name" optional="hide" />
+                <field name="is_gmp" optional="show" />
                 <field name="management_no" optional="hide" />
+                <field name="is_fixed_asset" optional="show" />
                 <field name="fixed_asset_code" optional="hide" />
-                <field name="manufacturer" optional="hide" />
-                <field name="manufacturer_serial_no" optional="hide" />
-                <field name="national_project_name" optional="hide" />
-                <field name="acquisition_date" optional="hide" />
-                <field name="is_national_project" optional="hide" />
-                <field name="is_fixed_asset" optional="hide" />
-                <field name="is_gmp" optional="hide" />
-                <field name="is_manufacturer_calibration" optional="hide" />
-                <field name="is_in_house_calibration" optional="hide" />
+                <field name="acquisition_date" optional="show" />
+                <field
+                    name="maintenance_exempt"
+                    string="Inspection Exempt"
+                    optional="show"
+                />
+                <field name="is_manufacturer_calibration" optional="show" />
+                <field name="is_in_house_calibration" optional="show" />
                 <field name="is_fluorocarbon_inspection" optional="hide" />
+            </field>
+            <field name="employee_id" position="before">
+                <field name="manufacturer" optional="hide" />
+                <field name="model" optional="hide" />
+                <field name="manufacturer_serial_no" optional="hide" />
+                <field name="is_national_project" optional="hide" />
+                <field name="national_project_name" optional="hide" />
+            </field>
+            <field name="employee_id" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="department_id" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="category_id" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="category_id" position="after">
+                <field name="generic_name_id" optional="hide" />
+                <field name="set_name" optional="hide" />
                 <field name="usable_temperature" optional="hide" />
                 <field name="usable_humidity" optional="hide" />
             </field>
