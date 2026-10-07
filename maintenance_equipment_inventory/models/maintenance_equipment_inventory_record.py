@@ -41,6 +41,8 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         index=True,
         tracking=True,
     )
+    serial_no = fields.Char(related="equipment_id.serial_no")
+    fixed_asset_code = fields.Char(related="equipment_id.fixed_asset_code")
     company_id = fields.Many2one(
         related="equipment_id.company_id",
         store=True,

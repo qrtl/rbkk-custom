@@ -156,6 +156,11 @@ msgid "Fail"
 msgstr "不合格"
 
 #. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__fixed_asset_code
+msgid "Fixed Asset Code"
+msgstr "固定資産コード"
+
+#. module: maintenance_equipment_inventory
 #: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__message_follower_ids
 msgid "Followers"
 msgstr "フォロワー"
@@ -438,6 +443,11 @@ msgstr "担当ユーザ"
 #: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__seal_attached
 msgid "Seal Attached"
 msgstr "シール貼付あり"
+
+#. module: maintenance_equipment_inventory
+#: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__serial_no
+msgid "Serial Number"
+msgstr "設備ID"
 
 #. module: maintenance_equipment_inventory
 #. odoo-python

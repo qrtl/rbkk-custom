@@ -9,7 +9,7 @@
     "author": "Quartile",
     "website": "https://www.quartile.co",
     "license": "LGPL-3",
-    "depends": ["maintenance"],
+    "depends": ["maintenance_additional_attribute"],
     "data": [
         "security/ir.model.access.csv",
         "security/maintenance_equipment_inventory_security.xml",

@@ -61,6 +61,7 @@
                     </div>
                     <group>
                         <group>
+                            <field name="serial_no" />
                             <field name="equipment_id" readonly="state == 'approved'" />
                             <field
                                 name="inventory_date"
@@ -123,6 +124,7 @@
                     />
                 </header>
                 <field name="name" />
+                <field name="serial_no" optional="hide" />
                 <field name="equipment_id" readonly="state == 'approved'" />
                 <field
                     name="create_date"
@@ -160,6 +162,7 @@
             <search>
                 <field name="name" />
                 <field name="equipment_id" />
+                <field name="fixed_asset_code" />
                 <field name="user_id" />
                 <field name="checked_by_id" />
                 <filter
