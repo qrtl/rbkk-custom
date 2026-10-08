@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Quartile (https://www.quartile.co)
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <!-- The standard rule maintenance.equipment_rule_user only lets an internal
+         user see the equipment they follow, which leaves the equipment register
+         empty for anybody who is not an equipment manager. That rule is defined
+         with noupdate="1", so instead of rewriting its domain we add a
+         permissive read rule: rules of the groups a user belongs to are
+         combined with OR, and the access rights of base.group_user stay
+         read only. -->
+    <record id="equipment_rule_user_read_all" model="ir.rule">
+        <field name="name">Users are allowed to read all equipment</field>
+        <field name="model_id" ref="maintenance.model_maintenance_equipment" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]" />
+        <field name="perm_read" eval="True" />
+        <field name="perm_write" eval="False" />
+        <field name="perm_create" eval="False" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="maintenance_request_view_form" model="ir.ui.view">
+        <field name="name">maintenance.request.form.additional.attributes</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form" />
+        <field name="arch" type="xml">
+            <field name="equipment_id" position="before">
+                <field name="serial_no" />
+            </field>
+            <field name="schedule_date" position="attributes">
+                <attribute name="options">{'show_time': false}</attribute>
+            </field>
+            <field name="close_date" position="attributes">
+                <attribute name="readonly">0</attribute>
+                <attribute name="invisible">0</attribute>
+            </field>
+            <xpath expr="//field[@name='schedule_date']" position="after">
+                <label for="alert_period" />
+                <div class="o_row">
+                    <field name="alert_period" />
+                    <field name="alert_period_unit" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="maintenance_request_view_list" model="ir.ui.view">
+        <field name="name">maintenance.request.list.additional.attributes</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree" />
+        <!-- Applied after the other extensions so that the columns they add can
+             be moved. -->
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="serial_no" />
+            </field>
+            <field name="name" position="after">
+                <field name="maintenance_team_id" />
+                <xpath expr="//field[@name='user_id']" position="move" />
+                <xpath expr="//field[@name='stage_id']" position="move" />
+                <xpath expr="//field[@name='maintenance_result']" position="move" />
+                <field
+                    name="schedule_date"
+                    options="{'show_time': false}"
+                    optional="show"
+                />
+                <field name="close_date" optional="show" />
+                <field name="alert_period" optional="show" />
+                <field name="alert_period_unit" optional="show" />
+            </field>
+            <field name="category_id" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="employee_id" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="maintenance_request_view_search" model="ir.ui.view">
+        <field name="name">maintenance.request.search.additional.attributes</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_search" />
+        <field name="arch" type="xml">
+            <field name="equipment_id" position="after">
+                <field name="fixed_asset_code" />
+            </field>
+        </field>
+    </record>
+    <record id="maintenance_request_view_kanban" model="ir.ui.view">
+        <field name="name">maintenance.request.kanban.additional.attributes</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban" />
+        <field name="arch" type="xml">
+            <field name="schedule_date" position="attributes">
+                <attribute name="options">{'show_time': false}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
