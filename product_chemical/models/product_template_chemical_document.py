@@ -44,15 +44,25 @@ class ProductTemplateChemicalDocument(models.Model):
         )
         self.browse(attachments.mapped("res_id")).is_pdf = True
 
+    def _get_file_url(self):
+        self.ensure_one()
+        return f"/web/content/{self._name}/{self.id}/file?filename_field=filename"
+
     def action_open(self):
         """Show the PDF file in a new browser tab.
 
         The browser only displays the file itself when it is served inline,
         which is what /web/content does without download=true.
         """
-        self.ensure_one()
         return {
             "type": "ir.actions.act_url",
-            "url": f"/web/content/{self._name}/{self.id}/file?filename_field=filename",
+            "url": self._get_file_url(),
             "target": "new",
+        }
+
+    def action_download(self):
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"{self._get_file_url()}&download=true",
+            "target": "download",
         }

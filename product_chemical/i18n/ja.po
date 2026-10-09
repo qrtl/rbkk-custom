@@ -270,6 +270,11 @@ msgid "Documents"
 msgstr "文書"
 
 #. module: product_chemical
+#: model_terms:ir.ui.view,arch_db:product_chemical.product_template_form_view
+msgid "Download"
+msgstr "ダウンロード"
+
+#. module: product_chemical
 #: model:ir.model.constraint,message:product_chemical.constraint_product_template_chemical_substance_line_product_substance_uniq
 msgid "Each substance can be added only once per product."
 msgstr "1プロダクトに対し各化学物質は1度のみ追加できます。"

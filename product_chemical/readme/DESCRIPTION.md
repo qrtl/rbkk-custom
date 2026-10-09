@@ -5,8 +5,8 @@ flag on a product is enabled, a "Chemical" tab is shown that allows users to:
   minor category per law).
 * Upload documents, each classified as an SDS or a risk assessment sheet
   (several of each per product). A PDF file can be shown in a new browser tab
-  with the "Open" button; any other file, such as a Word document, is
-  downloaded from its filename.
+  with the "Open" button, and any file is downloaded with the "Download"
+  button.
 * Register the chemical substances contained in the product together with
   their content rate (%).
 * Review the component amount per stock location, calculated from on-hand
