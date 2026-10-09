@@ -8,7 +8,8 @@ flag on a product is enabled, a "Chemical" tab is shown that allows users to:
   with the "Open" button, and any file is downloaded with the "Download"
   button.
 * Register the chemical substances contained in the product together with
-  their content rate (%).
+  their content rate (%). A substance may be entered on several lines, each
+  reported separately.
 * Review the component amount per stock location, calculated from on-hand
   quantity multiplied by each substance content rate.
 

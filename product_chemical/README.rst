@@ -33,7 +33,8 @@ allows users to:
   browser tab with the "Open" button, and any file is downloaded with
   the "Download" button.
 - Register the chemical substances contained in the product together
-  with their content rate (%).
+  with their content rate (%). A substance may be entered on several
+  lines, each reported separately.
 - Review the component amount per stock location, calculated from
   on-hand quantity multiplied by each substance content rate.
 

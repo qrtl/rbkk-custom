@@ -119,6 +119,32 @@ class TestProductChemicalConsumption(TransactionCase):
         self.assertEqual(amount_a.amount_uom_id, self.uom_ml)
         self.assertAlmostEqual(amount_a.amount, 6000.0)
 
+    def test_substance_entered_twice_is_recorded_per_line(self):
+        product = self.env["product.product"].create(
+            {
+                "name": "Kit",
+                "is_storable": True,
+                "uom_id": self.uom_l.id,
+                "uom_po_id": self.uom_l.id,
+                "is_chemical": True,
+                "track_chemical_consumption": True,
+                "chemical_substance_line_ids": [
+                    Command.create(
+                        {"substance_id": self.substance_a.id, "content_rate": 30.0}
+                    ),
+                    Command.create(
+                        {"substance_id": self.substance_a.id, "content_rate": 20.0}
+                    ),
+                ],
+            }
+        )
+        move = self._make_move(
+            self.stock_location, self.consumption_location, product=product
+        )
+        records = move.chemical_consumption_ids
+        self.assertEqual(sorted(records.mapped("content_rate")), [20.0, 30.0])
+        self.assertEqual(sorted(records.mapped("amount")), [2000.0, 3000.0])
+
     def test_consumption_to_internal_is_recorded_as_negative(self):
         move = self._make_move(self.consumption_location, self.stock_location)
         amount_a = self._amount_a(move)

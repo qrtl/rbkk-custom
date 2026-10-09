@@ -67,6 +67,15 @@ class TestProductChemicalStock(TransactionCase):
             [("product_tmpl_id", "=", product_tmpl.id)]
         )
 
+    def test_substance_entered_twice_is_one_row_per_line(self):
+        self.liquid.chemical_substance_line_ids = [
+            Command.create({"substance_id": self.substance.id, "content_rate": 50.0})
+        ]
+        self._add_stock(self.liquid.product_variant_id, self.stock_location, 3.0)
+        rows = self._rows(self.liquid)
+        self.assertEqual(rows.mapped("quantity"), [3.0, 3.0])
+        self.assertEqual(rows.mapped("component_amount"), [1500.0, 1500.0])
+
     def test_amount_is_converted_into_the_aggregation_uom(self):
         # The conversion factor is a ratio of two uom factors and is trivially
         # invertible: 3 L at 50% is 1500 mL, but 0.0015 if au and pu are

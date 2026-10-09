@@ -26,11 +26,6 @@ class ProductTemplateChemicalSubstanceLine(models.Model):
 
     _sql_constraints = [
         (
-            "product_substance_uniq",
-            "unique(product_tmpl_id, substance_id)",
-            "Each substance can be added only once per product.",
-        ),
-        (
             "content_rate_range",
             "CHECK(content_rate >= 0 AND content_rate <= 100)",
             "Content rate must be between 0 and 100.",

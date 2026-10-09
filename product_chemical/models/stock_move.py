@@ -56,7 +56,11 @@ class StockMove(models.Model):
             ):
                 continue
             vals_list += [
-                {"move_id": move.id, "substance_id": line.substance_id.id}
+                {
+                    "move_id": move.id,
+                    "substance_id": line.substance_id.id,
+                    "content_rate": line.content_rate,
+                }
                 for line in move.product_id.chemical_substance_line_ids
             ]
         return self.env["product.chemical.consumption"].create(vals_list)

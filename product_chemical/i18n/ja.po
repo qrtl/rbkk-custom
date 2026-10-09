@@ -275,16 +275,6 @@ msgid "Download"
 msgstr "ダウンロード"
 
 #. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_template_chemical_substance_line_product_substance_uniq
-msgid "Each substance can be added only once per product."
-msgstr "1プロダクトに対し各化学物質は1度のみ追加できます。"
-
-#. module: product_chemical
-#: model:ir.model.constraint,message:product_chemical.constraint_product_chemical_consumption_move_substance_uniq
-msgid "Each substance can be recorded only once per stock move."
-msgstr "各化学物質は在庫移動ごとに1回のみ記録できます。"
-
-#. module: product_chemical
 #: model:ir.model.fields,field_description:product_chemical.field_product_template_chemical_document__file
 msgid "File"
 msgstr "ファイル"

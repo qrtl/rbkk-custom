@@ -39,17 +39,8 @@ class ProductChemicalConsumption(models.Model):
     product_uom_id = fields.Many2one(
         related="move_id.product_uom", string="Product UoM"
     )
-    # Frozen at creation by the precompute -- computed on flush it would pick
-    # up whatever the product holds by the end of the transaction -- so that
-    # revising the content rate on a product leaves the rate the amounts
-    # already reported were computed with alone. A rate registered wrongly is
-    # fixed on the product and replayed with Update Chemical Consumption.
-    content_rate = fields.Float(
-        string="Content Rate (%)",
-        compute="_compute_content_rate",
-        store=True,
-        precompute=True,
-    )
+    # Copied from the substance line when recorded, then left unchanged.
+    content_rate = fields.Float(string="Content Rate (%)", readonly=True)
     amount = fields.Float(
         string="Consumed Amount",
         compute="_compute_amount",
@@ -69,28 +60,11 @@ class ProductChemicalConsumption(models.Model):
         "category has none.",
     )
 
-    _sql_constraints = [
-        (
-            "move_substance_uniq",
-            "unique(move_id, substance_id)",
-            "Each substance can be recorded only once per stock move.",
-        ),
-    ]
-
     @api.depends("move_id")
     def _compute_amount_uom_id(self):
         for rec in self:
             product_tmpl = rec.move_id.product_id.product_tmpl_id
             rec.amount_uom_id = product_tmpl._get_chemical_amount_uom()
-
-    @api.depends("move_id", "substance_id")
-    def _compute_content_rate(self):
-        for rec in self:
-            rates = {
-                line.substance_id: line.content_rate
-                for line in rec.move_id.product_id.chemical_substance_line_ids
-            }
-            rec.content_rate = rates.get(rec.substance_id, 0.0)
 
     @api.depends(
         "quantity", "product_uom_id", "amount_uom_id", "content_rate", "move_id"

@@ -59,7 +59,9 @@ class ProductChemicalStock(models.Model):
         # the product's UoM category, so that amounts of the same kind (weight,
         # volume) add up. Categories without an aggregation unit are reported
         # unconverted, which keeps count-managed products listed while leaving
-        # them out of the weight and volume totals.
+        # them out of the weight and volume totals. Grouping by the substance
+        # line keeps a substance entered on several lines from repeating the
+        # on-hand quantity in one row.
         return """
             SELECT
                 ROW_NUMBER() OVER () AS id,
@@ -92,6 +94,7 @@ class ProductChemicalStock(models.Model):
             GROUP BY
                 pt.id,
                 sq.location_id,
+                sub_line.id,
                 sub_line.substance_id,
                 sub.cas_no,
                 pt.uom_id,
