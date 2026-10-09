@@ -70,9 +70,6 @@ class ProductChemicalConsumption(models.Model):
         "quantity", "product_uom_id", "amount_uom_id", "content_rate", "move_id"
     )
     def _compute_amount(self):
-        # Amounts are converted into the chemical aggregation unit of the
-        # product's UoM category, so that amounts of the same kind (weight,
-        # volume) add up, the way product.chemical.stock does it.
         for rec in self:
             quantity = rec.product_uom_id._compute_quantity(
                 rec.quantity, rec.amount_uom_id, round=False
@@ -81,5 +78,4 @@ class ProductChemicalConsumption(models.Model):
             rec.amount = sign * quantity * rec.content_rate / 100.0
 
     def action_sync_from_move(self):
-        """Rebuild the amounts of the moves these records belong to."""
         return self.move_id.action_sync_chemical_consumption()

@@ -6,12 +6,6 @@ from odoo.tests.common import TransactionCase
 
 
 class TestProductChemicalStock(TransactionCase):
-    """Pin the SQL of the on hand report.
-
-    The whole report lives in one opaque _table_query string that no reviewer
-    re-reads, so each test below defends one clause of it.
-    """
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -27,8 +21,7 @@ class TestProductChemicalStock(TransactionCase):
         )
         cls.uom_l.category_id.chemical_uom_id = cls.uom_ml
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
-        # Left without an aggregation unit on purpose: a percentage of a piece
-        # count is not a meaningful quantity, so it must not be converted.
+        # No aggregation unit: a piece count is not converted.
         cls.uom_unit.category_id.chemical_uom_id = False
         cls.substance = cls.env["product.chemical.substance"].create(
             {"name": "Substance A", "cas_no": "9999920-20-1"}
@@ -60,9 +53,7 @@ class TestProductChemicalStock(TransactionCase):
         self.env["stock.quant"]._update_available_quantity(product, location, quantity)
 
     def _rows(self, product_tmpl):
-        # Deliberately queried through search rather than a manual flush: the
-        # model is _auto=False, so it is the _depends declaration that pushes
-        # the pending quants and lines to the database first.
+        # search() without a flush: _depends must push pending data first.
         return self.env["product.chemical.stock"].search(
             [("product_tmpl_id", "=", product_tmpl.id)]
         )
@@ -77,11 +68,7 @@ class TestProductChemicalStock(TransactionCase):
         self.assertEqual(rows.mapped("component_amount"), [1500.0, 1500.0])
 
     def test_amount_is_converted_into_the_aggregation_uom(self):
-        # The conversion factor is a ratio of two uom factors and is trivially
-        # invertible: 3 L at 50% is 1500 mL, but 0.0015 if au and pu are
-        # swapped and 1.5 if the conversion is dropped altogether. The reported
-        # on hand quantity has to stay in the product unit either way -- only
-        # the component amount is converted.
+        # 3 L at 50% is 1500 mL; the quantity stays in the product unit.
         self._add_stock(self.liquid.product_variant_id, self.stock_location, 3.0)
         row = self._rows(self.liquid)
         self.assertEqual(len(row), 1)
@@ -91,10 +78,6 @@ class TestProductChemicalStock(TransactionCase):
         self.assertEqual(row.amount_uom_id, self.uom_ml)
 
     def test_category_without_aggregation_uom_is_left_unconverted(self):
-        # COALESCE(uc.chemical_uom_id, pt.uom_id) is what keeps count-managed
-        # products listed while leaving them out of the weight and volume
-        # totals. Without the fallback the amount unit would be empty and the
-        # LEFT JOIN would multiply the amount by NULL, i.e. lose the row.
         self._add_stock(self.counted.product_variant_id, self.stock_location, 8.0)
         row = self._rows(self.counted)
         self.assertEqual(len(row), 1)
@@ -102,9 +85,6 @@ class TestProductChemicalStock(TransactionCase):
         self.assertEqual(row.amount_uom_id, self.uom_unit)
 
     def test_only_internal_locations_are_reported(self):
-        # The report answers what is held on the site, so goods sitting in a
-        # customer, supplier or virtual location are not part of it. Dropping
-        # the usage filter double counts everything that ever left the stock.
         self._add_stock(self.liquid.product_variant_id, self.stock_location, 3.0)
         self._add_stock(self.liquid.product_variant_id, self.customer_location, 5.0)
         rows = self._rows(self.liquid)
@@ -112,10 +92,6 @@ class TestProductChemicalStock(TransactionCase):
         self.assertAlmostEqual(rows.component_amount, 1500.0)
 
     def test_variants_of_a_product_are_summed_into_one_row(self):
-        # The query joins product_product to reach the quants while reporting
-        # by template, so a template with several variants would yield one row
-        # per variant if the GROUP BY were relaxed -- and the list view sums
-        # the column, so the total would silently double.
         attribute = self.env["product.attribute"].create(
             {
                 "name": "Pack",

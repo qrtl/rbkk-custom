@@ -4,10 +4,7 @@
         <field name="name">product.chemical.consumption.list</field>
         <field name="model">product.chemical.consumption</field>
         <field name="arch" type="xml">
-            <!-- The records are a read-only trace of what the stock moves
-                 handled. A wrong figure is fixed on the product and replayed
-                 with the Update Chemical Consumption action, never edited
-                 here, so there is no form view either. -->
+            <!-- Read-only: fix the product and run Update Chemical Consumption -->
             <list create="false" edit="false" delete="false">
                 <field name="actual_date" />
                 <field name="product_id" />
@@ -111,8 +108,7 @@
         <field name="name">Chemical Consumption</field>
         <field name="res_model">product.chemical.consumption</field>
         <field name="view_mode">list,pivot</field>
-        <!-- The amount unit has to be the outermost group, otherwise weight and
-             volume amounts end up in the same subtotal. -->
+        <!-- Group by amount UoM first so weight and volume are not summed together -->
         <field
             name="context"
         >{'search_default_group_amount_uom': 1, 'search_default_group_substance': 1}</field>

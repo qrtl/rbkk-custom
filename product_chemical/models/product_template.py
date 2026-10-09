@@ -9,8 +9,6 @@ class ProductTemplate(models.Model):
 
     is_chemical = fields.Boolean(string="Chemical")
     track_chemical_consumption = fields.Boolean(default=False)
-    # copy=True: One2many defaults to copy=False, which would leave the
-    # duplicate flagged as a chemical with no composition at all.
     chemical_law_line_ids = fields.One2many(
         "product.template.chemical.law.line",
         "product_tmpl_id",
@@ -62,10 +60,6 @@ class ProductTemplate(models.Model):
         return super().write(vals)
 
     def _get_chemical_amount_uom(self):
-        """Return the unit chemical amounts of this product are expressed in.
-
-        The same rule is applied in SQL by product.chemical.stock, so
-        that both reports aggregate amounts into the same unit.
-        """
+        """Return the UoM chemical amounts are expressed in."""
         self.ensure_one()
         return self.uom_id.category_id.chemical_uom_id or self.uom_id

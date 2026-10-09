@@ -55,13 +55,7 @@ class ProductChemicalStock(models.Model):
 
     @property
     def _table_query(self):
-        # Component amounts are converted into the chemical aggregation unit of
-        # the product's UoM category, so that amounts of the same kind (weight,
-        # volume) add up. Categories without an aggregation unit are reported
-        # unconverted, which keeps count-managed products listed while leaving
-        # them out of the weight and volume totals. Grouping by the substance
-        # line keeps a substance entered on several lines from repeating the
-        # on-hand quantity in one row.
+        # Grouped by substance line so a repeated substance does not double the qty.
         return """
             SELECT
                 ROW_NUMBER() OVER () AS id,

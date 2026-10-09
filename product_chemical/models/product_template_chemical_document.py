@@ -49,11 +49,6 @@ class ProductTemplateChemicalDocument(models.Model):
         return f"/web/content/{self._name}/{self.id}/file?filename_field=filename"
 
     def action_open(self):
-        """Show the PDF file in a new browser tab.
-
-        The browser only displays the file itself when it is served inline,
-        which is what /web/content does without download=true.
-        """
         return {
             "type": "ir.actions.act_url",
             "url": self._get_file_url(),

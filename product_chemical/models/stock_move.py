@@ -13,18 +13,7 @@ class StockMove(models.Model):
     )
 
     def _get_chemical_consumption_sign(self):
-        """Return the sign the moved amount has to be recorded with.
-
-        The records measure how much of the substance was used up, not how the
-        stock varied: issuing the goods out of an internal location into a
-        chemical consumption location is a consumption and is recorded as
-        positive, and the reverse move returns them to the stock and is
-        recorded as negative, cancelling that consumption. The consumption
-        location is usually a virtual one (a production location, or an
-        inventory adjustment location standing for a scrapping or a
-        non-manufacturing issue), so only its counterpart is required to be
-        internal. Any other move returns 0, i.e. is not recorded at all.
-        """
+        """Return 1 for a consumption, -1 for a return, 0 otherwise."""
         self.ensure_one()
         source, dest = self.location_id, self.location_dest_id
         from_consumption = source.is_chemical_consumption_location
@@ -36,7 +25,6 @@ class StockMove(models.Model):
         return -1 if dest.usage == "internal" else 0
 
     def _is_chemical_consumption_move(self):
-        """Return whether the move has to be recorded as a chemical consumption."""
         self.ensure_one()
         product = self.product_id
         if self.state != "done":
@@ -66,12 +54,7 @@ class StockMove(models.Model):
         return self.env["product.chemical.consumption"].create(vals_list)
 
     def action_sync_chemical_consumption(self):
-        """Rebuild the chemical consumption of the moves from the current composition.
-
-        The records are replaced rather than recomputed, so that a substance
-        added to (or removed from) the product after the move was validated is
-        reflected as well.
-        """
+        """Recreate the consumption records from the current composition."""
         self.chemical_consumption_ids.unlink()
         amounts = self._create_chemical_consumption()
         return {

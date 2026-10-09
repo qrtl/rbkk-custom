@@ -32,11 +32,6 @@ class TestProductTemplate(TransactionCase):
         )
 
     def test_duplicate_keeps_the_composition(self):
-        # One2many defaults to copy=False while the two flags, being booleans,
-        # are copied regardless. Dropping copy=True therefore yields a duplicate
-        # that still presents itself as a tracked chemical but holds no
-        # substance at all, so it is reported nowhere and records no
-        # consumption -- a silent loss of the very data this module manages.
         copy = self.product_tmpl.copy()
         self.assertTrue(copy.is_chemical)
         self.assertEqual(copy.chemical_substance_line_ids.substance_id, self.substance)
@@ -44,9 +39,6 @@ class TestProductTemplate(TransactionCase):
         self.assertEqual(copy.chemical_law_line_ids.law_id, self.law)
 
     def test_unsetting_is_chemical_clears_the_tracking_flag(self):
-        # The write path is the one worth pinning: the form merely hides the
-        # flag, so an import or plain ORM code is what walks a non-chemical
-        # product into carrying a tracking flag nothing acts on any more.
         self.product_tmpl.write({"is_chemical": False})
         self.assertFalse(self.product_tmpl.track_chemical_consumption)
 
@@ -66,8 +58,7 @@ class TestProductTemplate(TransactionCase):
         )
 
     def test_only_a_pdf_can_be_opened(self):
-        # The file type is read off the stored attachment, not the filename,
-        # so a Word file renamed to .pdf is still not offered for opening.
+        # Detected from the attachment, not the filename.
         pdf = self._create_document("sds.pdf", b"%PDF-1.4\n%%EOF")
         renamed = self._create_document("word.pdf", b"plain text")
         self.assertTrue(pdf.is_pdf)

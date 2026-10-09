@@ -151,16 +151,11 @@ class TestProductChemicalConsumption(TransactionCase):
         self.assertAlmostEqual(amount_a.amount, -6000.0)
 
     def test_virtual_consumption_location_is_recorded(self):
-        # A consumption location is normally a virtual one (a production or an
-        # inventory adjustment location), so only its counterpart has to be
-        # internal. This fails if the internal-on-both-sides guard comes back.
+        # Only the counterpart of the consumption location has to be internal.
         move = self._make_move(self.stock_location, self.virtual_consumption_location)
         self.assertAlmostEqual(self._amount_a(move).amount, 6000.0)
 
     def test_consumption_location_needs_an_internal_counterpart(self):
-        # A move between two non-stock locations takes nothing out of the site,
-        # so it is not a consumption. This fails if the usage check is dropped
-        # altogether rather than being moved onto the counterpart.
         move = self._make_move(
             self.supplier_location, self.virtual_consumption_location
         )
@@ -175,10 +170,6 @@ class TestProductChemicalConsumption(TransactionCase):
         self.assertFalse(move.chemical_consumption_ids)
 
     def test_unsetting_is_chemical_stops_the_tracking(self):
-        # The consumption report and the on hand report have to describe the
-        # same products, and the on hand report is driven by is_chemical alone.
-        # This fails if the flag is merely hidden in the form instead of being
-        # cleared, or if the move path stops checking is_chemical.
         self.tracked_product.product_tmpl_id.is_chemical = False
         self.assertFalse(self.tracked_product.track_chemical_consumption)
         move = self._make_move(self.stock_location, self.consumption_location)
@@ -197,9 +188,6 @@ class TestProductChemicalConsumption(TransactionCase):
         self.assertFalse(move.chemical_consumption_ids)
 
     def test_amounts_are_snapshots(self):
-        # A later revision of the product composition must not rewrite the
-        # amounts of past records; replaying the move is the only way to bring
-        # them in line with a composition that was registered wrongly.
         move = self._make_move(self.stock_location, self.consumption_location)
         amount_a = move.chemical_consumption_ids.filtered(
             lambda a: a.substance_id == self.substance_a
@@ -215,9 +203,6 @@ class TestProductChemicalConsumption(TransactionCase):
         self.assertAlmostEqual(amount_a.amount, 3000.0)
 
     def test_the_move_side_follows_the_move(self):
-        # The quantity, the units, the locations and the date are read from the
-        # move, so correcting a move corrects the amounts booked against it --
-        # the content rate being the exception the test above pins.
         move = self._make_move(self.stock_location, self.consumption_location)
         amount_a = self._amount_a(move)
         move.date = fields.Datetime.to_datetime("2020-01-01 12:00:00")
@@ -227,9 +212,6 @@ class TestProductChemicalConsumption(TransactionCase):
         self.assertAlmostEqual(amount_a.amount, 3000.0)
 
     def test_sync_follows_the_composition_of_the_product(self):
-        # The rebuild has to replace the records, not recompute them in place:
-        # a per-record recompute cannot add a substance registered after the
-        # move was validated, nor drop one that was removed from the product.
         move = self._make_move(self.stock_location, self.consumption_location)
         self.tracked_product.chemical_substance_line_ids.filtered(
             lambda line: line.substance_id == self.substance_b
@@ -247,8 +229,7 @@ class TestProductChemicalConsumption(TransactionCase):
         self.assertAlmostEqual(amount_c.amount, 2500.0)
 
     def test_sync_records_a_move_validated_before_installation(self):
-        # Backfilling a past move must keep the date of the move, so that the
-        # amount lands in the period it was actually handled in.
+        # The backfilled record keeps the date of the move.
         move = self._make_move(self.stock_location, self.consumption_location)
         move.chemical_consumption_ids.unlink()
         move.action_sync_chemical_consumption()

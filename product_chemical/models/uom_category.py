@@ -20,8 +20,7 @@ class UomCategory(models.Model):
 
     @api.constrains("chemical_uom_id")
     def _check_chemical_uom_id(self):
-        # The field domain is only enforced client side, so keep import and ORM
-        # writes from pointing at a unit of another category.
+        # The field domain is only enforced in the UI.
         for categ in self:
             if categ.chemical_uom_id and categ.chemical_uom_id.category_id != categ:
                 raise ValidationError(
