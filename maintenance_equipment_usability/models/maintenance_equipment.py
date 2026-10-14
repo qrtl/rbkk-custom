@@ -168,4 +168,5 @@ class MaintenanceEquipment(models.Model):
         domain = domains[states[0]]
         for state in states[1:]:
             domain = ["|"] + domain + domains[state]
-        return domain
+        equipments = self.sudo().with_context(active_test=False)
+        return [("id", "in", equipments._search(domain))]
