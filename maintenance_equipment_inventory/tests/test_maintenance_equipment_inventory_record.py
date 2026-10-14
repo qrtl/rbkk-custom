@@ -106,6 +106,41 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         with self.assertRaises(UserError):
             record.unlink()
 
+    def test_approved_record_cannot_be_cancelled(self):
+        record = self._create_record()
+        record.action_submit()
+        record.with_user(self.manager).action_approve()
+        with self.assertRaises(UserError):
+            record.with_user(self.user).action_cancel()
+        self.assertEqual(record.state, "approved")
+
+    def test_only_pending_records_can_be_refused(self):
+        record = self._create_record()
+        record.action_submit()
+        record.with_user(self.manager).action_approve()
+        with self.assertRaises(UserError):
+            record.with_user(self.manager).action_refuse()
+        self.assertEqual(record.state, "approved")
+
+    def test_workflow_fields_not_writable(self):
+        """The status can only change through the workflow actions."""
+        record = self._create_record()
+        record.action_submit()
+        record.with_user(self.manager).action_approve()
+        for vals in (
+            {"state": "draft"},
+            {"approved_by_id": False},
+            {"approved_date": False},
+        ):
+            with self.assertRaises(UserError):
+                record.with_user(self.user).write(vals)
+
+    def test_cannot_create_approved_record(self):
+        with self.assertRaises(UserError):
+            self.Record.with_user(self.user).create(
+                {"equipment_id": self.equipment.id, "state": "approved"}
+            )
+
     def test_approved_record_still_accepts_chatter(self):
         # The lock only covers the business fields, so the mail framework can
         # still log messages and attachments on an approved record.

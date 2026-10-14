@@ -4,10 +4,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
-# Business fields that are frozen once the record is approved. Workflow fields
-# are deliberately left out so that the action methods can still move the
-# record through its states; they are protected by being readonly on the model
-# (the UI cannot write them) plus the group checks in those methods.
+# Business fields that are frozen once the record is approved.
 LOCKED_FIELDS = {
     "equipment_id",
     "inventory_date",
@@ -18,6 +15,10 @@ LOCKED_FIELDS = {
     "checked_by_id",
     "note",
 }
+# Workflow fields, only written by the action methods through
+# _write_workflow(). Being readonly only keeps the UI from writing them; a
+# plain write() over RPC would bypass the state and group checks.
+WORKFLOW_FIELDS = {"state", "approved_by_id", "approved_date"}
 
 
 class MaintenanceEquipmentInventoryRecord(models.Model):
@@ -110,6 +111,11 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            # New records start as draft; the default may come along in vals.
+            if any(vals.get(field) for field in WORKFLOW_FIELDS - {"state"}) or (
+                vals.get("state", "draft") != "draft"
+            ):
+                raise UserError(_("Use the workflow buttons to change the status."))
             if not vals.get("name") or vals["name"] == _("New"):
                 vals["name"] = self.env["ir.sequence"].next_by_code(
                     "maintenance.equipment.inventory.record"
@@ -117,6 +123,8 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         return super().create(vals_list)
 
     def write(self, vals):
+        if set(vals) & WORKFLOW_FIELDS:
+            raise UserError(_("Use the workflow buttons to change the status."))
         if set(vals) & LOCKED_FIELDS and any(r.state == "approved" for r in self):
             raise UserError(
                 _(
@@ -124,6 +132,9 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
                     "Reset the record to draft first."
                 )
             )
+        return super().write(vals)
+
+    def _write_workflow(self, vals):
         return super().write(vals)
 
     def unlink(self):
@@ -145,7 +156,7 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
                         record=record.name,
                     )
                 )
-        self.write({"state": "to_approve"})
+        self._write_workflow({"state": "to_approve"})
 
     def action_approve(self):
         if not self.env.user.has_group("maintenance.group_equipment_manager"):
@@ -155,7 +166,7 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
         for record in self:
             if record.state != "to_approve":
                 raise UserError(_("Only records pending approval can be approved."))
-        self.write(
+        self._write_workflow(
             {
                 "state": "approved",
                 "approved_by_id": self.env.user.id,
@@ -168,13 +179,17 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
             raise UserError(
                 _("Only Maintenance Managers can refuse inventory records.")
             )
-        self.write({"state": "refused"})
+        if any(r.state != "to_approve" for r in self):
+            raise UserError(_("Only records pending approval can be refused."))
+        self._write_workflow({"state": "refused"})
 
     def action_cancel(self):
         # Used when the equipment turns out to be out of scope for the round
         # (e.g. already scrapped). Cancelling instead of deleting keeps the
         # equipment out of the next bulk creation.
-        self.write({"state": "cancelled"})
+        if any(r.state in ("approved", "cancelled") for r in self):
+            raise UserError(_("Approved or cancelled records cannot be cancelled."))
+        self._write_workflow({"state": "cancelled"})
 
     def action_reset_to_draft(self):
         if any(r.state == "approved" for r in self) and not self.env.user.has_group(
@@ -186,7 +201,7 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
                     "records to draft."
                 )
             )
-        self.write(
+        self._write_workflow(
             {
                 "state": "draft",
                 "approved_by_id": False,
