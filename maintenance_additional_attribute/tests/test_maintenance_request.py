@@ -72,6 +72,21 @@ class TestMaintenanceRequest(TransactionCase):
         request.stage_id = self.stage_done
         self.assertEqual(request.close_date, fields.Date.today())
 
+    def test_close_date_cleared_on_reopen(self):
+        """Reopening a completed request clears the close date, as standard."""
+        request = self._create_request(close_date=self.close_date)
+        request.stage_id = self.stage_done
+        request.stage_id = self.stage_open
+        self.assertFalse(request.close_date)
+
+    def test_close_date_restamped_on_completion_after_reopen(self):
+        request = self._create_request()
+        request.stage_id = self.stage_done
+        request.close_date = self.close_date
+        request.stage_id = self.stage_open
+        request.stage_id = self.stage_done
+        self.assertEqual(request.close_date, fields.Date.today())
+
     def test_alert_sent_once_within_period(self):
         request = self._create_request()
         self.assertTrue(self._run_cron(request))

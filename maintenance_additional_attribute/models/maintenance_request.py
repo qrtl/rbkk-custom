@@ -47,12 +47,16 @@ class MaintenanceRequest(models.Model):
         # The standard create() and write() rewrite the close date whenever the
         # stage changes (today() when the request is completed, empty
         # otherwise), which discards the date the user recorded. Those updates
-        # come back here as a write on the close date alone, so ignore them,
-        # except for the requests that have no date recorded yet.
+        # come back here as a write on the close date alone: keep a recorded
+        # date, but still clear it when a completed request is reopened.
         if list(vals) == ["close_date"] and self.env.context.get(
             "maintenance_keep_close_date"
         ):
-            requests = self.filtered(lambda request: not request.close_date)
+            if vals["close_date"]:
+                requests = self.filtered(lambda request: not request.close_date)
+            else:
+                reopened_ids = self.env.context.get("maintenance_reopened_ids", ())
+                requests = self.filtered(lambda request: request.id in reopened_ids)
             return super(MaintenanceRequest, requests).write(vals) if requests else True
         # Drop the outdated alert and let it be sent again on the new timing.
         if any(
@@ -63,8 +67,18 @@ class MaintenanceRequest(models.Model):
             self.activity_unlink(
                 ["maintenance_additional_attribute.mail_act_maintenance_alert"]
             )
+        reopened_ids = ()
+        if (
+            "stage_id" in vals
+            and not self.env["maintenance.stage"].browse(vals["stage_id"]).done
+        ):
+            reopened_ids = tuple(self.filtered("done").ids)
         res = super(
-            MaintenanceRequest, self.with_context(maintenance_keep_close_date=True)
+            MaintenanceRequest,
+            self.with_context(
+                maintenance_keep_close_date=True,
+                maintenance_reopened_ids=reopened_ids,
+            ),
         ).write(vals)
         if "stage_id" in vals:
             # Mark the alert as handled once the request is completed.
