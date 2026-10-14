@@ -1,0 +1,2 @@
+odoo-addon-maintenance_equipment_usability @ git+https://github.com/qrtl/rbkk-custom@refs/pull/10/head#subdirectory=maintenance_equipment_usability
+odoo-addon-maintenance_additional_attribute @ git+https://github.com/qrtl/rbkk-custom@refs/pull/9/head#subdirectory=maintenance_additional_attribute
