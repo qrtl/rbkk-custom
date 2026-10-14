@@ -72,9 +72,9 @@ msgstr "承認日時"
 #. odoo-python
 #: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
 msgid ""
-"Approved inventory records cannot be modified. Reset the record to draft "
-"first."
-msgstr "承認済の棚卸記録は変更できません。先にドラフトに戻してください。"
+"Submitted or approved inventory records cannot be modified. Reset the record"
+" to draft first."
+msgstr "承認待ちまたは承認済の棚卸記録は変更できません。先にドラフトに戻してください。"
 
 #. module: maintenance_equipment_inventory
 #: model:ir.model.fields,field_description:maintenance_equipment_inventory.field_maintenance_equipment_inventory_record__user_id
@@ -391,6 +391,24 @@ msgstr "承認申請できるのはドラフトまたは却下済の記録のみ
 #: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
 msgid "Only records pending approval can be approved."
 msgstr "承認できるのは承認待ちの記録のみです。"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "Only records pending approval can be refused."
+msgstr "却下できるのは承認待ちの記録のみです。"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "Use the workflow buttons to change the status."
+msgstr "ステータスはワークフローのボタンで変更してください。"
+
+#. module: maintenance_equipment_inventory
+#. odoo-python
+#: code:addons/maintenance_equipment_inventory/models/maintenance_equipment_inventory_record.py:0
+msgid "Approved or cancelled records cannot be cancelled."
+msgstr "承認済またはキャンセル済の記録はキャンセルできません。"
 
 #. module: maintenance_equipment_inventory
 #: model:ir.model.fields.selection,name:maintenance_equipment_inventory.selection__maintenance_equipment__last_inventory_result__pass

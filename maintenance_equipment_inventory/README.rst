@@ -26,6 +26,9 @@ This module lets you record the stocktaking (inventory) history of
 maintenance equipment. Each inventory record goes through a **Draft → To
 Approve → Approved** workflow and can no longer be edited once approved.
 
+Submitted records are locked as well, so that the manager approves the
+values that were submitted. To correct one, reset it to draft first.
+
 Each record has three checks. Tick each one when it is fine, so an
 unticked check means the equipment needs attention:
 

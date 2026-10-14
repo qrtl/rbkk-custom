@@ -141,6 +141,14 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
                 {"equipment_id": self.equipment.id, "state": "approved"}
             )
 
+    def test_submitted_record_is_locked(self):
+        """The manager approves the values that were submitted."""
+        record = self._create_record()
+        record.action_submit()
+        for vals in ({"checked_by_id": False}, {"seal_attached": False}):
+            with self.assertRaises(UserError):
+                record.with_user(self.user).write(vals)
+
     def test_approved_record_still_accepts_chatter(self):
         # The lock only covers the business fields, so the mail framework can
         # still log messages and attachments on an approved record.
@@ -268,6 +276,23 @@ class TestMaintenanceEquipmentInventoryRecord(TransactionCase):
         action = equipments.action_create_inventory_records()
         records = self.Record.search(action["domain"])
         self.assertEqual(records.equipment_id, equipment2)
+
+    def test_bulk_create_reruns_after_newer_approval(self):
+        # Only the latest record counts: an old cancelled record must not keep
+        # the equipment out once a newer record is approved.
+        self._create_record().action_cancel()
+        newer = self.Record.create(
+            {
+                "equipment_id": self.equipment.id,
+                "inventory_date": "2027-06-01",
+                "checked_by_id": self.user.id,
+            }
+        )
+        newer.action_submit()
+        newer.with_user(self.manager).action_approve()
+        action = self.equipment.action_create_inventory_records()
+        records = self.Record.search(action["domain"])
+        self.assertEqual(records.equipment_id, self.equipment)
 
     def test_bulk_create_reruns_after_approval(self):
         # An equipment whose only record is approved is eligible again.

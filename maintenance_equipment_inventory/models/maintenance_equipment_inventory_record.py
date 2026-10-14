@@ -4,7 +4,8 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
-# Business fields that are frozen once the record is approved.
+# Business fields that are frozen once the record is submitted, so that the
+# manager approves the values that were submitted.
 LOCKED_FIELDS = {
     "equipment_id",
     "inventory_date",
@@ -125,11 +126,13 @@ class MaintenanceEquipmentInventoryRecord(models.Model):
     def write(self, vals):
         if set(vals) & WORKFLOW_FIELDS:
             raise UserError(_("Use the workflow buttons to change the status."))
-        if set(vals) & LOCKED_FIELDS and any(r.state == "approved" for r in self):
+        if set(vals) & LOCKED_FIELDS and any(
+            r.state in ("to_approve", "approved") for r in self
+        ):
             raise UserError(
                 _(
-                    "Approved inventory records cannot be modified. "
-                    "Reset the record to draft first."
+                    "Submitted or approved inventory records cannot be "
+                    "modified. Reset the record to draft first."
                 )
             )
         return super().write(vals)

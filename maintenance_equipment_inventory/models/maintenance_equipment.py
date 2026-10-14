@@ -58,19 +58,22 @@ class MaintenanceEquipment(models.Model):
     def action_create_inventory_records(self):
         """Bulk-create a draft inventory record per selected equipment.
 
-        Equipment that already have a record in any state but approved are
-        skipped to avoid duplicates: such a record means the stocktaking round
-        is either still unfinished or deliberately closed (refused/cancelled)
-        for that equipment. The created records are then shown.
+        Equipment whose latest record is not approved are skipped to avoid
+        duplicates: that record means the stocktaking round is either still
+        unfinished or deliberately closed (refused/cancelled) for that
+        equipment. Only the latest record counts, so an old cancelled record
+        does not keep the equipment out once a newer one is approved. The
+        created records are then shown.
         """
         Record = self.env["maintenance.equipment.inventory.record"]
-        existing = Record.search(
-            [
-                ("equipment_id", "in", self.ids),
-                ("state", "!=", "approved"),
-            ]
-        ).equipment_id
-        targets = self - existing
+        latest = {}
+        # Records come newest first (the model's _order).
+        for record in Record.search([("equipment_id", "in", self.ids)]):
+            latest.setdefault(record.equipment_id, record)
+        targets = self.filtered(
+            lambda equipment: equipment not in latest
+            or latest[equipment].state == "approved"
+        )
         if not targets:
             raise UserError(
                 _(
