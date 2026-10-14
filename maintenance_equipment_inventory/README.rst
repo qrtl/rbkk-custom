@@ -85,6 +85,17 @@ Contributors
 Maintainers
 -----------
 
+.. |maintainer-kanda999| image:: https://github.com/kanda999.png?size=40px
+    :target: https://github.com/kanda999
+    :alt: kanda999
+.. |maintainer-smorita7749| image:: https://github.com/smorita7749.png?size=40px
+    :target: https://github.com/smorita7749
+    :alt: smorita7749
+
+Current maintainers:
+
+|maintainer-kanda999| |maintainer-smorita7749| 
+
 This module is part of the `qrtl/rbkk-custom <https://github.com/qrtl/rbkk-custom/tree/18.0/maintenance_equipment_inventory>`_ project on GitHub.
 
 You are welcome to contribute.

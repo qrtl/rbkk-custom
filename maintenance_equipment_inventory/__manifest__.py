@@ -9,6 +9,7 @@
     "author": "Quartile",
     "website": "https://www.quartile.co",
     "license": "LGPL-3",
+    "maintainers": ["kanda999", "smorita7749"],
     "depends": ["maintenance_additional_attribute"],
     "data": [
         "security/ir.model.access.csv",
