@@ -73,9 +73,9 @@ it: the amounts are still listed, unconverted, but they no longer join
 the weight or volume totals. That is what count-managed products need,
 since a percentage of a piece count is not a meaningful quantity.
 
-The **Chemicals by Location** report groups by aggregation unit first
-for this reason, and offers an *Aggregated Only* filter to hide the
-categories that have none.
+For this reason, group the **Chemicals by Location** report by *Amount
+UoM* before reading a total, and use the *Aggregated Only* filter to
+hide the categories that have none.
 
 Chemical consumption
 --------------------

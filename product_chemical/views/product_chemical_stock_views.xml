@@ -68,9 +68,6 @@
         <field name="name">Chemicals by Location</field>
         <field name="res_model">product.chemical.stock</field>
         <field name="view_mode">list</field>
-        <!-- Group by amount UoM first so weight and volume are not summed together -->
-        <field
-            name="context"
-        >{'search_default_group_amount_uom': 1, 'search_default_group_location': 1, 'search_default_group_substance': 1}</field>
+        <field name="context">{}</field>
     </record>
 </odoo>
