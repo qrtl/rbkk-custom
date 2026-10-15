@@ -170,6 +170,31 @@ class TestMaintenanceEquipmentUsability(BaseCommon):
         self.assertNotIn(expired_equipment, usable)
         self.assertIn(expired_equipment, unusable)
 
+    def test_search_usability_state_operators(self):
+        self._create_request(
+            self.done_stage,
+            result="passed",
+            close_date=self.today - relativedelta(months=1),
+        )
+        unknown_equipment = self.env["maintenance.equipment"].create(
+            {"name": "Unknown Equipment", "status": "operating"}
+        )
+        Equipment = self.env["maintenance.equipment"]
+        unknown = Equipment.search([("usability_state", "=", "unknown")])
+        self.assertIn(unknown_equipment, unknown)
+        self.assertNotIn(self.equipment, unknown)
+        not_usable = Equipment.search([("usability_state", "!=", "usable")])
+        self.assertIn(unknown_equipment, not_usable)
+        self.assertNotIn(self.equipment, not_usable)
+        usable_or_unknown = Equipment.search(
+            [("usability_state", "in", ["usable", "unknown"])]
+        )
+        self.assertIn(self.equipment, usable_or_unknown)
+        self.assertIn(unknown_equipment, usable_or_unknown)
+        not_unknown = Equipment.search([("usability_state", "not in", ["unknown"])])
+        self.assertIn(self.equipment, not_unknown)
+        self.assertNotIn(unknown_equipment, not_unknown)
+
     def test_create_followup_request_from_failed(self):
         request = self._create_request(
             self.done_stage, result="failed", close_date=self.today
@@ -180,3 +205,14 @@ class TestMaintenanceEquipmentUsability(BaseCommon):
         self.assertEqual(followup.source_request_id, request)
         self.assertEqual(followup.equipment_id, self.equipment)
         self.assertEqual(followup.maintenance_type, "corrective")
+
+    def test_followup_request_keeps_company(self):
+        request = self._create_request(
+            self.done_stage, result="failed", close_date=self.today
+        )
+        company_b = self.env["res.company"].create({"name": "Company B"})
+        self.env.user.company_ids |= company_b
+        request.with_context(
+            allowed_company_ids=[company_b.id, request.company_id.id]
+        ).action_create_followup_request()
+        self.assertEqual(request.followup_request_ids.company_id, request.company_id)

@@ -39,6 +39,7 @@ class MaintenanceRequest(models.Model):
                 "maintenance_team_id": self.maintenance_team_id.id,
                 "maintenance_type": "corrective",
                 "source_request_id": self.id,
+                "company_id": self.company_id.id,
             }
         )
         return {

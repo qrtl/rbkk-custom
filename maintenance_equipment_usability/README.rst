@@ -36,7 +36,7 @@ status alone.
 Usage
 =====
 
-The equipment Status (Preparing, Operating, Idle, Disposal / Scrapped)
+The equipment Status (Preparing, Operating, Idle, Retired, Scrapped)
 gates usability: only equipment in the Operating status can be usable.
 In any other status the equipment is unusable regardless of its
 maintenance result.
