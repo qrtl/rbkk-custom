@@ -41,6 +41,12 @@ gates usability: only equipment in the Operating status can be usable.
 In any other status the equipment is unusable regardless of its
 maintenance result.
 
+Equipment under a manufacturer warranty is usable until its Warranty
+Expiration Date, as long as it is in the Operating status and its latest
+maintenance result is not Failed. Once the warranty has expired,
+usability is computed as below, so record the first maintenance result
+before that date to keep the equipment usable.
+
 Equipment that is not subject to maintenance can be flagged with
 Maintenance Not Required. Its maintenance request results are then
 excluded from the usability evaluation: the equipment is usable while it

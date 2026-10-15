@@ -216,3 +216,70 @@ class TestMaintenanceEquipmentUsability(BaseCommon):
             allowed_company_ids=[company_b.id, request.company_id.id]
         ).action_create_followup_request()
         self.assertEqual(request.followup_request_ids.company_id, request.company_id)
+
+    def test_in_warranty_without_result_is_usable(self):
+        self.equipment.warranty_date = self.today
+        self.assertEqual(self.equipment.usability_state, "usable")
+        self.equipment.warranty_date = self.today - relativedelta(days=1)
+        self.assertEqual(self.equipment.usability_state, "unknown")
+
+    def test_in_warranty_passed_past_grace_is_usable(self):
+        self._create_request(
+            self.done_stage,
+            result="passed",
+            close_date=self.today - relativedelta(months=13),
+        )
+        self.assertEqual(self.equipment.usability_state, "unusable")
+        self.equipment.warranty_date = self.today + relativedelta(months=1)
+        self.assertEqual(self.equipment.usability_state, "usable")
+
+    def test_in_warranty_failed_is_unusable(self):
+        self.equipment.warranty_date = self.today + relativedelta(months=1)
+        self._create_request(self.done_stage, result="failed", close_date=self.today)
+        self.assertEqual(self.equipment.usability_state, "unusable")
+
+    def test_in_warranty_not_operating_is_unusable(self):
+        self.equipment.warranty_date = self.today + relativedelta(months=1)
+        self.equipment.status = "idle"
+        self.assertEqual(self.equipment.usability_state, "unusable")
+
+    def test_search_usability_state_with_warranty(self):
+        Equipment = self.env["maintenance.equipment"]
+        in_warranty = Equipment.create(
+            {
+                "name": "In Warranty",
+                "status": "operating",
+                "warranty_date": self.today + relativedelta(months=1),
+            }
+        )
+        expired = Equipment.create(
+            {
+                "name": "Warranty Expired",
+                "status": "operating",
+                "warranty_date": self.today - relativedelta(days=1),
+            }
+        )
+        failed = Equipment.create(
+            {
+                "name": "Failed In Warranty",
+                "status": "operating",
+                "warranty_date": self.today + relativedelta(months=1),
+            }
+        )
+        self.env["maintenance.request"].create(
+            {
+                "name": "Failed Request",
+                "equipment_id": failed.id,
+                "stage_id": self.done_stage.id,
+                "request_date": self.today,
+                "close_date": self.today,
+                "maintenance_result": "failed",
+            }
+        )
+        for state in ("usable", "unusable", "unknown"):
+            found = Equipment.search([("usability_state", "=", state)])
+            for equipment in (in_warranty, expired, failed):
+                self.assertEqual(equipment in found, equipment.usability_state == state)
+        self.assertEqual(in_warranty.usability_state, "usable")
+        self.assertEqual(expired.usability_state, "unknown")
+        self.assertEqual(failed.usability_state, "unusable")

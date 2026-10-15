@@ -25,6 +25,7 @@ class MaintenanceEquipment(models.Model):
         "usability: the equipment is usable as long as it is in the Operating "
         "status.",
     )
+    warranty_date = fields.Date(tracking=True)
     usability_state = fields.Selection(
         selection=[
             ("unknown", "Unknown"),
@@ -82,6 +83,7 @@ class MaintenanceEquipment(models.Model):
         "company_id",
         "status",
         "maintenance_exempt",
+        "warranty_date",
         "latest_maintenance_result_request_id.maintenance_result",
         "latest_maintenance_result_date",
     )
@@ -97,6 +99,13 @@ class MaintenanceEquipment(models.Model):
                 continue
             request = equipment.latest_maintenance_result_request_id
             result_date = equipment.latest_maintenance_result_date
+            if (
+                equipment.warranty_date
+                and today <= equipment.warranty_date
+                and request.maintenance_result != "failed"
+            ):
+                equipment.usability_state = "usable"
+                continue
             if not request or not result_date:
                 equipment.usability_state = "unknown"
                 continue
@@ -131,28 +140,46 @@ class MaintenanceEquipment(models.Model):
         threshold = fields.Date.context_today(self).replace(day=1) - relativedelta(
             months=self.env.company.usability_grace_period_months
         )
+        today = fields.Date.context_today(self)
+        in_warranty = [
+            "&",
+            ("warranty_date", ">=", today),
+            "|",
+            ("latest_maintenance_result_request_id", "=", False),
+            (result, "!=", "failed"),
+        ]
+        out_of_warranty = [
+            "|",
+            ("warranty_date", "=", False),
+            ("warranty_date", "<", today),
+        ]
         domains = {
-            # unknown: operating and not exempt, but no completed result yet
+            # unknown: operating and not exempt, out of warranty, but no completed
+            # result yet
             "unknown": [
                 "&",
                 ("status", "=", "operating"),
                 "&",
                 ("maintenance_exempt", "=", False),
+                "&",
                 ("latest_maintenance_result_request_id", "=", False),
+                *out_of_warranty,
             ],
-            # usable: operating and either exempt, or the latest result passed
-            # within the grace period
+            # usable: operating and either exempt, in warranty without a failed
+            # result, or the latest result passed within the grace period
             "usable": [
                 "&",
                 ("status", "=", "operating"),
                 "|",
                 ("maintenance_exempt", "=", True),
+                "|",
+                *in_warranty,
                 "&",
                 (result, "=", "passed"),
                 ("latest_maintenance_result_date", ">=", threshold),
             ],
             # unusable: not operating, or not exempt with a failed result or a
-            # passed result past the grace period
+            # passed result past the grace period and out of warranty
             "unusable": [
                 "|",
                 ("status", "!=", "operating"),
@@ -162,7 +189,9 @@ class MaintenanceEquipment(models.Model):
                 (result, "=", "failed"),
                 "&",
                 (result, "=", "passed"),
+                "&",
                 ("latest_maintenance_result_date", "<", threshold),
+                *out_of_warranty,
             ],
         }
         domain = domains[states[0]]
