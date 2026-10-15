@@ -1,9 +1,12 @@
 # Copyright 2026 Quartile (https://www.quartile.co)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
+from datetime import date
+
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
+from odoo.osv import expression
 
 
 class MaintenanceEquipment(models.Model):
@@ -18,9 +21,11 @@ class MaintenanceEquipment(models.Model):
             ("scrapped", "Scrapped"),
         ],
         default="preparing",
+        tracking=True,
     )
     maintenance_exempt = fields.Boolean(
         string="Maintenance Not Required",
+        tracking=True,
         help="If set, maintenance request results are ignored when computing "
         "usability: the equipment is usable as long as it is in the Operating "
         "status.",
@@ -32,9 +37,17 @@ class MaintenanceEquipment(models.Model):
             ("usable", "Usable"),
             ("unusable", "Unusable"),
         ],
-        compute="_compute_usability",
+        compute="_compute_usability_state",
         search="_search_usability_state",
         string="Usability",
+    )
+    usable_until = fields.Date(
+        compute="_compute_usable_until",
+        store=True,
+        help="Last day the equipment is usable on the strength of its warranty "
+        "or its latest passed maintenance result, whichever is later. Empty "
+        "when neither applies or the latest result is Failed. The equipment "
+        "must also be in the Operating status to be usable.",
     )
     latest_maintenance_result_request_id = fields.Many2one(
         comodel_name="maintenance.request",
@@ -65,12 +78,21 @@ class MaintenanceEquipment(models.Model):
                     ("stage_id.done", "=", True),
                     ("maintenance_result", "in", ("passed", "failed")),
                     ("archive", "=", False),
-                ],
-                order="equipment_id, close_date desc, request_date desc, id desc",
+                ]
             )
         )
+        # Rank on the date the result counts from (close date, else request
+        # date), in Python: ordering on close_date in SQL would put requests
+        # without one first.
         latest_by_equipment = {}
-        for request in requests:
+        for request in requests.sorted(
+            lambda r: (
+                r.close_date or r.request_date or date.min,
+                r.request_date or date.min,
+                r.id,
+            ),
+            reverse=True,
+        ):
             latest_by_equipment.setdefault(request.equipment_id.id, request)
         for equipment in self:
             request = latest_by_equipment.get(equipment.id)
@@ -80,45 +102,57 @@ class MaintenanceEquipment(models.Model):
             )
 
     @api.depends(
-        "company_id",
-        "status",
-        "maintenance_exempt",
+        "company_id.usability_validity_months",
+        "latest_maintenance_result_request_id.company_id.usability_validity_months",
         "warranty_date",
         "latest_maintenance_result_request_id.maintenance_result",
         "latest_maintenance_result_date",
     )
-    def _compute_usability(self):
+    def _compute_usable_until(self):
+        for equipment in self:
+            request = equipment.latest_maintenance_result_request_id
+            if request.maintenance_result == "failed":
+                equipment.usable_until = False
+                continue
+            dates = []
+            if equipment.warranty_date:
+                dates.append(equipment.warranty_date)
+            result_date = equipment.latest_maintenance_result_date
+            if request and result_date:
+                # Equipment without a company (shared across companies) takes
+                # the period of the company of its latest result.
+                company = equipment.company_id or request.company_id
+                # Validity extends to the end of the target month.
+                dates.append(
+                    result_date
+                    + relativedelta(months=company.usability_validity_months, day=31)
+                )
+            equipment.usable_until = max(dates) if dates else False
+
+    @api.depends(
+        "status",
+        "scrap_date",
+        "maintenance_exempt",
+        "usable_until",
+        "latest_maintenance_result_request_id",
+    )
+    def _compute_usability_state(self):
         today = fields.Date.context_today(self)
         for equipment in self:
-            if equipment.status != "operating":
+            if equipment.status != "operating" or (
+                equipment.scrap_date and equipment.scrap_date <= today
+            ):
+                # Scrapped equipment is unusable whatever its status says; a
+                # future scrap date leaves it usable until that day.
                 equipment.usability_state = "unusable"
-                continue
-            if equipment.maintenance_exempt:
-                # Maintenance results are not evaluated for exempt equipment.
-                equipment.usability_state = "usable"
-                continue
-            request = equipment.latest_maintenance_result_request_id
-            result_date = equipment.latest_maintenance_result_date
-            if (
-                equipment.warranty_date
-                and today <= equipment.warranty_date
-                and request.maintenance_result != "failed"
+            elif equipment.maintenance_exempt or (
+                equipment.usable_until and equipment.usable_until >= today
             ):
                 equipment.usability_state = "usable"
-                continue
-            if not request or not result_date:
-                equipment.usability_state = "unknown"
-                continue
-            if request.maintenance_result == "failed":
-                equipment.usability_state = "unusable"
-                continue
-            company = equipment.company_id or self.env.company
-            grace_months = company.usability_grace_period_months
-            if today > result_date + relativedelta(months=grace_months, day=31):
-                # Validity extends to the end of the target month.
+            elif equipment.latest_maintenance_result_request_id:
                 equipment.usability_state = "unusable"
             else:
-                equipment.usability_state = "usable"
+                equipment.usability_state = "unknown"
 
     def _search_usability_state(self, operator, value):
         all_states = ("unknown", "usable", "unusable")
@@ -133,69 +167,37 @@ class MaintenanceEquipment(models.Model):
         else:
             states = []
         if not states:
-            return [("id", "=", False)]
-        result = "latest_maintenance_result_request_id.maintenance_result"
-        # Validity extends to the end of the target month, so the earliest
-        # still-valid result date is the first day of its month.
-        threshold = fields.Date.context_today(self).replace(day=1) - relativedelta(
-            months=self.env.company.usability_grace_period_months
-        )
+            return expression.FALSE_DOMAIN
         today = fields.Date.context_today(self)
-        in_warranty = [
-            "&",
-            ("warranty_date", ">=", today),
+        # Implicitly ANDed term lists, so they can be spliced together.
+        operating = [
+            ("status", "=", "operating"),
             "|",
-            ("latest_maintenance_result_request_id", "=", False),
-            (result, "!=", "failed"),
+            ("scrap_date", "=", False),
+            ("scrap_date", ">", today),
         ]
-        out_of_warranty = [
+        not_valid = [
+            ("maintenance_exempt", "=", False),
             "|",
-            ("warranty_date", "=", False),
-            ("warranty_date", "<", today),
+            ("usable_until", "=", False),
+            ("usable_until", "<", today),
         ]
+        has_result = ("latest_maintenance_result_request_id", "!=", False)
+        no_result = ("latest_maintenance_result_request_id", "=", False)
         domains = {
-            # unknown: operating and not exempt, out of warranty, but no completed
-            # result yet
-            "unknown": [
-                "&",
-                ("status", "=", "operating"),
-                "&",
-                ("maintenance_exempt", "=", False),
-                "&",
-                ("latest_maintenance_result_request_id", "=", False),
-                *out_of_warranty,
-            ],
-            # usable: operating and either exempt, in warranty without a failed
-            # result, or the latest result passed within the grace period
             "usable": [
-                "&",
-                ("status", "=", "operating"),
+                *operating,
                 "|",
                 ("maintenance_exempt", "=", True),
-                "|",
-                *in_warranty,
-                "&",
-                (result, "=", "passed"),
-                ("latest_maintenance_result_date", ">=", threshold),
+                ("usable_until", ">=", today),
             ],
-            # unusable: not operating, or not exempt with a failed result or a
-            # passed result past the grace period and out of warranty
-            "unusable": [
-                "|",
-                ("status", "!=", "operating"),
-                "&",
-                ("maintenance_exempt", "=", False),
-                "|",
-                (result, "=", "failed"),
-                "&",
-                (result, "=", "passed"),
-                "&",
-                ("latest_maintenance_result_date", "<", threshold),
-                *out_of_warranty,
-            ],
+            "unknown": [*operating, *not_valid, no_result],
+            "unusable": expression.OR(
+                [
+                    [("status", "!=", "operating")],
+                    [("scrap_date", "<=", today)],
+                    [has_result, *not_valid],
+                ]
+            ),
         }
-        domain = domains[states[0]]
-        for state in states[1:]:
-            domain = ["|"] + domain + domains[state]
-        equipments = self.sudo().with_context(active_test=False)
-        return [("id", "in", equipments._search(domain))]
+        return expression.OR([domains[state] for state in states])

@@ -13,7 +13,7 @@
                         string="Usability Validity Period"
                         help="Number of months the equipment stays usable after its latest passed maintenance result. Validity extends to the end of the target month (e.g. passed on 15 June with 13 months stays usable until 31 July of the following year)."
                     >
-                        <field name="usability_grace_period_months" />
+                        <field name="usability_validity_months" />
                         <span class="text-muted ms-1">months</span>
                     </setting>
                 </block>

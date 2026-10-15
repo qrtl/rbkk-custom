@@ -10,14 +10,14 @@
             <field name="close_date" position="after">
                 <field name="maintenance_result" />
                 <field name="source_request_id" invisible="not source_request_id" />
-                <field name="followup_request_ids" invisible="1" />
+                <field name="has_followup_request" invisible="1" />
             </field>
             <button name="archive_equipment_request" position="after">
                 <button
                     name="action_create_followup_request"
                     type="object"
                     string="Create Follow-up Request"
-                    invisible="maintenance_result != 'failed' or followup_request_ids"
+                    invisible="maintenance_result != 'failed' or has_followup_request"
                 />
             </button>
         </field>

@@ -21,6 +21,12 @@ msgid "<span class=\"text-muted ms-1\">months</span>"
 msgstr "<span class=\"text-muted ms-1\">月</span>"
 
 #. module: maintenance_equipment_usability
+#. odoo-python
+#: code:addons/maintenance_equipment_usability/models/maintenance_request.py:0
+msgid "A follow-up request can only be created once, from a failed request."
+msgstr "フォローアップ依頼は、不合格の整備依頼から1回のみ作成できます。"
+
+#. module: maintenance_equipment_usability
 #: model:ir.model,name:maintenance_equipment_usability.model_res_company
 msgid "Companies"
 msgstr "会社"
@@ -61,6 +67,23 @@ msgstr "フォローアップ依頼"
 #: code:addons/maintenance_equipment_usability/models/maintenance_request.py:0
 msgid "Follow-up of %s"
 msgstr "%s のフォローアップ"
+
+#. module: maintenance_equipment_usability
+#: model:ir.model.fields,help:maintenance_equipment_usability.field_maintenance_equipment__usable_until
+msgid ""
+"Last day the equipment is usable on the strength of its warranty or its "
+"latest passed maintenance result, whichever is later. Empty when neither "
+"applies or the latest result is Failed. The equipment must also be in the "
+"Operating status to be usable."
+msgstr ""
+"保証または最新の合格結果に基づいて設備が使用可能な最終日（いずれか遅い方）。"
+"どちらも該当しない場合、または最新結果が不合格の場合は空欄です。使用可となる"
+"には、設備が稼働中ステータスであることも必要です。"
+
+#. module: maintenance_equipment_usability
+#: model:ir.model.fields,field_description:maintenance_equipment_usability.field_maintenance_request__has_followup_request
+msgid "Has Followup Request"
+msgstr "フォローアップ依頼あり"
 
 #. module: maintenance_equipment_usability
 #: model:ir.model.fields.selection,name:maintenance_equipment_usability.selection__maintenance_equipment__status__idle
@@ -158,6 +181,12 @@ msgid "Smart Search"
 msgstr "スマート検索"
 
 #. module: maintenance_equipment_usability
+#. odoo-python
+#: code:addons/maintenance_equipment_usability/models/maintenance_request.py:0
+msgid "Set the Maintenance Result (Passed or Failed) of '%s' before completing it."
+msgstr "「%s」を完了する前に、整備結果（合格または不合格）を設定してください。"
+
+#. module: maintenance_equipment_usability
 #: model:ir.model.fields,field_description:maintenance_equipment_usability.field_maintenance_request__source_request_id
 msgid "Source Request"
 msgstr "作成元の整備依頼"
@@ -166,6 +195,18 @@ msgstr "作成元の整備依頼"
 #: model:ir.model.fields,field_description:maintenance_equipment_usability.field_maintenance_equipment__status
 msgid "Status"
 msgstr "ステータス"
+
+#. module: maintenance_equipment_usability
+#. odoo-python
+#: code:addons/maintenance_equipment_usability/models/maintenance_request.py:0
+msgid "The close date cannot be in the future."
+msgstr "完了日に未来の日付は設定できません。"
+
+#. module: maintenance_equipment_usability
+#. odoo-python
+#: code:addons/maintenance_equipment_usability/models/res_company.py:0
+msgid "The usability validity period must be at least one month."
+msgstr "使用可否の有効期間は1ヶ月以上にしてください。"
 
 #. module: maintenance_equipment_usability
 #: model:ir.model.fields.selection,name:maintenance_equipment_usability.selection__maintenance_equipment__usability_state__unknown
@@ -195,8 +236,8 @@ msgid "Usability Validity Period"
 msgstr "使用可否の有効期間"
 
 #. module: maintenance_equipment_usability
-#: model:ir.model.fields,field_description:maintenance_equipment_usability.field_res_company__usability_grace_period_months
-#: model:ir.model.fields,field_description:maintenance_equipment_usability.field_res_config_settings__usability_grace_period_months
+#: model:ir.model.fields,field_description:maintenance_equipment_usability.field_res_company__usability_validity_months
+#: model:ir.model.fields,field_description:maintenance_equipment_usability.field_res_config_settings__usability_validity_months
 msgid "Usability Validity Period (Months)"
 msgstr "使用可否の有効期間（月）"
 
@@ -205,3 +246,8 @@ msgstr "使用可否の有効期間（月）"
 #: model_terms:ir.ui.view,arch_db:maintenance_equipment_usability.hr_equipment_view_search
 msgid "Usable"
 msgstr "使用可"
+
+#. module: maintenance_equipment_usability
+#: model:ir.model.fields,field_description:maintenance_equipment_usability.field_maintenance_equipment__usable_until
+msgid "Usable Until"
+msgstr "使用可能期限"

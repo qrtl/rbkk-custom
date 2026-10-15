@@ -17,4 +17,5 @@
         "views/maintenance_equipment_views.xml",
     ],
     "installable": True,
+    "post_init_hook": "post_init_hook",
 }

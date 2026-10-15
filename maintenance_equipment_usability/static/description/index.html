@@ -372,9 +372,9 @@ ul.auto-toc {
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/qrtl/rbkk-custom/tree/18.0/maintenance_equipment_usability"><img alt="qrtl/rbkk-custom" src="https://img.shields.io/badge/github-qrtl%2Frbkk--custom-lightgray.png?logo=github" /></a></p>
 <p>This module adds an equipment status and a pass/fail maintenance result,
 and computes equipment usability from the status, the latest completed
-maintenance request result, and a configurable usability grace period.
-Equipment flagged as not requiring maintenance is evaluated from its
-status alone.</p>
+maintenance request result, and a configurable usability validity
+period. Equipment flagged as not requiring maintenance is evaluated from
+its status alone.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -393,7 +393,8 @@ status alone.</p>
 <p>The equipment Status (Preparing, Operating, Idle, Retired, Scrapped)
 gates usability: only equipment in the Operating status can be usable.
 In any other status the equipment is unusable regardless of its
-maintenance result.</p>
+maintenance result. Equipment whose Scrap Date has been reached is
+unusable as well, whatever its status.</p>
 <p>Equipment under a manufacturer warranty is usable until its Warranty
 Expiration Date, as long as it is in the Operating status and its latest
 maintenance result is not Failed. Once the warranty has expired,
@@ -403,16 +404,20 @@ before that date to keep the equipment usable.</p>
 Maintenance Not Required. Its maintenance request results are then
 excluded from the usability evaluation: the equipment is usable while it
 is in the Operating status, and unusable in any other status.</p>
-<p>When a maintenance request is completed (it reaches a done stage), set
-its Maintenance Result to Passed or Failed. For equipment in the
-Operating status, usability is then computed from the latest completed
-request by completion date:</p>
+<p>Set the Maintenance Result to Passed or Failed before completing a
+maintenance request (moving it to a done stage). Completing a request
+without a result is blocked, unless its equipment is flagged Maintenance
+Not Required. For equipment in the Operating status, usability is then
+computed from the latest completed request by close date:</p>
 <ul class="simple">
 <li>Failed result: the equipment is unusable.</li>
 <li>Passed result, within the validity period: the equipment is usable.</li>
 <li>Passed result, past the validity period: the equipment is unusable.</li>
 <li>No result yet: the equipment usability is unknown.</li>
 </ul>
+<p>The close date is the user’s current date when the request is completed,
+unless one was recorded beforehand, which is kept. It cannot be in the
+future, and it is cleared when the request is reopened.</p>
 <p>The validity period runs from the latest completed maintenance result
 date and defaults to 12 months. Configure it in Settings &gt; Maintenance &gt;
 Usability Validity Period (for example 13 or 14 months). Usability is
@@ -422,6 +427,9 @@ automatically once the validity period elapses.</p>
 with a result passed on 15 June and a 13-month validity period, the
 equipment stays usable until 31 July of the following year and becomes
 unusable on 1 August.</p>
+<p>The equipment form and list show this date as Usable Until: the later of
+the warranty expiration date and the end of the validity period of the
+latest passed result. It is empty when the latest result is Failed.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>

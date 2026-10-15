@@ -7,8 +7,8 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
-    usability_grace_period_months = fields.Integer(
-        related="company_id.usability_grace_period_months",
+    usability_validity_months = fields.Integer(
+        related="company_id.usability_validity_months",
         readonly=False,
         string="Usability Validity Period (Months)",
     )

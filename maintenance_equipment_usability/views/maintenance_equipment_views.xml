@@ -23,8 +23,15 @@
                     string="Usability"
                     invisible="maintenance_exempt"
                 >
-                    <field name="latest_maintenance_result_request_id" readonly="1" />
+                    <!-- Filled under sudo: regular users may not be able to
+                         open the request, so only managers get the link. -->
+                    <field
+                        name="latest_maintenance_result_request_id"
+                        readonly="1"
+                        groups="maintenance.group_equipment_manager"
+                    />
                     <field name="latest_maintenance_result_date" readonly="1" />
+                    <field name="usable_until" readonly="1" />
                 </group>
             </xpath>
         </field>
@@ -44,6 +51,7 @@
                     decoration-muted="usability_state == 'unknown'"
                     optional="show"
                 />
+                <field name="usable_until" optional="hide" />
             </field>
         </field>
     </record>
