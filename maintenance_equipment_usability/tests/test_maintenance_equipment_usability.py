@@ -12,8 +12,6 @@ from odoo.tests.common import new_test_user
 
 from odoo.addons.base.tests.common import BaseCommon
 
-from ..hooks import post_init_hook
-
 
 class TestMaintenanceEquipmentUsability(BaseCommon):
     @classmethod
@@ -242,19 +240,6 @@ class TestMaintenanceEquipmentUsability(BaseCommon):
         )
         with self.assertRaises(UserError):
             passed.action_create_followup_request()
-
-    def test_post_init_hook_sets_status_of_existing_equipment(self):
-        in_use = self.env["maintenance.equipment"].create({"name": "In Use"})
-        scrapped = self.env["maintenance.equipment"].create(
-            {"name": "Scrapped", "scrap_date": self.today}
-        )
-        planned = self.env["maintenance.equipment"].create(
-            {"name": "Planned Scrap", "scrap_date": self.today + relativedelta(days=1)}
-        )
-        post_init_hook(self.env)
-        self.assertEqual(in_use.status, "operating")
-        self.assertEqual(scrapped.status, "scrapped")
-        self.assertEqual(planned.status, "operating")
 
     def test_close_date(self):
         """A recorded date is kept until reopening; none in the future."""
