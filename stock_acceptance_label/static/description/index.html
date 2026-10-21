@@ -378,8 +378,8 @@ sheet).</p>
 <li>the product name;</li>
 <li>the acceptance number;</li>
 <li>the model number (product internal reference);</li>
-<li>the lot number the goods are received in, blank as long as no lot is
-assigned;</li>
+<li>the lot number the goods are received in, blank as long as none is
+entered;</li>
 <li>the expiration date of that lot, blank when it has none;</li>
 <li>the arrival date (the effective date of the transfer, or any other
 date field selected in the settings);</li>
@@ -446,11 +446,13 @@ on.</p>
 <p>Cancelled lines are not printed. The arrival date stays blank as long as
 the configured date field is empty, which is the case until the transfer
 is done with the default setting.</p>
-<p>The lot number and the expiration date are taken from the lot of the
-operation, so they stay blank until the lot is assigned in the <em>Detailed
-Operations</em> of the transfer. A line received in several lots prints one
-label per lot, each with that lot’s own number, acceptance number and
-expiration date. A lot without an expiration date prints the date blank.</p>
+<p>The lot number and the expiration date are those of the operation, as
+shown in the <em>Detailed Operations</em> of the transfer, so a lot number
+typed in a receipt is printed before the transfer is done. The lot
+number stays blank until it is entered. A line received in several lots
+prints one label per lot, each with that lot’s own number, acceptance
+number and expiration date. A lot without an expiration date prints the
+date blank.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>

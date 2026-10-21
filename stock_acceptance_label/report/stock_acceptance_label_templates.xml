@@ -29,7 +29,7 @@
             <tr>
                 <td class="o_pal_key">Lot No.</td>
                 <td class="o_pal_value">
-                    <span t-field="line.lot_id.name" />
+                    <span t-out="line.lot_id.name or line.lot_name" />
                 </td>
             </tr>
             <tr>

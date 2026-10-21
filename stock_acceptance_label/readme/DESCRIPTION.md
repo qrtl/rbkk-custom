@@ -6,8 +6,7 @@ Each label shows the following rows, in the same layout:
 - the product name;
 - the acceptance number;
 - the model number (product internal reference);
-- the lot number the goods are received in, blank as long as no lot is
-  assigned;
+- the lot number the goods are received in, blank as long as none is entered;
 - the expiration date of that lot, blank when it has none;
 - the arrival date (the effective date of the transfer, or any other date field
   selected in the settings);

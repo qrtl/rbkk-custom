@@ -161,7 +161,6 @@ class TestStockAcceptanceLabel(TransactionCase):
         picking.action_confirm()
         line = self._label_line(picking)
         self.assertFalse(line.lot_id)
-        self.assertFalse(line.get_acceptance_expiration_date())
         lot = self._create_lot("LOT-0001", "2027-03-30 15:30:00")
         line.lot_id = lot
         self.assertEqual(line.lot_id.name, "LOT-0001")
@@ -170,6 +169,23 @@ class TestStockAcceptanceLabel(TransactionCase):
         lot.expiration_date = False
         self.assertEqual(line.lot_id.name, "LOT-0001")
         self.assertFalse(line.get_acceptance_expiration_date())
+
+    def test_lot_entered_before_validation(self):
+        picking = self._create_picking(self.product_lot)
+        picking.action_confirm()
+        line = self._label_line(picking)
+        line.write({"lot_name": "LOT-0001", "expiration_date": "2027-03-30 15:30:00"})
+        self.assertEqual(line.get_acceptance_expiration_date(), date(2027, 3, 31))
+        html = (
+            self.env["ir.actions.report"]
+            ._render_qweb_html(
+                "stock_acceptance_label.report_stock_acceptance_label",
+                picking.ids,
+            )[0]
+            .decode()
+        )
+        self.assertIn("LOT-0001", html)
+        self.assertIn("2027/03/31", html)
 
     def test_several_lots_print_one_label_each(self):
         picking = self._create_picking(self.product_lot)

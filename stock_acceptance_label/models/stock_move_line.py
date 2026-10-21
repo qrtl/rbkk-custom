@@ -25,8 +25,6 @@ class StockMoveLine(models.Model):
 
     def get_acceptance_expiration_date(self):
         self.ensure_one()
-        if not self.lot_id.expiration_date:
+        if not self.expiration_date:
             return False
-        return fields.Datetime.context_timestamp(
-            self, self.lot_id.expiration_date
-        ).date()
+        return fields.Datetime.context_timestamp(self, self.expiration_date).date()

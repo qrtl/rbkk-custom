@@ -9,8 +9,9 @@ Cancelled lines are not printed. The arrival date stays blank as long as the
 configured date field is empty, which is the case until the transfer is done
 with the default setting.
 
-The lot number and the expiration date are taken from the lot of the operation,
-so they stay blank until the lot is assigned in the *Detailed Operations* of the
-transfer. A line received in several lots prints one label per lot, each with
+The lot number and the expiration date are those of the operation, as shown in
+the *Detailed Operations* of the transfer, so a lot number typed in a receipt is
+printed before the transfer is done. The lot number stays blank until it is
+entered. A line received in several lots prints one label per lot, each with
 that lot's own number, acceptance number and expiration date. A lot without an
 expiration date prints the date blank.
