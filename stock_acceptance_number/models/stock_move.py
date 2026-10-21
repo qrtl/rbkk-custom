@@ -22,6 +22,9 @@ class StockMove(models.Model):
     @api.depends("move_line_ids.acceptance_number")
     def _compute_acceptance_number(self):
         for move in self:
+            # A quantity set to 0 unlinks the operations of the line.
+            if move.has_tracking == "none" and not move.move_line_ids:
+                continue
             move.acceptance_number = ", ".join(
                 move.move_line_ids._get_acceptance_numbers()
             )

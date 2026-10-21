@@ -99,6 +99,17 @@ class TestStockAcceptanceNumber(TransactionCase):
         move.acceptance_number = False
         self.assertFalse(move.move_line_ids.acceptance_number)
 
+    def test_number_is_kept_when_the_quantity_is_set_to_zero(self):
+        picking = self._create_picking(self.product_a)
+        picking.action_confirm()
+        move = picking.move_ids
+        move.acceptance_number = "R016-20251017-01"
+        move.quantity = 0.0
+        self.assertFalse(move.move_line_ids)
+        self.assertEqual(move.acceptance_number, "R016-20251017-01")
+        move.quantity = 1.0
+        self.assertEqual(move.move_line_ids.acceptance_number, "R016-20251017-01")
+
     def test_line_summarizes_the_numbers_of_its_lots(self):
         picking = self._create_picking(self.product_lot)
         picking.move_ids.product_uom_qty = 2.0

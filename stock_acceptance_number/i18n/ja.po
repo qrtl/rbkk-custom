@@ -81,7 +81,6 @@ msgstr ""
 "この明細の詳細オペレーションの受入番号のまとめ。追跡のないプロダクトの明細は"
 "ここで直接入力でき、追跡のあるプロダクトは詳細オペレーションでロットごとに入"
 "力します。"
-"この明細の詳細オペレーションの受入番号のまとめ。追跡のないプロダクトの明細はここで直接入力でき、追跡のあるプロダクトは詳細オペレーションでロットごとに入力します。"
 
 #. module: stock_acceptance_number
 #: model:ir.model.fields,help:stock_acceptance_number.field_stock_picking__acceptance_number
