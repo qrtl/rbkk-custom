@@ -8,3 +8,7 @@ entered on the line is applied to its detailed operations.
 
 Receipts can be searched by acceptance number from the search bar of the
 transfer list, and the numbers received under a lot are shown on the lot itself.
+
+When you select a lot-tracked component in the MO, you can search for it by
+acceptance number in the Quant view when adding a new line in Detailed
+Operations.
