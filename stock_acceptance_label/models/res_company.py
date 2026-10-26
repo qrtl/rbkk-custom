@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
-from odoo.tools import html_sanitize, is_html_empty
+from odoo.tools import is_html_empty
 
 
 class ResCompany(models.Model):
@@ -46,4 +46,4 @@ class ResCompany(models.Model):
             return self.env["ir.qweb"]._render(
                 "stock_acceptance_label.acceptance_label_status"
             )
-        return html_sanitize(self.acceptance_label_status_html)
+        return self.acceptance_label_status_html
